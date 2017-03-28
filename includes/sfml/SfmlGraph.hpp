@@ -11,8 +11,8 @@
 #ifndef SFMLGRAPH_HPP
 # define SFMLGRAPH_HPP
 
-#include <SFML/Graphics/RenderWindow.hpp>
-#include "IGraph.hpp"
+# include <SFML/Graphics/RenderWindow.hpp>
+# include "IGraph.hpp"
 
 namespace Arcade
 {
@@ -36,4 +36,4 @@ namespace Arcade
     sf::RenderWindow	*mainWin;
   };
 }
-#endif //CPP_ARCADE_SFMLGRAPH_HPP
+#endif // !SFMLGRAPH_HPP
