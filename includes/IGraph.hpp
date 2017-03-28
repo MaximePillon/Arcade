@@ -1,17 +1,17 @@
 /*
-** IGraph.hpp for cpp_arcade in /home/sylvain/Travail/Epitech/cpp_arcade/IGraph.hpp
+** IGraph.hpp for cpp_arcade in /home/soszyn_h/rendu/CPP/cpp_arcade/includes/IGraph.hpp
 **
-** Made by Sylvain CORSINI
-** Login   <sylvain.corsini@epitech.eu>
+** Made by Hugo SOSZYNSKI
+** Login   <hugo.soszynski@epitech.eu>
 **
-** Started on  Fri Mar 24 13:27:57 2017 Sylvain CORSINI
-** Last update Fri Mar 24 13:27:57 2017 Sylvain CORSINI
+** Started on  Tue Mar 28 20:28:46 2017 Hugo SOSZYNSKI
+** Last update Tue Mar 28 20:28:46 2017 Hugo SOSZYNSKI
 */
 
-#ifndef CPP_ARCADE_IGRAPH_HPP
-#define CPP_ARCADE_IGRAPH_HPP
+#ifndef IGRAPH_HPP
+# define IGRAPH_HPP
 
-#include <string>
+# include <string>
 
 /// \namespace Arcade
 namespace Arcade
@@ -99,4 +99,4 @@ namespace Arcade
   };
 }
 
-#endif //CPP_ARCADE_IGRAPH_HPP
+#endif // !IGRAPH_HPP
