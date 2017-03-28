@@ -50,8 +50,9 @@ namespace Arcade
     /// \brief Initialize window and lib (if not already initialized).
     ///
     /// \param size Size of the window
+    /// \param window_name The name of the window to be created
     /// \return True on success or false otherwise
-    virtual bool init(t_pos size) = 0;
+    virtual bool init(t_pos const& size, std::string const& window_name) = 0;
 
     /// \brief Close and destroy window.
     ///
@@ -63,7 +64,7 @@ namespace Arcade
     /// \param pos Position (top left)
     /// \param text Text to draw
     /// \return True on success or false otherwise
-    virtual bool drawText(t_pos pos, std::string text) = 0;
+    virtual bool drawText(t_pos const& pos, std::string const& text) = 0;
 
     /// \brief Draw a sprite on the window.
     ///
@@ -71,20 +72,30 @@ namespace Arcade
     /// \param image Sprite to draw
     /// \param color Background color
     /// \return True on success or false otherwise
-    virtual bool drawSprite(t_pos pos, t_image image, t_color color) = 0;
+    virtual bool drawSprite(t_pos const& pos,
+			    t_image const& image,
+			    t_color const& color) = 0;
 
     /// \brief Draw a block on the window.
     ///
     /// \param pos Position (top left)
     /// \param color Background color
     /// \return True on success or false otherwise
-    virtual bool drawBlock(t_pos pos, t_color color) = 0;
+    virtual bool drawBlock(t_pos const& pos, t_color const& color) = 0;
 
     /// \brief Draw the following sprite on all block of the window.
     ///
     /// \param image Background sprite (default_char must be ignored for text library)
     /// \return True on success or false otherwise
-    virtual bool setBackground(t_image image) = 0;
+    virtual bool setBackground(t_image const& image) = 0;
+
+    /// \brief Refresh the window content
+    virtual void refresh(void) = 0;
+
+    /// \brief Check if the window is open
+    ///
+    /// \return True if the window is open, false otherwise
+    virtual bool isOpen(void) = 0;
   };
 }
 
