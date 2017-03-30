@@ -11,7 +11,11 @@
 #ifndef SFMLGRAPH_HPP
 # define SFMLGRAPH_HPP
 
+# include <list>
+# include <SFML/Graphics/Sprite.hpp>
 # include <SFML/Graphics/RenderWindow.hpp>
+# include <SFML/Graphics/Text.hpp>
+# include <SFML/Graphics/Font.hpp>
 # include "IGraph.hpp"
 
 namespace Arcade
@@ -23,17 +27,28 @@ namespace Arcade
     virtual ~SfmlGraph();
 
   public:
-    bool init(t_pos size);
+    bool init(t_pos const& size, std::string const& name);
     bool close();
 
   public:
-    bool drawText(t_pos pos, std::string text);
-    bool drawSprite(t_pos pos, t_image image, t_color color);
-    bool drawBlock(t_pos pos, t_color color);
-    bool setBackground(t_image image);
+    bool drawText(t_pos const& pos,
+		  std::string const& text);
+    bool drawSprite(t_pos const& pos,
+		    t_image const& image, t_color const& color);
+    bool drawBlock(t_pos const& pos,
+		   t_color const& color);
+    bool setBackground(t_image const& image);
+
+  public:
+    bool isOpen() const;
+    void refresh();
 
   protected:
-    sf::RenderWindow	*mainWin;
+    std::map<std::string, sf::Sprite>	spriteMap;
+    std::list<sf::Text> 		textList;
+    sf::Sprite				back;
+    sf::Font				font;
+    sf::RenderWindow			*mainWin;
   };
 }
 #endif // !SFMLGRAPH_HPP
