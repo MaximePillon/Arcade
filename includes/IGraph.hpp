@@ -95,7 +95,13 @@ namespace Arcade
     /// \brief Check if the window is open
     ///
     /// \return True if the window is open, false otherwise
-    virtual bool isOpen(void) = 0;
+    virtual bool isOpen(void) const = 0;
+
+    /// \brief Make the loop
+    ///
+    /// \param Loop frequency
+    /// \param A handler
+    virtual void loop(int frequency, void *handler) = 0;
   };
 }
 
