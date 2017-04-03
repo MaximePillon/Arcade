@@ -13,6 +13,10 @@
 
 # include <string>
 
+#ifndef BLOCK_SIZE
+# define BLOCK_SIZE 10
+#endif // !BLOCK_SIZE
+
 /// \namespace Arcade
 namespace Arcade
 {
