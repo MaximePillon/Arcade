@@ -69,7 +69,7 @@ namespace Arcade
     /// \param text Text to draw
     /// \return True on success or false otherwise
     virtual bool drawText(t_pos const& pos, std::string const& text) = 0;
-    
+
     /// \brief Draw a block on the window.
     ///
     /// \param pos Position (top left)
@@ -84,12 +84,6 @@ namespace Arcade
     ///
     /// \return True if the window is open, false otherwise
     virtual bool isOpen(void) const = 0;
-
-    /// \brief Make the loop
-    ///
-    /// \param Loop frequency
-    /// \param A handler
-    virtual void loop(int frequency, void *handler) = 0;
   };
 }
 
