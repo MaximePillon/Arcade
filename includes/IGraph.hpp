@@ -69,17 +69,7 @@ namespace Arcade
     /// \param text Text to draw
     /// \return True on success or false otherwise
     virtual bool drawText(t_pos const& pos, std::string const& text) = 0;
-
-    /// \brief Draw a sprite on the window.
-    ///
-    /// \param pos Position (top left)
-    /// \param image Sprite to draw
-    /// \param color Background color
-    /// \return True on success or false otherwise
-    virtual bool drawSprite(t_pos const& pos,
-			    t_image const& image,
-			    t_color const& color) = 0;
-
+    é""
     /// \brief Draw a block on the window.
     ///
     /// \param pos Position (top left)
