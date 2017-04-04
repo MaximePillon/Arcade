@@ -128,3 +128,4 @@ flycheck_*.el
 .idea*
 CMake*
 cmake*
+test*
