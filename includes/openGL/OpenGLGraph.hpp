@@ -52,6 +52,8 @@ namespace Arcade
     bool close(void);
     void refresh(void);
     bool isOpen(void);
+    bool isOpen(void) const;
+    void loop(int frequency, void *handler);
 
     // GETTER  | SETTER
     GLFWwindow *getWindows();
