@@ -10,27 +10,46 @@
 
 #include "openGL/OpenGLGraph.hpp"
 
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
+{
+  // When a user presses the escape key, we set the WindowShouldClose property to true,
+  // closing the application
+  if(key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+    glfwSetWindowShouldClose(window, GL_TRUE);
+}
+
 int			main(int ac, char **av)
 {
   Arcade::OpenGLGraph	openGl;
   Arcade::t_pos		toto;
-Arcade::t_pos		square;
+  Arcade::t_pos		square;
+  Arcade::t_color	color;
 
-  toto.x = 1024;
-  toto.y = 972;
+  color.argb[0] = 255;
+  color.argb[1] = 0;
+  color.argb[2] = 255;
+  color.argb[3] = 0;
+  toto.x = 800;
+  toto.y = 600;
+  square.x = 4;
+  square.y = 3;
 
   // add basics color to the background (black + blue)
   openGl.init(toto, "test");
-  do
+  glfwSetKeyCallback(openGl.getWindows(), key_callback);
+  while(!glfwWindowShouldClose(openGl.getWindows()))
   {
-    openGl.refresh();
-    openGl.drawBlock
-    glfwSwapBuffers(openGl.getWindows());
+    // Check and call events
     glfwPollEvents();
 
+    // Rendering commands here
+    openGl.refresh();
+    openGl.drawBlock(square, color);
+
+    // Swap the buffers
+    glfwSwapBuffers(openGl.getWindows());
+
   }
-  while( glfwGetKey(openGl.getWindows(), GLFW_KEY_ESCAPE ) != GLFW_PRESS &&
-	 glfwWindowShouldClose(openGl.getWindows()) == 0 );
   openGl.close();
   return (0);
 }
