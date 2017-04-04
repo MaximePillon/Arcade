@@ -9,14 +9,7 @@
 */
 
 #include <IGraph.hpp>
-#include "IGraph.hpp"
 #include "sfml/SfmlGraph.hpp"
-
-Arcade::SfmlGraph::SfmlGraph()
-{}
-
-Arcade::SfmlGraph::~SfmlGraph()
-{}
 
 bool Arcade::SfmlGraph::init(t_pos const& size, std::string const& name)
 {
@@ -87,11 +80,6 @@ bool Arcade::SfmlGraph::drawText(t_pos const& pos, std::string const& text)
 bool Arcade::SfmlGraph::isOpen() const
 {
  return this->mainWin->isOpen();
-}
-
-bool Arcade::SfmlGraph::setBackground(t_image const& image)
-{
-
 }
 
 void Arcade::SfmlGraph::refresh()

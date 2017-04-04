@@ -69,19 +69,13 @@ namespace Arcade
     /// \param text Text to draw
     /// \return True on success or false otherwise
     virtual bool drawText(t_pos const& pos, std::string const& text) = 0;
-    é""
+    
     /// \brief Draw a block on the window.
     ///
     /// \param pos Position (top left)
     /// \param color Background color
     /// \return True on success or false otherwise
     virtual bool drawBlock(t_pos const& pos, t_color const& color) = 0;
-
-    /// \brief Draw the following sprite on all block of the window.
-    ///
-    /// \param image Background sprite (default_char must be ignored for text library)
-    /// \return True on success or false otherwise
-    virtual bool setBackground(t_image const& image) = 0;
 
     /// \brief Refresh the window content
     virtual void refresh(void) = 0;
