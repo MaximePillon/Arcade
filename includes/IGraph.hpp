@@ -33,7 +33,7 @@ namespace arcade
   /// \union t_color
   typedef union
   {
-    int full;			//!< Full color
+    unsigned int full;			//!< Full color
     unsigned char argb[4];	//!< ARGB color
   } t_color;
 
