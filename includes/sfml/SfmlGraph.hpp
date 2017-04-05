@@ -12,19 +12,31 @@
 # define SFMLGRAPH_HPP
 
 # include <list>
+# include <map>
 # include <SFML/Graphics/Sprite.hpp>
 # include <SFML/Graphics/RenderWindow.hpp>
 # include <SFML/Graphics/Text.hpp>
 # include <SFML/Graphics/Font.hpp>
+# include <SFML/Graphics/RectangleShape.hpp>
+# include <SFML/Window/Event.hpp>
 # include "IGraph.hpp"
+# include "arcade_protocol.hpp"
 
-namespace Arcade
+namespace arcade
 {
+
+  /// \struct handler_t
+  typedef struct
+  {
+    event_handler	hdl;	//!< The handler function pointer
+    void		*param;	//!< The param of the function pointer
+  }			handler_t;
+
   class SfmlGraph : IGraph
   {
   public:
-    SfmlGraph();
-    virtual ~SfmlGraph();
+    SfmlGraph() {};
+    virtual ~SfmlGraph() {};
 
   public:
     bool init(t_pos const& size, std::string const& name);
@@ -33,22 +45,27 @@ namespace Arcade
   public:
     bool drawText(t_pos const& pos,
 		  std::string const& text);
-    bool drawSprite(t_pos const& pos,
-		    t_image const& image, t_color const& color);
     bool drawBlock(t_pos const& pos,
 		   t_color const& color);
-    bool setBackground(t_image const& image);
+
+  public:
+    void execEvents();
+    void registerEvent(CommandType type,
+		       event_handler hdl,
+		       void* param);
 
   public:
     bool isOpen() const;
     void refresh();
 
   protected:
-    std::map<std::string, sf::Sprite>	spriteMap;
-    std::list<sf::Text> 		textList;
-    sf::Sprite				back;
-    sf::Font				font;
-    sf::RenderWindow			*mainWin;
+    std::map<CommandType, sf::Keyboard::Key>	keyboard;
+    std::map<CommandType, handler_t>		eventMap;
+    std::list<sf::Text> 			textList;
+    std::list<sf::RectangleShape>		block;
+    sf::Font					font;
+    sf::Event					event;
+    sf::RenderWindow*				mainWin;
   };
 }
 #endif // !SFMLGRAPH_HPP
