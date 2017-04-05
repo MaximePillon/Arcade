@@ -8,6 +8,7 @@
 ** Last update Mon Apr 03 07:59:55 2017 Maxime PILLON
 */
 
+#include <IGraph.hpp>
 #include "openGL/OpenGLGraph.hpp"
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
@@ -29,11 +30,8 @@ int			main(int ac, char **av)
   color.argb[1] = 0;
   color.argb[2] = 255;
   color.argb[3] = 0;
-  toto.x = 800;
-  toto.y = 600;
-  square.x = 4;
-  square.y = 3;
-
+  toto.x = 512;
+  toto.y = 512;
   // add basics color to the background (black + blue)
   openGl.init(toto, "test");
   glfwSetKeyCallback(openGl.getWindows(), key_callback);
@@ -44,7 +42,9 @@ int			main(int ac, char **av)
 
     // Rendering commands here
     openGl.refresh();
-    openGl.drawBlock(square, color);
+    square.x = 0;
+    square.y = 0;
+    openGl.drawText(square, "abcd");
 
     // Swap the buffers
     glfwSwapBuffers(openGl.getWindows());
