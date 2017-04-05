@@ -20,8 +20,8 @@
 
 typedef void (*event_handler)(void*);
 
-/// \namespace Arcade
-namespace Arcade
+/// \namespace arcade
+namespace arcade
 {
   /// \struct t_pos
   typedef struct
@@ -93,7 +93,7 @@ namespace Arcade
     /// \param command The command you want to bind the handler to.
     /// \param hdl The handler you want to bind to the key (handler's prototype: "void handler(void *);").
     /// \param param The parameter to pass to the handler.
-    virtual void registerEvent(arcade::CommandType command,
+    virtual void registerEvent(CommandType command,
 			       event_handler hdl,
 			       void* param) = 0;
 
