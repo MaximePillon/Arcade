@@ -166,7 +166,7 @@ namespace myncurses
     ///        If an event has already been registered, the handler is replaced.
     ///        This method should never fail (in case of fail, an NcursesError exception is thrown).
     /// \param key The key you want to bind the handler to.
-    /// \param handler The handler you ant to bind to the key (handler's prototype: "void handler(void *);").
+    /// \param handler The handler you want to bind to the key (handler's prototype: "void handler(void *);").
     /// \param param The parameter to pass to the handler.
     void registerEvent(int key, handler func, void* param);
 

@@ -12,10 +12,13 @@
 # define IGRAPH_HPP
 
 # include <string>
+# include "arcade_protocol.hpp"
 
 #ifndef BLOCK_SIZE
 # define BLOCK_SIZE 25
 #endif // !BLOCK_SIZE
+
+typedef void (*event_handler)(void*);
 
 /// \namespace Arcade
 namespace Arcade
@@ -84,6 +87,18 @@ namespace Arcade
     ///
     /// \return True if the window is open, false otherwise
     virtual bool isOpen(void) const = 0;
+
+    /// \brief Method used to bind event to a function.
+    ///
+    /// \param command The command you want to bind the handler to.
+    /// \param hdl The handler you want to bind to the key (handler's prototype: "void handler(void *);").
+    /// \param param The parameter to pass to the handler.
+    virtual void registerEvent(arcade::CommandType command,
+			       event_handler hdl,
+			       void* param) = 0;
+
+    /// \brief Get the inputs and execute the corresponding handler
+    virtual void execEvents() = 0;
   };
 }
 
