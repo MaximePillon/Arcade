@@ -12,13 +12,16 @@
 # define IGRAPH_HPP
 
 # include <string>
+# include "arcade_protocol.hpp"
 
 #ifndef BLOCK_SIZE
 # define BLOCK_SIZE 25
 #endif // !BLOCK_SIZE
 
-/// \namespace Arcade
-namespace Arcade
+typedef void (*event_handler)(void*);
+
+/// \namespace arcade
+namespace arcade
 {
   /// \struct t_pos
   typedef struct
@@ -70,28 +73,12 @@ namespace Arcade
     /// \return True on success or false otherwise
     virtual bool drawText(t_pos const& pos, std::string const& text) = 0;
 
-    /// \brief Draw a sprite on the window.
-    ///
-    /// \param pos Position (top left)
-    /// \param image Sprite to draw
-    /// \param color Background color
-    /// \return True on success or false otherwise
-    virtual bool drawSprite(t_pos const& pos,
-			    t_image const& image,
-			    t_color const& color) = 0;
-
     /// \brief Draw a block on the window.
     ///
     /// \param pos Position (top left)
     /// \param color Background color
     /// \return True on success or false otherwise
     virtual bool drawBlock(t_pos const& pos, t_color const& color) = 0;
-
-    /// \brief Draw the following sprite on all block of the window.
-    ///
-    /// \param image Background sprite (default_char must be ignored for text library)
-    /// \return True on success or false otherwise
-    virtual bool setBackground(t_image const& image) = 0;
 
     /// \brief Refresh the window content
     virtual void refresh(void) = 0;
@@ -101,11 +88,17 @@ namespace Arcade
     /// \return True if the window is open, false otherwise
     virtual bool isOpen(void) const = 0;
 
-    /// \brief Make the loop
+    /// \brief Method used to bind event to a function.
     ///
-    /// \param Loop frequency
-    /// \param A handler
-    virtual void loop(int frequency, void *handler) = 0;
+    /// \param command The command you want to bind the handler to.
+    /// \param hdl The handler you want to bind to the key (handler's prototype: "void handler(void *);").
+    /// \param param The parameter to pass to the handler.
+    virtual void registerEvent(CommandType command,
+			       event_handler hdl,
+			       void* param) = 0;
+
+    /// \brief Get the inputs and execute the corresponding handler
+    virtual void execEvents() = 0;
   };
 }
 
