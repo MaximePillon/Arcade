@@ -11,6 +11,7 @@
 #ifndef NCURSESGRAPH_HPP
 # define NCURSESGRAPH_HPP
 
+# include <map>
 # include "IGraph.hpp"
 # include "libs/Ncurses.hpp"
 
@@ -39,8 +40,12 @@ namespace arcade
     virtual bool drawBlock(t_pos const& pos, t_color const& color);
 
   protected:
-    myncurses::Window* _window;
-    myncurses::Events* _events;
+
+  protected:
+    myncurses::Window*	_window;
+    myncurses::Events*	_events;
+    std::map<CommandType, int> _keyboard;
+    bool		_isOpen;
   };
 }
 
