@@ -26,10 +26,10 @@ int			main(int ac, char **av)
   arcade::t_pos		square;
   arcade::t_color	color;
 
-  color.argb[0] = 255;
-  color.argb[1] = 0;
+  color.argb[0] = 0;
+  color.argb[1] = 255;
   color.argb[2] = 255;
-  color.argb[3] = 0;
+  color.argb[3] = 255;
   toto.x = 1024;
   toto.y = 512;
   // add basics color to the background (black + blue)
@@ -42,16 +42,18 @@ int			main(int ac, char **av)
 
     // Rendering commands here
     openGl.refresh();
-    square.x = 0;
-    square.y = 0;
+    //square.x = 1;
+    //square.y = 1;
     //openGl.drawBlock(square, color);
-    openGl.drawText(square, "abcdefghijklm");
+    //openGl.drawText(square, "abcdefghijklm");
     square.x = 10;
     square.y = 10;
-    openGl.drawText(square, "coucou");
-    square.x = 10;
-    square.y = 11;
-    openGl.drawText(square, "Score 1212");
+    openGl.drawText(square, "o");
+    square.x += 1;
+    openGl.drawBlock(square, color);
+    //square.x = 10;
+    //square.y = 11;
+    //openGl.drawText(square, "Score 1212");
 
     // Swap the buffers
     glfwSwapBuffers(openGl.getWindows());

@@ -9,6 +9,7 @@
 */
 
 #include <iostream>
+#include <IGraph.hpp>
 #include "openGL/OpenGLGraph.hpp"
 
 /*
@@ -36,7 +37,7 @@ bool arcade::OpenGLGraph::loadFont()
   if (FT_New_Face(_ft, "/usr/share/fonts/dejavu/DejaVuSansMono.ttf", 0, &_face))
     std::cerr << "ERROR::FREETYPE: Failed to load font" << std::endl;
 
-  FT_Set_Pixel_Sizes(_face, 0, BLOCK_SIZE);
+  FT_Set_Pixel_Sizes(_face, 0, 50);
 
   glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // Disable byte-alignment restriction
 
@@ -124,6 +125,7 @@ bool arcade::OpenGLGraph::drawText(t_pos const &pos, std::string const &text)
   glBindVertexArray(VAO);
 
   // Iterate through all characters
+  // for (auto it = text.begin() : text)
   for (auto c = text.begin(); c != text.end(); c++)
   {
     Character ch = Characters[*c];
@@ -160,28 +162,80 @@ bool arcade::OpenGLGraph::drawText(t_pos const &pos, std::string const &text)
 }
 
 
-bool arcade::OpenGLGraph::drawBlock(t_pos const &pos, t_color const &color)
+bool arcade::OpenGLGraph::drawBlock(t_pos const &pos, t_color const &color_char)
 {
   int width, height;
-  t_pos		tmpPosMax;
-  t_pos		tmpPos;
+  int cpt;
 
   glfwGetFramebufferSize(_window, &width, &height);
-  glClear( GL_COLOR_BUFFER_BIT);
-  glViewport(0, 0, width, height);
-  glColor3f(static_cast<float>(color.argb[1]), static_cast<float>(color.argb[2]), static_cast<float>(color.argb[3]));
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-  glOrtho(0.f, static_cast<float>(width), static_cast<float>(height), 0.f, 0.f, 1.f);
-  glMatrixMode(GL_MODELVIEW);
-  glLoadIdentity();
-  /*glBegin(GL_QUADS);
-  glVertex2i(pos.x, pos.y + BLOCK_SIZE);
-  glVertex2i(pos.x + BLOCK_SIZE, pos.y + BLOCK_SIZE);
-  glVertex2i(pos.x + BLOCK_SIZE ,pos.y);
-  glVertex2i(pos.x, pos.y);
-  glEnd();*/
-  glRecti(pos.x * BLOCK_SIZE, pos.y * BLOCK_SIZE, pos.x * BLOCK_SIZE + BLOCK_SIZE, pos.y * BLOCK_SIZE + BLOCK_SIZE);
+  cpt = 0;
+
+  std::string text("o");
+
+  glDisable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+  Shader shader("./sources/OpenGL/shader/shader1.vec", "./sources/OpenGL/shader/shader2.fra");
+  glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(width), 0.0f, static_cast<GLfloat>(height));
+  shader.Use();
+  glUniformMatrix4fv(glGetUniformLocation(shader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+
+  GLuint VAO, VBO;
+  glGenVertexArrays(1, &VAO);
+  glGenBuffers(1, &VBO);
+  glBindVertexArray(VAO);
+  glBindBuffer(GL_ARRAY_BUFFER, VBO);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 6 * 4, NULL, GL_DYNAMIC_DRAW);
+  glEnableVertexAttribArray(0);
+  glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), 0);
+  glBindBuffer(GL_ARRAY_BUFFER, 0);
+  glBindVertexArray(0);
+
+
+  t_pos newpos;
+  newpos.x = pos.x * BLOCK_SIZE;
+  newpos.y = height - ((pos.y  + 1) * BLOCK_SIZE);
+
+  glm::vec3 color(static_cast<float>(color_char.argb[1] / 255), static_cast<float>(color_char.argb[2] / 255), static_cast<float>(color_char.argb[3] / 255));
+  shader.Use();
+  glUniform3f(glGetUniformLocation(shader.Program, "textColor"), color.x, color.y, color.z);
+  glActiveTexture(GL_TEXTURE0);
+  glBindVertexArray(VAO);
+
+  // Iterate through all characters
+  // for (auto it = text.begin() : text)
+  for (auto c = text.begin(); c != text.end(); c++)
+  {
+    Character ch = Characters[*c];
+    GLfloat xpos = (float)newpos.x + ch.Bearing.x * 1;
+    GLfloat ypos = (float)newpos.y - (ch.Size.y - ch.Bearing.y) * 1;
+
+    GLfloat w = ch.Size.x * 1;
+    GLfloat h = ch.Size.y * 1;
+    // Update VBO for each character
+    GLfloat vertices[6][4] = {
+      { xpos,     ypos + h,   0.0, 0.0 },
+      { xpos,     ypos,       0.0, 1.0 },
+      { xpos + w, ypos,       1.0, 1.0 },
+
+      { xpos,     ypos + h,   0.0, 0.0 },
+      { xpos + w, ypos,       1.0, 1.0 },
+      { xpos + w, ypos + h,   1.0, 0.0 }
+    };
+    // Render glyph texture over quad
+    glBindTexture(GL_TEXTURE_2D, ch.TextureID);
+    // Update content of VBO memory
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    // Render quad
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+    // Now advance cursors for next glyph (note that advance is number of 1/64 pixels)
+    newpos.x += (ch.Advance >> 6) * 1; // Bitshift by 6 to get value in pixels (2^6 = 64)
+  }
+  glBindVertexArray(0);
+  glBindTexture(GL_TEXTURE_2D, 0);
+
   return true;
 }
 
@@ -201,6 +255,7 @@ bool arcade::OpenGLGraph::init(t_pos const &size,
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
   glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+  glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
   _window = glfwCreateWindow( size.x, size.y, window_name.c_str(), NULL, NULL);
   if (!_window)
   {
