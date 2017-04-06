@@ -34,7 +34,8 @@ namespace arcade
     void setTile(t_pos const& pos, TileType type); //! set tile
 
   protected:
-    arcade::GetMap	map; //!< Protocol map structure (need to be allocated)
+    char		*cMap; //!< Char pointer to the map
+    arcade::GetMap	*map; //!< Protocol map structure (need to be allocated)
 
   };
 }

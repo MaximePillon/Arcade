@@ -71,7 +71,7 @@ namespace arcade
   protected:
     std::vector<Block>		powerup; //!< Powerups
     std::vector<Block>		body; //!< Block of the body
-    std::vector<Block>		turns; //!< The truning points
+    std::vector<Block>		turns; //!< The turning points
     std::vector<Block>		border; //!< Border
     unsigned int		score; //!< The score
     Map				map; //!< Map class
