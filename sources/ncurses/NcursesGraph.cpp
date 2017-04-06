@@ -27,6 +27,14 @@ namespace arcade
     this->_keyboard[CommandType::GO_RIGHT] = KEY_RIGHT;
     this->_keyboard[CommandType::GO_LEFT] = KEY_LEFT;
     this->_keyboard[CommandType::SHOOT] = ' ';
+    this->_window->initPair(1, COLOR_BLACK, COLOR_RED);
+    this->_window->initPair(2, COLOR_BLACK, COLOR_WHITE);
+    this->_window->initPair(3, COLOR_BLACK, COLOR_BLACK);
+    this->_window->initPair(4, COLOR_BLACK, COLOR_GREEN);
+    this->_window->initPair(5, COLOR_BLACK, COLOR_BLUE);
+    this->_window->initPair(6, COLOR_BLACK, COLOR_YELLOW);
+    this->_window->initPair(7, COLOR_BLACK, COLOR_MAGENTA);
+    this->_window->initPair(8, COLOR_BLACK, COLOR_CYAN);
   }
 
   NcursesGraph::~NcursesGraph()
@@ -120,27 +128,27 @@ namespace arcade
     green = color.argb[2] * 200 / 51;
     blue = color.argb[3] * 200 / 51;
     if (red >= 500 && green <= 100 && blue <= 100)
-      print_color = COLOR_RED;
+      print_color = 1;
     else if (red >= 500 && green >= 500 && blue >= 500)
-      print_color = COLOR_WHITE;
+      print_color = 2;
     else if (red < 500 && green < 500 && blue < 500)
-      print_color = COLOR_BLACK;
+      print_color = 3;
     else if (red <= 100 && green >= 500 && blue <= 100)
-      print_color = COLOR_GREEN;
+      print_color = 4;
     else if (red <= 100 && green <= 100 && blue >= 500)
-      print_color = COLOR_BLUE;
+      print_color = 5;
     else if (red >= 500 && green >= 500 && blue <= 100)
-      print_color = COLOR_YELLOW;
+      print_color = 6;
     else if (red >= 500 && green <= 100 && blue >= 500)
-      print_color = COLOR_MAGENTA;
+      print_color = 7;
     else if (red <= 100 && green >= 500 && blue >= 500)
-      print_color = COLOR_CYAN;
+      print_color = 8;
 
-    this->_window->attributeOn(print_color);
+    this->_window->attributeOn(COLOR_PAIR(print_color));
     this->_window->attributeOn(WA_TOP);
     this->_window->mvprintw(pos.y, pos.x, " ");
     this->_window->attributeOff(WA_TOP);
-    this->_window->attributeOff(print_color);
+    this->_window->attributeOff(COLOR_PAIR(print_color));
 
     return true;
   }
