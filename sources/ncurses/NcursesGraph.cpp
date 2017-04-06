@@ -123,7 +123,7 @@ namespace arcade
       print_color = COLOR_RED;
     else if (red >= 500 && green >= 500 && blue >= 500)
       print_color = COLOR_WHITE;
-    else if (red <= 0 && green <= 0 && blue <= 0)
+    else if (red < 500 && green < 500 && blue < 500)
       print_color = COLOR_BLACK;
     else if (red <= 100 && green >= 500 && blue <= 100)
       print_color = COLOR_GREEN;
