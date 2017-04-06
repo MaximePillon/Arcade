@@ -32,7 +32,7 @@ namespace arcade
     /// \param direction The new direction to apply to the block
     void changeDirection(t_pos const& direction);
 
-    ///\brief Print the block on screen
+    /// \brief Print the block on screen
     /// \param graph The graphical interface on which to print the block
     void print(IGraph &graph);
 
@@ -51,21 +51,29 @@ namespace arcade
   class Snake
   {
   public:
-    void turn(CommandType type); //!< turn the snake
-    void print(); //!< Print the snake
-    void move(); //!< Move the snake
-    void collide(); //!< Gst of collide
+    /// \brief Change the direction of the head and add a turn position
+    /// \param type The direction in which you turn
+    void turn(CommandType type);
+
+    /// \brief Print the snake
+    void print();
+
+    /// \brief Move all the blocks the snake
+    void move();
+
+    /// \brief Collision detections and reactions
+    void collide();
 
   public:
     Snake();
     virtual ~Snake() {};
 
   protected:
-    std::vector<Block>		mystere;
-    std::vector<Block>		body; //!< block of the body
-    std::vector<Block>		turns;
-    std::vector<Block>		border; //!< border
-    int				lol;
+    std::vector<Block>		powerup; //!< Powerups
+    std::vector<Block>		body; //!< Block of the body
+    std::vector<Block>		turns; //!< The truning points
+    std::vector<Block>		border; //!< Border
+    unsigned int		score; //!< The score
     Map				map; //!< Map class
   };
 }
