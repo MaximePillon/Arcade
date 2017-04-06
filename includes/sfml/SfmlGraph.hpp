@@ -49,6 +49,7 @@ namespace arcade
 		  std::string const& text);
     bool drawBlock(t_pos const& pos,
 		   t_color const& color);
+    bool setBackground(t_color const& color);
 
   public:
     void execEvents();
@@ -67,6 +68,8 @@ namespace arcade
     std::list<sf::RectangleShape>		block; //!< List of block
     sf::Font					font; //!< Font of the project
     sf::Event					event; //!< Keyboard Event
+    sf::RectangleShape				background; //!< Background
+
     sf::RenderWindow*				mainWin; //!< The main window
   };
 }
