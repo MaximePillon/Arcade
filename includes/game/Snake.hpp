@@ -21,13 +21,25 @@ namespace arcade
   class Block
   {
   public:
-    Block() {};
+    Block(t_color const& color, t_pos const& pos, t_pos const& direction);
     virtual ~Block() {};
 
   public:
-    void move(); //!< Move the block
-    void changeDirection(); //!< Change the direction of the block
-    void print(); //!< Print the block
+    /// \brief Move the block
+    void move();
+
+    /// \brief Change the direction of the block
+    /// \param direction The new direction to apply to the block
+    void changeDirection(t_pos const& direction);
+
+    ///\brief Print the block on screen
+    /// \param graph The graphical interface on which to print the block
+    void print(IGraph &graph);
+
+    /// \brief Compare the positions of the Blocks
+    /// \param other The Block to compare with
+    /// \return true if positions are equal, false otherwise
+    bool operator==(Block const& other);
 
   protected:
     t_color	color; //!< Color of the block
