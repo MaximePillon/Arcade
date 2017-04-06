@@ -32,6 +32,7 @@ namespace arcade
     void		*param;	//!< The param of the function pointer
   }			handler_t;
 
+  /// \class SfmlGraph
   class SfmlGraph : IGraph
   {
   public:
@@ -59,13 +60,13 @@ namespace arcade
     void refresh();
 
   protected:
-    std::map<CommandType, sf::Keyboard::Key>	keyboard;
-    std::map<CommandType, handler_t>		eventMap;
-    std::list<sf::Text> 			textList;
-    std::list<sf::RectangleShape>		block;
-    sf::Font					font;
-    sf::Event					event;
-    sf::RenderWindow*				mainWin;
+    std::map<CommandType, sf::Keyboard::Key>	keyboard; //!< Map of keyboard macros
+    std::map<CommandType, handler_t>		eventMap; //!< Map of handler
+    std::list<sf::Text> 			textList; //!< List of text object
+    std::list<sf::RectangleShape>		block; //!< List of block
+    sf::Font					font; //!< Font of the project
+    sf::Event					event; //!< Keyboard Event
+    sf::RenderWindow*				mainWin; //!< The main window
   };
 }
 #endif // !SFMLGRAPH_HPP

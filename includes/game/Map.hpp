@@ -17,6 +17,7 @@
 
 namespace arcade
 {
+  /// \class Map
   class Map
   {
   public:
@@ -24,16 +25,16 @@ namespace arcade
     ~Map();
 
   public:
-    uint16_t getWidth() const;
-    uint16_t getHeight() const;
-    GetMap const* getMap() const;
-    TileType getTile(t_pos const& pos) const;
+    uint16_t getWidth() const; //!< Return the map width
+    uint16_t getHeight() const; //!< Return the map height
+    GetMap const* getMap() const; //!< Return the map
+    TileType getTile(t_pos const& pos) const; //!< Return tile
 
   public:
-    void setTile(t_pos const& pos, TileType type);
+    void setTile(t_pos const& pos, TileType type); //! set tile
 
   protected:
-    arcade::GetMap	*_map;
+    arcade::GetMap	map; //!< Protocol map structure
 
   };
 }

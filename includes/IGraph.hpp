@@ -37,14 +37,6 @@ namespace arcade
     unsigned char argb[4];	//!< ARGB color
   } t_color;
 
-  /// \struct t_image
-  typedef struct
-  {
-    std::string path;		//!< The path to the image file
-    t_color default_color;	//!< The color to use for ascii lib
-    char default_char;		//!< The character to display for ascii lib
-  } t_image;
-
   /// \class IGraph
   class IGraph
   {
