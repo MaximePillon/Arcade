@@ -13,7 +13,7 @@
 
 # include <map>
 # include "IGraph.hpp"
-# include "libs/Ncurses.hpp"
+# include "../../externLibs/Ncurses.hpp"
 
 namespace arcade
 {
