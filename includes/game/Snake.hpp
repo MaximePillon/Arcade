@@ -9,7 +9,11 @@
 */
 
 #ifndef SNAKE_HPP
-#define SNAKE_HPP
+# define SNAKE_HPP
+
+# include <vector>
+# include "IGraph.hpp"
+# include "Map.hpp"
 
 namespace arcade
 {
@@ -41,13 +45,13 @@ namespace arcade
     void collide(); //!< Gst of collide
 
   public:
-    Snake() {};
+    Snake();
     virtual ~Snake() {};
 
   protected:
     std::vector<Block>		mystere;
     std::vector<Block>		body; //!< block of the body
-    std::vector<Block>		turn;
+    std::vector<Block>		turns;
     std::vector<Block>		border; //!< border
     int				lol;
     Map				map; //!< Map class
