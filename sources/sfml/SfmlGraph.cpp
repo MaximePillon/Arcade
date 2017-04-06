@@ -92,9 +92,13 @@ namespace arcade
   void SfmlGraph::execEvents()
   {
     while (this->mainWin->pollEvent(this->event))
+    {
+      if (this->event.type == sf::Event::Closed)
+	this->close();
       for (auto &it : this->keyboard)
 	if (it.second == this->event.key.code)
 	  this->eventMap[it.first].hdl(this->eventMap[it.first].param);
+    }
   }
 
   void SfmlGraph::registerEvent(CommandType type,

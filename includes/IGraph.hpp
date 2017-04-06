@@ -18,6 +18,14 @@
 # define BLOCK_SIZE 25
 #endif // !BLOCK_SIZE
 
+#ifndef WINDOW_HEIGHT
+# define WINDOW_HEIGHT 600
+#endif // !WINDOW_HEIGHT
+
+#ifndef WINDOW_WIDTH
+# define WINDOW_WIDTH 800
+#endif // !WINDOW_WIDTH
+
 typedef void (*event_handler)(void*);
 
 /// \namespace arcade
