@@ -1,8 +1,11 @@
 #include "sfml/SfmlGraph.hpp"
 
-int main()
+namespace arcade
 {
-
-  return 0;
+  int main()
+  {
+    SfmlGraph lol;
+    return 0;
+  }
 }
 
