@@ -15,15 +15,20 @@
 
 namespace arcade
 {
-  bool SfmlGraph::init(t_pos const &size, std::string const &name)
+  void SfmlGraph::initMap()
   {
-    this->font.loadFromFile("../../ressources/DejaVuSansMono.ttf");
-    this->mainWin = new sf::RenderWindow(sf::VideoMode(size.x, size.y), name);
     this->keyboard[CommandType::GO_UP] = sf::Keyboard::Up;
     this->keyboard[CommandType::GO_DOWN] = sf::Keyboard::Down;
     this->keyboard[CommandType::GO_RIGHT] = sf::Keyboard::Right;
     this->keyboard[CommandType::GO_LEFT] = sf::Keyboard::Left;
     this->keyboard[CommandType::SHOOT] = sf::Keyboard::Space;
+  }
+
+  bool SfmlGraph::init(t_pos const &size, std::string const &name)
+  {
+    this->font.loadFromFile("../../ressources/DejaVuSansMono.ttf");
+    this->mainWin = new sf::RenderWindow(sf::VideoMode(size.x, size.y), name);
+    this->initMap();
     return true;
   }
 
