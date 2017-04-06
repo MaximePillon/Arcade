@@ -50,7 +50,7 @@ namespace arcade
     CommandType type;
     uint16_t width;
     uint16_t height;
-    TileType *tile; //!< SPECIFY AN ADDITIONAL SIZE WHILE ALLOCATING
+    TileType tile[0]; //!< SPECIFY AN ADDITIONAL SIZE WHILE ALLOCATING
   } __attribute__ ((packed));
 
 
@@ -67,7 +67,7 @@ namespace arcade
   {
     CommandType type;
     uint16_t lenght;
-    Position *position; //!< SPECIFY AN ADDITIONAL SIZE WHILE ALLOCATING
+    Position position[0]; //!< SPECIFY AN ADDITIONAL SIZE WHILE ALLOCATING
   } __attribute__ ((packed));
 }
 
