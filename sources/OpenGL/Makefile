@@ -5,7 +5,7 @@
 ## Login   <loens_g@epitech.net>
 ## 
 ## Started on  Thu Apr  6 21:08:23 2017 loens_g
-## Last update Thu Apr  6 21:39:11 2017 loens_g
+## Last update Thu Apr  6 22:13:07 2017 loens_g
 ##
 
 INCLUDE		= 	-Iincludes
@@ -27,9 +27,9 @@ ifeq	($(DEBUG), 1)
 	CPPFLAGS	+=	-g -ggdb3
 endif
 
-NAME		=	libsfml.so
+NAME		=	libOpenGLso
 
-SRCS		=	SfmlGraph.cpp
+SRCS		=
 
 
 OBJS		=	 $(SRCS:.cpp=.o)
