@@ -21,16 +21,16 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 int			main(int ac, char **av)
 {
-  Arcade::OpenGLGraph	openGl;
-  Arcade::t_pos		toto;
-  Arcade::t_pos		square;
-  Arcade::t_color	color;
+  arcade::OpenGLGraph	openGl;
+  arcade::t_pos		toto;
+  arcade::t_pos		square;
+  arcade::t_color	color;
 
   color.argb[0] = 255;
   color.argb[1] = 0;
   color.argb[2] = 255;
   color.argb[3] = 0;
-  toto.x = 512;
+  toto.x = 1024;
   toto.y = 512;
   // add basics color to the background (black + blue)
   openGl.init(toto, "test");
@@ -42,8 +42,9 @@ int			main(int ac, char **av)
 
     // Rendering commands here
     openGl.refresh();
-    square.x = 0;
-    square.y = 0;
+    square.x = 50;
+    square.y = 50;
+    openGl.drawBlock(square, color);
     openGl.drawText(square, "abcd");
 
     // Swap the buffers

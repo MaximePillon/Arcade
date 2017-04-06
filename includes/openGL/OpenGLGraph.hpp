@@ -11,25 +11,28 @@
 #ifndef CPP_ARCADE_OPENGL_HPP
 # define CPP_ARCADE_OPENGL_HPP
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <cstdio>
+#include <cstdlib>
 #include <list>
 #include <map>
 
 // Include GLEW
 #include <GL/glew.h>
+#include <GL/glut.h>
 
 // Include GLFW
 #include <GLFW/glfw3.h>
 
 // Include GLM
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
 #include "IGraph.hpp"
-
+#include "shader.hpp"
 namespace arcade
 {
   struct Character {
@@ -64,12 +67,15 @@ namespace arcade
 
   public:
     bool init(t_pos const& size, std::string const& window_name);
-    bool loadFont(std::string const& pathname);
+    bool loadFont();
     bool close(void);
     void refresh(void);
-    bool isOpen(void);
     bool isOpen(void) const;
     void loop(int frequency, void *handler);
+    virtual void registerEvent(CommandType command,
+			       event_handler hdl,
+			       void* param);
+    virtual void execEvents();
 
     // GETTER  | SETTER
     GLFWwindow *getWindows();
