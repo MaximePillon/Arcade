@@ -41,6 +41,7 @@ namespace arcade
 
   public:
     bool init(t_pos const& size, std::string const& name);
+    void initMap();
     bool close();
 
   public:
