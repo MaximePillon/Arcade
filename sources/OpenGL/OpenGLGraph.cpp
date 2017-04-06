@@ -28,12 +28,6 @@ arcade::OpenGLGraph::~OpenGLGraph()
 /*
  * Edit window function
  */
-bool arcade::OpenGLGraph::drawSprite(t_pos const &pos, t_image const &image,
-				     t_color const &color)
-{
-  return true;
-}
-
 bool arcade::OpenGLGraph::loadFont()
 {
   if (FT_Init_FreeType(&_ft))
@@ -42,7 +36,7 @@ bool arcade::OpenGLGraph::loadFont()
   if (FT_New_Face(_ft, "/usr/share/fonts/dejavu/DejaVuSansMono.ttf", 0, &_face))
     std::cerr << "ERROR::FREETYPE: Failed to load font" << std::endl;
 
-  FT_Set_Pixel_Sizes(_face, 0, 48);
+  FT_Set_Pixel_Sizes(_face, 0, BLOCK_SIZE);
 
   glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // Disable byte-alignment restriction
 
@@ -89,6 +83,7 @@ bool arcade::OpenGLGraph::loadFont()
   return true;
 }
 
+
 bool arcade::OpenGLGraph::drawText(t_pos const &pos, std::string const &text)
 {
   int width, height;
@@ -119,12 +114,10 @@ bool arcade::OpenGLGraph::drawText(t_pos const &pos, std::string const &text)
 
 
   t_pos newpos;
-  newpos.x = pos.x;
-  newpos.y = pos.y;
-  // Activate corresponding render state
-//  void RenderText(Shader &s, std::string text, GLfloat x, GLfloat y, GLfloat scale, glm::vec3 color)
+  newpos.x = pos.x * BLOCK_SIZE;
+  newpos.y = height - ((pos.y  + 1) * BLOCK_SIZE);
 
-  glm::vec3 color(0.5f, 0.8f, 0.2f);
+  glm::vec3 color(0.8f, 0.5f, 0.2f);
   shader.Use();
   glUniform3f(glGetUniformLocation(shader.Program, "textColor"), color.x, color.y, color.z);
   glActiveTexture(GL_TEXTURE0);
@@ -175,19 +168,20 @@ bool arcade::OpenGLGraph::drawBlock(t_pos const &pos, t_color const &color)
 
   glfwGetFramebufferSize(_window, &width, &height);
   glClear( GL_COLOR_BUFFER_BIT);
+  glViewport(0, 0, width, height);
   glColor3f(static_cast<float>(color.argb[1]), static_cast<float>(color.argb[2]), static_cast<float>(color.argb[3]));
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
   glOrtho(0.f, static_cast<float>(width), static_cast<float>(height), 0.f, 0.f, 1.f);
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
+  /*glBegin(GL_QUADS);
+  glVertex2i(pos.x, pos.y + BLOCK_SIZE);
+  glVertex2i(pos.x + BLOCK_SIZE, pos.y + BLOCK_SIZE);
+  glVertex2i(pos.x + BLOCK_SIZE ,pos.y);
+  glVertex2i(pos.x, pos.y);
+  glEnd();*/
   glRecti(pos.x * BLOCK_SIZE, pos.y * BLOCK_SIZE, pos.x * BLOCK_SIZE + BLOCK_SIZE, pos.y * BLOCK_SIZE + BLOCK_SIZE);
-  return true;
-}
-
-bool arcade::OpenGLGraph::setBackground(t_image const &image)
-{
-
   return true;
 }
 

@@ -59,11 +59,8 @@ namespace arcade
   public:
     bool drawText(t_pos const& pos,
 		  std::string const& text);
-    bool drawSprite(t_pos const& pos,
-		    t_image const& image, t_color const& color);
     bool drawBlock(t_pos const& pos,
 		   t_color const& color);
-    bool setBackground(t_image const& image);
 
   public:
     bool init(t_pos const& size, std::string const& window_name);

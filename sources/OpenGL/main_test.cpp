@@ -42,10 +42,16 @@ int			main(int ac, char **av)
 
     // Rendering commands here
     openGl.refresh();
-    square.x = 50;
-    square.y = 50;
-    openGl.drawBlock(square, color);
-    openGl.drawText(square, "abcd");
+    square.x = 0;
+    square.y = 0;
+    //openGl.drawBlock(square, color);
+    openGl.drawText(square, "abcdefghijklm");
+    square.x = 10;
+    square.y = 10;
+    openGl.drawText(square, "coucou");
+    square.x = 10;
+    square.y = 11;
+    openGl.drawText(square, "Score 1212");
 
     // Swap the buffers
     glfwSwapBuffers(openGl.getWindows());
