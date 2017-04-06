@@ -38,6 +38,7 @@ namespace arcade
   public:
     virtual bool drawText(t_pos const& pos, std::string const& text);
     virtual bool drawBlock(t_pos const& pos, t_color const& color);
+    virtual bool setBackground(t_color const& color);
 
   protected:
 

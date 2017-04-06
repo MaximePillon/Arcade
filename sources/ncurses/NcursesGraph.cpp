@@ -137,9 +137,21 @@ namespace arcade
       print_color = COLOR_CYAN;
 
     this->_window->attributeOn(print_color);
+    this->_window->attributeOn(WA_TOP);
     this->_window->mvprintw(pos.y, pos.x, " ");
+    this->_window->attributeOff(WA_TOP);
     this->_window->attributeOff(print_color);
 
+    return true;
+  }
+
+  bool NcursesGraph::setBackground(t_color const &color)
+  {
+    t_pos pos;
+
+    for (pos.x = 0; pos.x < this->_window->getNbCols(); pos.x++)
+      for (pos.y = 0; pos.y < this->_window->getNbLines(); pos.y++)
+	this->drawBlock(pos, color);
     return true;
   }
 
