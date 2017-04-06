@@ -80,6 +80,12 @@ namespace arcade
     /// \return True on success or false otherwise
     virtual bool drawBlock(t_pos const& pos, t_color const& color) = 0;
 
+    /// \brief Draw a background
+    ///
+    /// \param Color of the background
+    /// \return Return true on success false on error
+    virtual bool setBackground(t_color const& color) = 0;
+
     /// \brief Refresh the window content
     virtual void refresh(void) = 0;
 

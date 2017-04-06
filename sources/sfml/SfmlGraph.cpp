@@ -128,6 +128,21 @@ namespace arcade
     this->mainWin->display();
   }
 
+  bool SfmlGraph::setBackground(t_color const& color)
+  {
+    sf::Color		tmp;
+
+    tmp.a  = color.argb[0];
+    tmp.r  = color.argb[1];
+    tmp.g  = color.argb[2];
+    tmp.b  = color.argb[3];
+    this->background.setPosition(0, 0);
+    this->background.setScale(WINDOW_WIDTH, WINDOW_HEIGHT);
+    this->background.setFillColor(tmp);
+    this->mainWin->draw(background);
+    return true;
+  }
+
   bool SfmlGraph::close()
   {
     this->textList.clear();
