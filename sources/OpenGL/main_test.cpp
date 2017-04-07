@@ -35,11 +35,9 @@ int			main(int ac, char **av)
   // add basics color to the background (black + blue)
   openGl.init(toto, "test");
   glfwSetKeyCallback(openGl.getWindows(), key_callback);
-  while(!glfwWindowShouldClose(openGl.getWindows()))
+  while(openGl.isOpen())
   {
-    // Check and call events
-    glfwPollEvents();
-
+    openGl.execEvents();
     // Rendering commands here
     openGl.refresh();
     color.argb[1] = 255;
@@ -60,8 +58,6 @@ int			main(int ac, char **av)
     openGl.drawText(square, "score:");
 
     // Swap the buffers
-    glfwSwapBuffers(openGl.getWindows());
-
   }
   openGl.close();
   return (0);

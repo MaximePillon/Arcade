@@ -54,5 +54,5 @@ re:	fclean
 	@$(MAKE) all
 
 .PHONY:	 all clean fclean re
-x
+
 -include	$(DEPS)
