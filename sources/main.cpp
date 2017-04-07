@@ -8,8 +8,24 @@
 ** Last update Tue Mar 07 17:52:18 2017 Hugo SOSZYNSKI
 */
 
+#include "launcher/Launcher.hpp"
+#include <IGraph.hpp>
+
+typedef arcade::IGraph* (*test)();
+
 int		main(int argc, const char *argv[])
 {
-  // ceci est un main mdr lol
+  arcade::Launcher 	lol;
+  test			ptr;
+
+  if (argc != 2)
+    return EXIT_FAILURE;
+  lol.openLib(argv[1]);
+  *(void **)(&ptr) = lol.loadSym("create_graph");
+  if (ptr == NULL)
+    return lol.closeLib();
+  arcade::IGraph*	yolo = ptr();
+  lol.closeLib();
+  delete yolo;
   return 0;
 }
