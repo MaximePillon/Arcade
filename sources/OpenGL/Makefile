@@ -14,9 +14,9 @@ RM		=	rm -rf
 
 CPPFLAGS	+=	$(INCLUDE)
 
-CPPFLAGS	+=	-W -Werror -Wextra -Wall -fPIC -lglfw -IGL -IGLEW -IGLU -L/usr/local/lib -lfreetype -l/usr/include/freetype2/ -l/usr/include/libpng16
+CPPFLAGS	+=	-W -Werror -Wextra -Wall -DPIC -fPIC -lglfw -IGL -IGLEW -IGLU -L/usr/local/lib -lfreetype -l/usr/include/freetype2/ -l/usr/include/libpng16
 
-LDFLAGS		+=	-shared
+LDFLAGS		+=	-shared -Wl,--no-allow-shlib-undefined /usr/lib64/libOpenGL.so /usr/lib64/libGLEW.so.1.13
 
 CC		=	g++
 
