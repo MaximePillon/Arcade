@@ -29,6 +29,7 @@ namespace arcade
     this->keyboard[CommandType::NEXT_GAME] = sf::Keyboard::Num5;
     this->keyboard[CommandType::RESTART] = sf::Keyboard::Num8;
     this->keyboard[CommandType::MENU] = sf::Keyboard::Num9;
+    this->keyboard[CommandType::PLAY] = sf::Keyboard::Return;
   }
 
   bool SfmlGraph::init(t_pos const &size, std::string const &name)
