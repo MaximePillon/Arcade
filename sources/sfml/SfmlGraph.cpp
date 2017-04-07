@@ -26,7 +26,7 @@ namespace arcade
 
   bool SfmlGraph::init(t_pos const &size, std::string const &name)
   {
-    this->font.loadFromFile("../../ressources/DejaVuSansMono.ttf");
+    this->font.loadFromFile("res/DejaVuSansMono.ttf");
     this->mainWin = new sf::RenderWindow(sf::VideoMode(size.x, size.y), name);
     this->initMap();
     return true;
@@ -100,6 +100,8 @@ namespace arcade
     {
       if (this->event.type == sf::Event::Closed)
 	this->close();
+      if (this->event.key.code == sf::Keyboard::Escape)
+	this->close();
       for (auto &it : this->keyboard)
 	if (it.second == this->event.key.code)
 	  this->eventMap[it.first].hdl(this->eventMap[it.first].param);
@@ -137,7 +139,8 @@ namespace arcade
     tmp.g  = color.argb[2];
     tmp.b  = color.argb[3];
     this->background.setPosition(0, 0);
-    this->background.setScale(WINDOW_WIDTH, WINDOW_HEIGHT);
+    this->background.setScale(WINDOW_WIDTH * BLOCK_SIZE,
+			      WINDOW_HEIGHT * BLOCK_SIZE);
     this->background.setFillColor(tmp);
     this->mainWin->draw(background);
     return true;
@@ -145,10 +148,11 @@ namespace arcade
 
   bool SfmlGraph::close()
   {
+    this->keyboard.clear();
+    this->eventMap.clear();
     this->textList.clear();
     this->block.clear();
     this->mainWin->close();
-    delete this->mainWin;
     return true;
   }
 }
