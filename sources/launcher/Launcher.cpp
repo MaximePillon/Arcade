@@ -139,6 +139,12 @@ namespace arcade
     this->selected_game = this->games.begin();
   }
 
+  /*
+   * Events Methods
+   */
+
+  // <editor-fold>
+
   void Launcher::launch_game(void *param)
   {
     IGraph* graph;
@@ -197,10 +203,51 @@ namespace arcade
     this->graph->init(pos, "Arcade");
   }
 
+  void Launcher::close(void* param)
+  {
+    static_cast<void>(param);
+    this->quit = true;
+  }
+
+  void Launcher::previousGl(void* param)
+  {
+    static_cast<void>(param);
+    if (this->selected_lib != this->libs.begin())
+      this->selected_lib--;
+  }
+
+  void Launcher::nextGl(void* param)
+  {
+    static_cast<void>(param);
+    if (this->selected_lib != this->libs.end()--)
+      this->selected_lib++;
+  }
+
+  void Launcher::previousGame(void* param)
+  {
+    static_cast<void>(param);
+    if (this->selected_game != this->games.begin())
+      this->selected_game--;
+  }
+
+  void Launcher::nextGame(void* param)
+  {
+    static_cast<void>(param);
+    if (this->selected_game != this->games.end()--)
+      this->selected_game++;
+  }
+
+  // </editor-fold>
+
   void Launcher::loop()
   {
     this->graph->registerEvent(CommandType::PLAY, this->launch_game, NULL);
-    while (this->graph->isOpen() && this->quit != false)
+    this->graph->registerEvent(CommandType::CLOSE, this->close, NULL);
+    this->graph->registerEvent(CommandType::PREVIOUS_GL, this->previousGl, NULL);
+    this->graph->registerEvent(CommandType::NEXT_GL, this->nextGl, NULL);
+    this->graph->registerEvent(CommandType::PREVIOUS_GAME, this->previousGame, NULL);
+    this->graph->registerEvent(CommandType::NEXT_GAME, this->nextGame, NULL);
+    while (this->graph->isOpen() && !this->quit)
     {
       this->graph->execEvents();
       this->graph->refresh();
