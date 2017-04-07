@@ -157,8 +157,8 @@ namespace arcade
   {
     t_pos pos;
 
-    for (pos.x = 0; pos.x < this->_window->getNbCols(); pos.x++)
-      for (pos.y = 0; pos.y < this->_window->getNbLines(); pos.y++)
+    for (pos.x = 0; pos.x < WINDOW_WIDTH; pos.x++)
+      for (pos.y = 0; pos.y < WINDOW_HEIGHT; pos.y++)
 	this->drawBlock(pos, color);
     return true;
   }

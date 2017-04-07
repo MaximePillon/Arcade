@@ -5,7 +5,7 @@
 ## Login   <loens_g@epitech.net>
 ## 
 ## Started on  Thu Apr  6 21:08:23 2017 loens_g
-## Last update Fri Apr  7 18:38:49 2017 Hugo SOSZYNSKI
+## Last update Fri Apr  7 19:35:34 2017 Hugo SOSZYNSKI
 ##
 
 INCLUDE		= 	-I../../includes
@@ -27,7 +27,7 @@ ifeq	($(DEBUG), 1)
 	CPPFLAGS	+=	-g -ggdb3
 endif
 
-NAME		=	libncurses.so
+NAME		=	../../lib/libncurses.so
 
 SRCS		=	NcursesGraph.cpp
 
@@ -38,7 +38,6 @@ all:	$(NAME)
 
 $(NAME):	$(OBJS)
 	$(CC) -o $(NAME) $(LDFLAGS) $(OBJS)
-	mv $(NAME) ../../lib
 
 %.o:	%.cpp
 	$(CC) -c -o $@ $< $(CPPFLAGS)
@@ -47,7 +46,7 @@ clean:
 	$(RM) $(OBJS)
 
 fclean:	clean
-	$(RM) $(NAME) $(CLI)
+	$(RM) $(NAME)
 
 re:	fclean
 	@$(MAKE) all

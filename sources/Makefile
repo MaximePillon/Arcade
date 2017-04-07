@@ -5,7 +5,7 @@
 ## Login   <loens_g@epitech.net>
 ## 
 ## Started on  Thu Apr  6 21:08:23 2017 loens_g
-## Last update Fri Apr  7 15:31:46 2017 Hugo SOSZYNSKI
+## Last update Fri Apr  7 19:44:06 2017 loens_g
 ##
 
 INCLUDE		= 	-I../includes
@@ -27,7 +27,7 @@ ifeq	($(DEBUG), 1)
 	CPPFLAGS	+=	-g -ggdb3
 endif
 
-NAME		=	arcade
+NAME		=	../arcade
 
 SRCS		=	launcher/Launcher.cpp \
 			main.cpp
@@ -39,7 +39,6 @@ all:	$(NAME)
 
 $(NAME):	$(OBJS)
 	$(CC) -o $(NAME) $(LDFLAGS) $(OBJS)
-	mv $(NAME) ../
 
 %.o:	%.cpp
 	$(CC) -c -o $@ $< $(CPPFLAGS)
