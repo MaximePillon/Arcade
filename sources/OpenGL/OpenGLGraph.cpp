@@ -13,6 +13,9 @@
 #include <IGraph.hpp>
 #include "openGL/OpenGLGraph.hpp"
 
+extern "C" { arcade::IGraph		*create_graph() { return new arcade::OpenGLGraph(); } }
+
+
 /*
  * Constructor and destructor
  */
