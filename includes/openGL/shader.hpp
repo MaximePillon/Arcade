@@ -71,6 +71,8 @@ public:
     GLuint vertex, fragment;
     GLint success;
     GLchar infoLog[512];
+    (void)success;
+    (void)infoLog;
     // Vertex Shader
     vertex = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertex, 1, &vShaderCode, NULL);

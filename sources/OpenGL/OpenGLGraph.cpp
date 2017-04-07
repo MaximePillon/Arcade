@@ -9,6 +9,7 @@
 */
 
 #include <iostream>
+#include <openGL/OpenGLGraph.hpp>
 #include <IGraph.hpp>
 #include "openGL/OpenGLGraph.hpp"
 
@@ -31,13 +32,19 @@ arcade::OpenGLGraph::~OpenGLGraph()
  */
 bool arcade::OpenGLGraph::loadFont()
 {
+
+  /*
+   *
+   * Font for text
+   *
+   */
   if (FT_Init_FreeType(&_ft))
     std::cerr << "ERROR::FREETYPE: Could not init FreeType Library" << std::endl;
 
   if (FT_New_Face(_ft, "/usr/share/fonts/dejavu/DejaVuSansMono.ttf", 0, &_face))
     std::cerr << "ERROR::FREETYPE: Failed to load font" << std::endl;
 
-  FT_Set_Pixel_Sizes(_face, 0, 50);
+  FT_Set_Pixel_Sizes(_face, 0, 25);
 
   glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // Disable byte-alignment restriction
 
@@ -79,6 +86,55 @@ bool arcade::OpenGLGraph::loadFont()
     };
     Characters.insert(std::pair<GLchar, Character>(c, character));
   }
+  /*
+   *
+   * Font for block
+   *
+   */
+  FT_Set_Pixel_Sizes(_face, 0, 50);
+
+  glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // Disable byte-alignment restriction
+
+
+  for (GLubyte c = 0; c < 128; c++)
+  {
+    // Load character glyph
+    if (FT_Load_Char(_face, c, FT_LOAD_RENDER))
+    {
+      std::cout << "ERROR::FREETYTPE: Failed to load Glyph" << std::endl;
+      continue;
+    }
+    // Generate texture
+    GLuint texture;
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glTexImage2D(
+      GL_TEXTURE_2D,
+      0,
+      GL_RED,
+      _face->glyph->bitmap.width,
+      _face->glyph->bitmap.rows,
+      0,
+      GL_RED,
+      GL_UNSIGNED_BYTE,
+      _face->glyph->bitmap.buffer
+    );
+    // Set texture options
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // Now store character for later use
+    Character character = {
+      texture,
+      glm::ivec2(_face->glyph->bitmap.width, _face->glyph->bitmap.rows),
+      glm::ivec2(_face->glyph->bitmap_left, _face->glyph->bitmap_top),
+      static_cast<GLuint>(_face->glyph->advance.x)
+    };
+    Block.insert(std::pair<GLchar, Character>(c, character));
+  }
+
+
   FT_Done_Face(_face);
   FT_Done_FreeType(_ft);
   return true;
@@ -88,12 +144,8 @@ bool arcade::OpenGLGraph::loadFont()
 bool arcade::OpenGLGraph::drawText(t_pos const &pos, std::string const &text)
 {
   int width, height;
-  int cpt;
 
   glfwGetFramebufferSize(_window, &width, &height);
-  cpt = 0;
-
-
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -118,7 +170,7 @@ bool arcade::OpenGLGraph::drawText(t_pos const &pos, std::string const &text)
   newpos.x = pos.x * BLOCK_SIZE;
   newpos.y = height - ((pos.y  + 1) * BLOCK_SIZE);
 
-  glm::vec3 color(0.8f, 0.5f, 0.2f);
+  glm::vec3 color(1.f, 0.f, 0.f);
   shader.Use();
   glUniform3f(glGetUniformLocation(shader.Program, "textColor"), color.x, color.y, color.z);
   glActiveTexture(GL_TEXTURE0);
@@ -165,13 +217,9 @@ bool arcade::OpenGLGraph::drawText(t_pos const &pos, std::string const &text)
 bool arcade::OpenGLGraph::drawBlock(t_pos const &pos, t_color const &color_char)
 {
   int width, height;
-  int cpt;
 
   glfwGetFramebufferSize(_window, &width, &height);
-  cpt = 0;
-
   std::string text("o");
-
   glDisable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -206,7 +254,7 @@ bool arcade::OpenGLGraph::drawBlock(t_pos const &pos, t_color const &color_char)
   // for (auto it = text.begin() : text)
   for (auto c = text.begin(); c != text.end(); c++)
   {
-    Character ch = Characters[*c];
+    Character ch = Block[*c];
     GLfloat xpos = (float)newpos.x + ch.Bearing.x * 1;
     GLfloat ypos = (float)newpos.y - (ch.Size.y - ch.Bearing.y) * 1;
 
@@ -289,7 +337,7 @@ bool arcade::OpenGLGraph::init(t_pos const &size,
 
 bool arcade::OpenGLGraph::setBackground(t_color const &color)
 {
-
+  glClearColor(static_cast<float>(color.argb[1] / 255), static_cast<float>(color.argb[2] / 255), static_cast<float>(color.argb[3] / 255), static_cast<float>(color.argb[0] / 255));
 }
 
 bool arcade::OpenGLGraph::close()

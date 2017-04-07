@@ -8,7 +8,7 @@
 ## Last update Thu Apr  6 22:13:07 2017 loens_g
 ##
 
-INCLUDE		= 	-Iincludes
+INCLUDE		= 	-I../../includes -I/usr/include/freetype2/ -I/usr/include/libpng16
 
 RM		=	rm -rf
 
@@ -29,7 +29,7 @@ endif
 
 NAME		=	libOpenGLso
 
-SRCS		=
+SRCS		=	OpenGLGraph.cpp
 
 
 OBJS		=	 $(SRCS:.cpp=.o)

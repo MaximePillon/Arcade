@@ -51,6 +51,7 @@ namespace arcade
     FT_Library _ft;
     FT_Face _face;
     std::map<GLchar, Character> Characters;
+    std::map<GLchar, Character> Block;
 
   public:
     OpenGLGraph();
