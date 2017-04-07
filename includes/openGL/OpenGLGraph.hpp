@@ -72,7 +72,8 @@ namespace arcade
     virtual void registerEvent(CommandType command,
 			       event_handler hdl,
 			       void* param);
-    virtual void execEvents();
+    void execEvents();
+    bool setBackground(t_color const& color);
 
     // GETTER  | SETTER
     GLFWwindow *getWindows();

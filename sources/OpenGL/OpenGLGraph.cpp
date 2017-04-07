@@ -287,6 +287,11 @@ bool arcade::OpenGLGraph::init(t_pos const &size,
   return true;
 }
 
+bool arcade::OpenGLGraph::setBackground(t_color const &color)
+{
+
+}
+
 bool arcade::OpenGLGraph::close()
 {
   glfwTerminate();
