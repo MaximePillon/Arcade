@@ -31,6 +31,13 @@ typedef void (*event_handler)(void*);
 /// \namespace arcade
 namespace arcade
 {
+  /// \struct handler_t
+  typedef struct
+  {
+    event_handler	hdl;	//!< The handler function pointer
+    void		*param;	//!< The param of the function pointer
+  }			handler_t;
+
   /// \struct t_pos
   typedef struct
   {
