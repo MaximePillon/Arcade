@@ -338,6 +338,7 @@ bool arcade::OpenGLGraph::init(t_pos const &size,
 bool arcade::OpenGLGraph::setBackground(t_color const &color)
 {
   glClearColor(static_cast<float>(color.argb[1] / 255), static_cast<float>(color.argb[2] / 255), static_cast<float>(color.argb[3] / 255), static_cast<float>(color.argb[0] / 255));
+  return true;
 }
 
 bool arcade::OpenGLGraph::close()
@@ -348,27 +349,36 @@ bool arcade::OpenGLGraph::close()
 
 void arcade::OpenGLGraph::refresh()
 {
+  glfwSwapBuffers(_window);
   glClear(GL_COLOR_BUFFER_BIT);
 }
 
 bool arcade::OpenGLGraph::isOpen() const
 {
+  if (glfwWindowShouldClose(_window))
+    return false;
   return _isOpen;
 }
 
 void arcade::OpenGLGraph::loop(int frequency, void *handler)
 {
+  (void)frequency;
+  (void)handler;
 }
 
 void arcade::OpenGLGraph::execEvents()
 {
+  // Check and call events
+  glfwPollEvents();
 
 }
 
 void arcade::OpenGLGraph::registerEvent(CommandType command, event_handler hdl,
 					void *param)
 {
-
+  (void)command;
+  (void)hdl;
+  (void)param;
 }
 
 /*
