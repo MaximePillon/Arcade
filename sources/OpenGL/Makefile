@@ -5,7 +5,7 @@
 ## Login   <loens_g@epitech.net>
 ## 
 ## Started on  Thu Apr  6 21:08:23 2017 loens_g
-## Last update Fri Apr  7 10:43:09 2017 loens_g
+## Last update Fri Apr  7 10:51:51 2017 loens_g
 ##
 
 INCLUDE		= 	-I../../includes -I/usr/include/freetype2/ -I/usr/include/libpng16
@@ -14,7 +14,7 @@ RM		=	rm -rf
 
 CPPFLAGS	+=	$(INCLUDE)
 
-CPPFLAGS	+=	-W -Werror -Wextra -Wall -fPIC -lglfw -IGL -IGLEW -IGLU -L/usr/local/lib -lfreetype -l/usr/include/freetype2/ -l/usr/include/libpng16 
+CPPFLAGS	+=	-W -Werror -Wextra -Wall -fPIC -lglfw -IGL -IGLEW -IGLU -L/usr/local/lib -lfreetype -l/usr/include/freetype2/ -l/usr/include/libpng16
 
 LDFLAGS		+=	-shared
 
@@ -27,7 +27,7 @@ ifeq	($(DEBUG), 1)
 	CPPFLAGS	+=	-g -ggdb3
 endif
 
-NAME		=	libOpenGLso
+NAME		=	libOpenGL.so
 
 SRCS		=	OpenGLGraph.cpp
 
@@ -54,5 +54,5 @@ re:	fclean
 	@$(MAKE) all
 
 .PHONY:	 all clean fclean re
-x
+
 -include	$(DEPS)
