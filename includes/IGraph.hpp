@@ -19,11 +19,11 @@
 #endif // !BLOCK_SIZE
 
 #ifndef WINDOW_HEIGHT
-# define WINDOW_HEIGHT 600
+# define WINDOW_HEIGHT 24
 #endif // !WINDOW_HEIGHT
 
 #ifndef WINDOW_WIDTH
-# define WINDOW_WIDTH 800
+# define WINDOW_WIDTH 32
 #endif // !WINDOW_WIDTH
 
 typedef void (*event_handler)(void*);

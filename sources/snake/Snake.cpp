@@ -53,4 +53,54 @@ namespace arcade
   }
 
   // </editor-fold>
+
+  /*
+   * Snake
+   */
+
+  // <editor-fold>
+
+  Snake::Snake():
+    powerup(), body(), turns(), border(), score(0)
+  {
+    t_color color;
+    t_pos   pos;
+    t_pos   direction;
+
+    // Body
+    color.argb[0] = 255;
+    color.argb[1] = 255;
+    color.argb[2] = 255;
+    color.argb[3] = 0;
+    direction.x = 0;
+    direction.y = 1;
+    pos.x = 16;
+    pos.y = 12;
+    for (int i = 0; i < 4; ++i)
+    {
+      this->body.push_back(Block(color, pos, direction));
+      pos.y += 1;
+    }
+
+    // Borders
+    color.argb[0] = 255;
+    color.argb[1] = 255;
+    color.argb[2] = 255;
+    color.argb[3] = 255;
+    direction.y = 0;
+    pos.y = 2;
+    for (pos.x = 0; pos.x < WINDOW_WIDTH; ++(pos.x))
+      this->border.push_back(Block(color, pos, direction));
+    pos.x = 0;
+    for (pos.y = 2; pos.y < WINDOW_HEIGHT; ++(pos.y))
+      this->border.push_back(Block(color, pos, direction));
+    pos.x = WINDOW_WIDTH - 1;
+    for (pos.y = 2; pos.y < WINDOW_HEIGHT; ++(pos.y))
+      this->border.push_back(Block(color, pos, direction));
+    pos.y = WINDOW_HEIGHT - 1;
+    for (pos.x = 0; pos.x < WINDOW_WIDTH; ++(pos.x))
+      this->border.push_back(Block(color, pos, direction));
+  }
+
+  // </editor-fold>
 }
