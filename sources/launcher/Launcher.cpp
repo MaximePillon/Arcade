@@ -140,104 +140,6 @@ namespace arcade
     this->selected_game = this->games.begin();
   }
 
-  /*
-   * Events Methods
-   */
-
-  // <editor-fold>
-
-  void Launcher::launch_game(void *param)
-  {
-    IGraph* graph;
-    graph_func gr_creat;
-    game_func ga_creat;
-    t_pos pos;
-
-    pos.x = WINDOW_WIDTH;
-    pos.y = WINDOW_HEIGHT;
-    this->graph->close();
-    static_cast<void>(param);
-    if (this->openGraphLib((*(this->selected_lib)).second.c_str()) == 1)
-    {
-      std::clog << dlerror() << std::endl;
-      this->graph->init(pos, "Arcade");
-      return ;
-    }
-    *(void**)(&gr_creat) = this->loadGraphSym("create_graph");
-    if (gr_creat == NULL)
-    {
-      std::clog << dlerror() << std::endl;
-      this->closeGraphLib();
-      this->graph->init(pos, "Arcade");
-      return ;
-    }
-    if (this->openGameLib((*(this->selected_game)).second.c_str()) == 1)
-    {
-      std::clog << dlerror() << std::endl;
-      this->graph->init(pos, "Arcade");
-      return ;
-    }
-    *(void**)(&ga_creat) = this->loadGameSym("launch_game");
-    if (ga_creat == NULL)
-    {
-      std::clog << dlerror() << std::endl;
-      this->closeGraphLib();
-      this->closeGameLib();
-      this->graph->init(pos, "Arcade");
-      return ;
-    }
-    graph = gr_creat();
-    if (graph == NULL)
-    {
-      std::clog << dlerror() << std::endl;
-      this->closeGraphLib();
-      this->closeGameLib();
-      this->graph->init(pos, "Arcade");
-      return ;
-    }
-    graph->init(pos, (*(this->selected_game)).second);
-    this->quit = ga_creat(graph);
-    graph->close();
-    delete graph;
-    this->closeGameLib();
-    this->closeGraphLib();
-    this->graph->init(pos, "Arcade");
-  }
-
-  void Launcher::close(void* param)
-  {
-    static_cast<void>(param);
-    this->quit = true;
-  }
-
-  void Launcher::previousGl(void* param)
-  {
-    static_cast<void>(param);
-    if (this->selected_lib != this->libs.begin())
-      this->selected_lib--;
-  }
-
-  void Launcher::nextGl(void* param)
-  {
-    static_cast<void>(param);
-    if (this->selected_lib != this->libs.end()--)
-      this->selected_lib++;
-  }
-
-  void Launcher::previousGame(void* param)
-  {
-    static_cast<void>(param);
-    if (this->selected_game != this->games.begin())
-      this->selected_game--;
-  }
-
-  void Launcher::nextGame(void* param)
-  {
-    static_cast<void>(param);
-    if (this->selected_game != this->games.end()--)
-      this->selected_game++;
-  }
-
   bool Launcher::printText(std::string string, unsigned int x,
 			   unsigned int y)
   {
@@ -272,18 +174,16 @@ namespace arcade
     return true;
   }
 
-  // </editor-fold>
-
   void Launcher::loop()
   {
     unsigned int x = 3;
     unsigned int y = 5;
-    this->graph->registerEvent(CommandType::PLAY, this->launch_game, NULL);
-    this->graph->registerEvent(CommandType::CLOSE, this->close, NULL);
-    this->graph->registerEvent(CommandType::PREVIOUS_GL, this->previousGl, NULL);
-    this->graph->registerEvent(CommandType::NEXT_GL, this->nextGl, NULL);
-    this->graph->registerEvent(CommandType::PREVIOUS_GAME, this->previousGame, NULL);
-    this->graph->registerEvent(CommandType::NEXT_GAME, this->nextGame, NULL);
+    this->graph->registerEvent(CommandType::PLAY, launch_game, this);
+    this->graph->registerEvent(CommandType::CLOSE, close, this);
+    this->graph->registerEvent(CommandType::PREVIOUS_GL, previousGl, this);
+    this->graph->registerEvent(CommandType::NEXT_GL, nextGl, this);
+    this->graph->registerEvent(CommandType::PREVIOUS_GAME, previousGame, this);
+    this->graph->registerEvent(CommandType::NEXT_GAME,nextGame, this);
     while (this->graph->isOpen() && !this->quit)
     {
       this->graph->execEvents();
@@ -314,4 +214,116 @@ namespace arcade
       this->graph->refresh();
     }
   }
+
+  /*
+   * Events Methods
+   */
+
+  // <editor-fold>
+
+  void launch_game(void *param)
+  {
+    IGraph* graph;
+    graph_func gr_creat;
+    game_func ga_creat;
+    t_pos pos;
+    Launcher* self;
+
+    self = static_cast<Launcher*>(param);
+    pos.x = WINDOW_WIDTH;
+    pos.y = WINDOW_HEIGHT;
+    self->graph->close();
+    if (self->openGraphLib((*(self->selected_lib)).second.c_str()) == 1)
+    {
+      std::clog << dlerror() << std::endl;
+      self->graph->init(pos, "Arcade");
+      return ;
+    }
+    *(void**)(&gr_creat) = self->loadGraphSym("create_graph");
+    if (gr_creat == NULL)
+    {
+      std::clog << dlerror() << std::endl;
+      self->closeGraphLib();
+      self->graph->init(pos, "Arcade");
+      return ;
+    }
+    if (self->openGameLib((*(self->selected_game)).second.c_str()) == 1)
+    {
+      std::clog << dlerror() << std::endl;
+      self->graph->init(pos, "Arcade");
+      return ;
+    }
+    *(void**)(&ga_creat) = self->loadGameSym("launch_game");
+    if (ga_creat == NULL)
+    {
+      std::clog << dlerror() << std::endl;
+      self->closeGraphLib();
+      self->closeGameLib();
+      self->graph->init(pos, "Arcade");
+      return ;
+    }
+    graph = gr_creat();
+    if (graph == NULL)
+    {
+      std::clog << dlerror() << std::endl;
+      self->closeGraphLib();
+      self->closeGameLib();
+      self->graph->init(pos, "Arcade");
+      return ;
+    }
+    graph->init(pos, (*(self->selected_game)).second);
+    self->quit = ga_creat(graph);
+    graph->close();
+    delete graph;
+    self->closeGameLib();
+    self->closeGraphLib();
+    self->graph->init(pos, "Arcade");
+  }
+
+  void close(void* param)
+  {
+    Launcher* self;
+
+    self = static_cast<Launcher*>(param);
+    self->quit = true;
+  }
+
+  void previousGl(void* param)
+  {
+    Launcher* self;
+
+    self = static_cast<Launcher*>(param);
+    if (self->selected_lib != self->libs.begin())
+      self->selected_lib--;
+  }
+
+  void nextGl(void* param)
+  {
+    Launcher* self;
+
+    self = static_cast<Launcher*>(param);
+    if (self->selected_lib != self->libs.end()--)
+      self->selected_lib++;
+  }
+
+  void previousGame(void* param)
+  {
+    Launcher* self;
+
+    self = static_cast<Launcher*>(param);
+    if (self->selected_game != self->games.begin())
+      self->selected_game--;
+  }
+
+  void nextGame(void* param)
+  {
+    Launcher* self;
+
+    self = static_cast<Launcher*>(param);
+    if (self->selected_game != self->games.end()--)
+      self->selected_game++;
+  }
+
+  // </editor-fold>
+
 }
