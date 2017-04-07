@@ -81,8 +81,8 @@ namespace arcade
 
   void NcursesGraph::refresh()
   {
-    this->_window->clear();
     this->_window->refresh();
+    this->_window->clear();
   }
 
   bool NcursesGraph::isOpen() const
@@ -168,7 +168,7 @@ namespace arcade
 
 extern "C"
 {
-arcade::IGraph* my_create_graph()
+arcade::IGraph* create_graph()
 {
   return new arcade::NcursesGraph();
 }

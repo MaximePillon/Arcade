@@ -21,8 +21,6 @@ namespace myncurses
   Window::Window():
     _nLines(0), _nCols(0), _beginY(0), _beginX(0), _window(NULL)
   {
-    if (this->isNcursesInitialised())
-      throw NcursesError("Ncurses already initialised");
     if (initscr() == NULL)
       throw NcursesError("Cannot initialise ncurses");
     this->_window = stdscr;

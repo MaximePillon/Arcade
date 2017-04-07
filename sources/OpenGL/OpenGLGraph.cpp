@@ -413,4 +413,4 @@ void arcade::OpenGLGraph::registerEvent(CommandType command, event_handler hdl,
  */
 GLFWwindow * arcade::OpenGLGraph::getWindows() { return _window; }
 
-extern "C" { arcade::IGraph* my_create_graph() { return new arcade::OpenGLGraph(); } }
+extern "C" { arcade::IGraph* create_graph() { return new arcade::OpenGLGraph(); } }

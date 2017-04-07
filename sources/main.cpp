@@ -9,6 +9,8 @@
 */
 
 #include <iostream>
+#include <unistd.h>
+#include <IGraph.hpp>
 #include "launcher/Launcher.hpp"
 #include "IGraph.hpp"
 
@@ -18,6 +20,8 @@ int		main(int argc, const char *argv[])
 {
   arcade::Launcher 	lol;
   test			ptr;
+  arcade::t_pos		pos;
+
 
   if (argc != 2)
     return EXIT_FAILURE;
@@ -28,10 +32,28 @@ int		main(int argc, const char *argv[])
   }
   *(void **)(&ptr) = lol.loadSym("create_graph");
   if (ptr == NULL)
+  {
+    std::clog << dlerror() << std::endl;
     return lol.closeLib();
+  }
   arcade::IGraph*	yolo = ptr();
   if (yolo == NULL)
     std::clog << "BITE" << std::endl;
+  pos.x = WINDOW_WIDTH;
+  pos.y = WINDOW_HEIGHT;
+  yolo->init(pos, "BITE");
+  pos.x = 10;
+  pos.y = 10;
+  arcade::t_color color;
+  color.full = 0x00FFFFFF;
+  yolo->setBackground(color);
+  yolo->drawText(pos, "BITE");
+  pos.x = 15;
+  color.full = 0xFF00FFFF;
+  yolo->drawBlock(pos, color);
+  yolo->refresh();
+  sleep(5);
+  yolo->close();
   delete yolo;
   lol.closeLib();
   return 0;

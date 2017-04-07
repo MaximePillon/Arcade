@@ -5,7 +5,7 @@
 ## Login   <loens_g@epitech.net>
 ## 
 ## Started on  Thu Apr  6 21:08:23 2017 loens_g
-## Last update Fri Apr  7 18:08:33 2017 loens_g
+## Last update Fri Apr  7 18:10:47 2017 Hugo SOSZYNSKI
 ##
 
 INCLUDE		= 	-I../../includes
@@ -16,7 +16,7 @@ CPPFLAGS	+=	$(INCLUDE)
 
 CPPFLAGS	+=	-W -Wextra -Wall -fPIC -lsfml-system -lsfml-window -lsfml-graphics
 
-LDFLAGS		+=	-shared -Wl,--no-allow-shlib-undefined /usr/lib/libsfml-graphics.so /usr/lib/libsfml-window.so /usr/lib/libsfml-system.so
+LDFLAGS		+=	-shared -Wl,--no-allow-shlib-undefined /usr/lib64/libsfml-graphics.so /usr/lib64/libsfml-window.so /usr/lib64/libsfml-system.so
 
 CC		=	g++
 
