@@ -13,7 +13,6 @@
 
 # include <vector>
 # include "IGraph.hpp"
-# include "Map.hpp"
 
 namespace arcade
 {
@@ -74,7 +73,6 @@ namespace arcade
     std::vector<Block>		turns; //!< The turning points
     std::vector<Block>		border; //!< Border
     unsigned int		score; //!< The score
-    Map				map; //!< Map class
   };
 }
 

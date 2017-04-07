@@ -8,7 +8,7 @@
 ** Last update Wed Apr 05 09:04:04 2017 Hugo SOSZYNSKI
 */
 
-#include <IGraph.hpp>
+#include "IGraph.hpp"
 #include "ncurses/NcursesGraph.hpp"
 
 namespace arcade
@@ -27,14 +27,6 @@ namespace arcade
     this->_keyboard[CommandType::GO_RIGHT] = KEY_RIGHT;
     this->_keyboard[CommandType::GO_LEFT] = KEY_LEFT;
     this->_keyboard[CommandType::SHOOT] = ' ';
-    this->_window->initPair(1, COLOR_BLACK, COLOR_RED);
-    this->_window->initPair(2, COLOR_BLACK, COLOR_WHITE);
-    this->_window->initPair(3, COLOR_BLACK, COLOR_BLACK);
-    this->_window->initPair(4, COLOR_BLACK, COLOR_GREEN);
-    this->_window->initPair(5, COLOR_BLACK, COLOR_BLUE);
-    this->_window->initPair(6, COLOR_BLACK, COLOR_YELLOW);
-    this->_window->initPair(7, COLOR_BLACK, COLOR_MAGENTA);
-    this->_window->initPair(8, COLOR_BLACK, COLOR_CYAN);
   }
 
   NcursesGraph::~NcursesGraph()
@@ -60,6 +52,14 @@ namespace arcade
     this->_events->termRaw();
     this->_events->termKeypad(TRUE);
     this->_events->tremNodelay(TRUE);
+    this->_window->initPair(1, COLOR_BLACK, COLOR_RED);
+    this->_window->initPair(2, COLOR_BLACK, COLOR_WHITE);
+    this->_window->initPair(3, COLOR_BLACK, COLOR_BLACK);
+    this->_window->initPair(4, COLOR_BLACK, COLOR_GREEN);
+    this->_window->initPair(5, COLOR_BLACK, COLOR_BLUE);
+    this->_window->initPair(6, COLOR_BLACK, COLOR_YELLOW);
+    this->_window->initPair(7, COLOR_BLACK, COLOR_MAGENTA);
+    this->_window->initPair(8, COLOR_BLACK, COLOR_CYAN);
     return true;
   }
 
@@ -164,4 +164,12 @@ namespace arcade
   }
 
   // </editor-fold>
+}
+
+extern "C"
+{
+arcade::IGraph* create_graph()
+{
+  return new arcade::NcursesGraph();
+}
 }
