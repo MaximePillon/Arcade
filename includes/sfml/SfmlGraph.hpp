@@ -24,9 +24,8 @@
 
 namespace arcade
 {
-
   /// \class SfmlGraph
-  class SfmlGraph : IGraph
+  class SfmlGraph : public IGraph
   {
   public:
     SfmlGraph() {};
