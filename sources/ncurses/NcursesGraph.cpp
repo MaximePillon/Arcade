@@ -27,6 +27,14 @@ namespace arcade
     this->_keyboard[CommandType::GO_RIGHT] = KEY_RIGHT;
     this->_keyboard[CommandType::GO_LEFT] = KEY_LEFT;
     this->_keyboard[CommandType::SHOOT] = ' ';
+    this->_keyboard[CommandType::CLOSE] = 27;
+    this->_keyboard[CommandType::PREVIOUS_GL] = '2';
+    this->_keyboard[CommandType::NEXT_GL] = '3';
+    this->_keyboard[CommandType::PREVIOUS_GAME] = '4';
+    this->_keyboard[CommandType::NEXT_GAME] = '5';
+    this->_keyboard[CommandType::RESTART] = '8';
+    this->_keyboard[CommandType::MENU] = '9';
+    this->_keyboard[CommandType::PLAY] = '\n';
   }
 
   NcursesGraph::~NcursesGraph()
