@@ -317,6 +317,7 @@ void arcade::OpenGLGraph::initMap()
   this->keyboard[CommandType::NEXT_GAME] = GLFW_KEY_5;
   this->keyboard[CommandType::RESTART] = GLFW_KEY_8;
   this->keyboard[CommandType::MENU] = GLFW_KEY_9;
+  this->keyboard[CommandType::PLAY] = GLFW_KEY_ENTER;
 
 }
 
