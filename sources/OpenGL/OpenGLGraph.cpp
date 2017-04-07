@@ -13,7 +13,6 @@
 #include <IGraph.hpp>
 #include "openGL/OpenGLGraph.hpp"
 
-extern "C" { arcade::IGraph		*create_graph() { return new arcade::OpenGLGraph(); } }
 
 
 /*
@@ -413,3 +412,5 @@ void arcade::OpenGLGraph::registerEvent(CommandType command, event_handler hdl,
  * GETTER / SETTER
  */
 GLFWwindow * arcade::OpenGLGraph::getWindows() { return _window; }
+
+extern "C" { arcade::IGraph* my_create_graph() { return new arcade::OpenGLGraph(); } }

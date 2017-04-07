@@ -168,7 +168,7 @@ namespace arcade
 
 extern "C"
 {
-arcade::IGraph* create_graph()
+arcade::IGraph* my_create_graph()
 {
   return new arcade::NcursesGraph();
 }

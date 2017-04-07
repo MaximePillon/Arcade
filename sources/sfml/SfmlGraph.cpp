@@ -160,7 +160,7 @@ namespace arcade
 
 extern "C"
 {
-arcade::IGraph		*create_graph()
+arcade::IGraph* my_create_graph()
 {
   arcade::IGraph	*newGraph;
 

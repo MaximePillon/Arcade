@@ -5,18 +5,18 @@
 ## Login   <loens_g@epitech.net>
 ## 
 ## Started on  Thu Apr  6 21:08:23 2017 loens_g
-## Last update Fri Apr  7 16:50:08 2017 Hugo SOSZYNSKI
+## Last update Fri Apr  7 15:31:46 2017 Hugo SOSZYNSKI
 ##
 
-INCLUDE		= 	-I../../includes
+INCLUDE		= 	-I../includes
 
 RM		=	rm -rf
 
 CPPFLAGS	+=	$(INCLUDE)
 
-CPPFLAGS	+=	-W -Wextra -Wall -fPIC -lsfml-system -lsfml-window -lsfml-graphics
+CPPFLAGS	+=	-W -Wextra -Wall
 
-LDFLAGS		+=	-shared
+LDFLAGS		+=	-ldl
 
 CC		=	g++
 
@@ -27,10 +27,10 @@ ifeq	($(DEBUG), 1)
 	CPPFLAGS	+=	-g -ggdb3
 endif
 
-NAME		=	libsfml.so
+NAME		=	arcade
 
-SRCS		=	SfmlGraph.cpp
-
+SRCS		=	launcher/Launcher.cpp \
+			main.cpp
 
 OBJS		=	 $(SRCS:.cpp=.o)
 
@@ -39,7 +39,7 @@ all:	$(NAME)
 
 $(NAME):	$(OBJS)
 	$(CC) -o $(NAME) $(LDFLAGS) $(OBJS)
-	mv $(NAME) ../../lib
+	mv $(NAME) ../
 
 %.o:	%.cpp
 	$(CC) -c -o $@ $< $(CPPFLAGS)
@@ -48,7 +48,7 @@ clean:
 	$(RM) $(OBJS)
 
 fclean:	clean
-	$(RM) ../../lib/$(NAME) $(CLI)
+	$(RM) $(NAME) $(CLI)
 
 re:	fclean
 	@$(MAKE) all
