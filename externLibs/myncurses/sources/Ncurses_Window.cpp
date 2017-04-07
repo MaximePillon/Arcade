@@ -29,7 +29,8 @@ namespace myncurses
     getmaxyx(stdscr, this->_nLines, this->_nCols);
   }
 
-  Window::Window(int nLines, int nCols, int beginY, int beginX):
+  Window::Window(unsigned int nLines, unsigned int nCols,
+		 unsigned int beginY, unsigned int beginX):
     _nLines(nLines), _nCols(nCols),
     _beginY(beginY), _beginX(beginX), _window(NULL)
   {
@@ -80,10 +81,10 @@ namespace myncurses
 
   // <editor-fold>
 
-  int Window::getNbLines() const { return this->_nLines; }
-  int Window::getNbCols() const { return this->_nCols; }
-  int Window::getBeginY() const { return this->_beginY; }
-  int Window::getBeginX() const { return this->_beginX; }
+  unsigned int Window::getNbLines() const { return this->_nLines; }
+  unsigned int Window::getNbCols() const { return this->_nCols; }
+  unsigned int Window::getBeginY() const { return this->_beginY; }
+  unsigned int Window::getBeginX() const { return this->_beginX; }
   WINDOW* Window::getWINDOW() { return this->_window; }
 
   // </editor-fold>

@@ -36,7 +36,8 @@ namespace myncurses
     /// \param ncols Number of columns of the window.
     /// \param begin_y Y position the window begin at.
     /// \param begin_x X position the window begin at.
-    Window(int nLines, int nCols, int beginY, int beginX);
+    Window(unsigned int nLines, unsigned int nCols,
+	   unsigned int beginY, unsigned int beginX);
 
     /// \brief Copy constructor for a Window object (create a new window).
     ///        This cannot duplicate the main window.
@@ -55,19 +56,19 @@ namespace myncurses
   public:
     /// \brief Getter for the number of lines in the Window.
     /// \return Return the number of lines in the Window.
-    int getNbLines() const;
+    unsigned int getNbLines() const;
 
     /// \brief Getter for the number of columns in the Window.
     /// \return Return the number of columns in the Window.
-    int getNbCols() const;
+    unsigned int getNbCols() const;
 
     /// \brief Getter for the X position th window begin at.
     /// \return Return the X position the Window begin at.
-    int getBeginX() const;
+    unsigned int getBeginX() const;
 
     /// \brief Getter for the Y position th window begin at.
     /// \return Return the Y position the Window begin at.
-    int getBeginY() const;
+    unsigned int getBeginY() const;
 
     /// \brief Getter for the ncurses WINDOW pointer.
     /// \return The constant ncurses WINDOW pointer.
@@ -149,10 +150,10 @@ namespace myncurses
     bool isNcursesInitialised() const;
 
   protected:
-    int		_nLines; //!< The number of line in the Window.
-    int		_nCols; //!< The number of columns in the Window.
-    int		_beginY; //!< The Y position the window begin at.
-    int		_beginX; //!< The X position the window begin at.
+    unsigned int		_nLines; //!< The number of line in the Window.
+    unsigned int		_nCols; //!< The number of columns in the Window.
+    unsigned int		_beginY; //!< The Y position the window begin at.
+    unsigned int		_beginX; //!< The X position the window begin at.
     WINDOW	*_window; //!< The pointer to the ncurses WINDOW.
   };
 
