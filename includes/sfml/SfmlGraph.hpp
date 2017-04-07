@@ -25,13 +25,6 @@
 namespace arcade
 {
 
-  /// \struct handler_t
-  typedef struct
-  {
-    event_handler	hdl;	//!< The handler function pointer
-    void		*param;	//!< The param of the function pointer
-  }			handler_t;
-
   /// \class SfmlGraph
   class SfmlGraph : IGraph
   {

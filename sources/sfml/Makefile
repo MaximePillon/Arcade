@@ -5,7 +5,7 @@
 ## Login   <loens_g@epitech.net>
 ## 
 ## Started on  Thu Apr  6 21:08:23 2017 loens_g
-## Last update Thu Apr  6 21:53:26 2017 loens_g
+## Last update Fri Apr  7 10:44:57 2017 loens_g
 ##
 
 INCLUDE		= 	-I../../includes
@@ -48,7 +48,7 @@ clean:
 	$(RM) $(OBJS)
 
 fclean:	clean
-	$(RM) $(NAME) $(CLI)
+	$(RM) ../../lib/$(NAME) $(CLI)
 
 re:	fclean
 	@$(MAKE) all
