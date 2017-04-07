@@ -290,10 +290,30 @@ bool arcade::OpenGLGraph::drawBlock(t_pos const &pos, t_color const &color_char)
 /*
  * Window usage
  */
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
+{
+  // When a user presses the escape key, we set the WindowShouldClose property to true,
+  // closing the application
+  (void)scancode;
+  (void)mode;
+  if(key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+    glfwSetWindowShouldClose(window, GL_TRUE);
+}
+
+
+void arcade::OpenGLGraph::initMap()
+{
+  this->keyboard[CommandType::GO_UP] = GLFW_KEY_UP;
+  this->keyboard[CommandType::GO_DOWN] = GLFW_KEY_DOWN;
+  this->keyboard[CommandType::GO_RIGHT] = GLFW_KEY_RIGHT;
+  this->keyboard[CommandType::GO_LEFT] = GLFW_KEY_LEFT;
+  this->keyboard[CommandType::SHOOT] = GLFW_KEY_SPACE;
+}
+
 bool arcade::OpenGLGraph::init(t_pos const &size,
 			       std::string const &window_name)
 {
-
+  // initialise GLFW
   if (!glfwInit())
   {
     std::cerr << "Failed to initialize GLFW\n";
@@ -313,13 +333,7 @@ bool arcade::OpenGLGraph::init(t_pos const &size,
   }
 
   glfwMakeContextCurrent(_window);
- /* int i = 0;
-  glutInit(&i, NULL);
-  glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
-  glutInitWindowSize(size.x,size.y);	//Optionnel
-  glutCreateWindow(window_name.c_str());
-  return 0;
-*/
+
   // initialize GLEW
   glewExperimental = true; // Needed for core profile
   if (glewInit() != GLEW_OK) {
@@ -330,8 +344,16 @@ bool arcade::OpenGLGraph::init(t_pos const &size,
   }
   glfwSetInputMode(_window, GLFW_STICKY_KEYS, GL_TRUE);
   _isOpen = true;
+
+  // Load font for text and blick rendering
   if (!loadFont())
     return false;
+
+  // initialise the corresponding of maccro key
+  initMap();
+
+  // set the close calback
+  glfwSetKeyCallback(_window, key_callback);
   return true;
 }
 
@@ -368,17 +390,20 @@ void arcade::OpenGLGraph::loop(int frequency, void *handler)
 
 void arcade::OpenGLGraph::execEvents()
 {
-  // Check and call events
   glfwPollEvents();
-
+  for (auto &it : this->keyboard)
+    if (glfwGetKey(_window, it.second) == GLFW_PRESS)
+      this->eventMap[it.first].hdl(this->eventMap[it.first].param);
 }
 
 void arcade::OpenGLGraph::registerEvent(CommandType command, event_handler hdl,
 					void *param)
 {
-  (void)command;
-  (void)hdl;
-  (void)param;
+  handler_t		tmp;
+
+  tmp.hdl = hdl;
+  tmp.param = param;
+  this->eventMap[command] = tmp;
 }
 
 /*
