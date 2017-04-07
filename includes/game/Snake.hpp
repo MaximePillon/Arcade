@@ -63,8 +63,11 @@ namespace arcade
     /// \brief Collision detections and reactions
     void collide();
 
+    /// \brief The main game function
+    void play();
+
   public:
-    Snake();
+    Snake(IGraph* graph);
     virtual ~Snake() {};
 
   protected:
@@ -73,6 +76,7 @@ namespace arcade
     std::vector<Block>		turns; //!< The turning points
     std::vector<Block>		border; //!< Border
     unsigned int		score; //!< The score
+    IGraph			*graph; //!< The graph interface to draw with
   };
 }
 
