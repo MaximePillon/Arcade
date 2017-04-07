@@ -13,8 +13,20 @@
 #include <sfml/SfmlGraph.hpp>
 #include "sfml/SfmlGraph.hpp"
 
+extern "C"
+{
+arcade::IGraph		*create_graph()
+{
+  arcade::IGraph	*newGraph;
+
+  newGraph = new arcade::SfmlGraph();
+  return newGraph;
+}
+}
+
 namespace arcade
 {
+
   void SfmlGraph::initMap()
   {
     this->keyboard[CommandType::GO_UP] = sf::Keyboard::Up;
