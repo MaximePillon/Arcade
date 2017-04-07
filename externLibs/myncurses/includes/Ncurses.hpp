@@ -131,6 +131,14 @@ namespace myncurses
     /// \return Return the integer OK on success and ERR on failure.
     int termNoecho();
 
+    /// \brief The init_pair routine changes the definition of a color-pair.
+    ///        This routine affects all the Windows.
+    /// \param pair A valid pair number to setup.
+    /// \param f The foreground color maccro.
+    /// \param b The background color maccro.
+    /// \return Return the integer OK on success and ERR on failure.
+    int initPair(short pair, short f, short b);
+
   protected:
     /// \brief Method to know if the current window is the stdscr.
     /// \return true if the window is stdscr, false otherwise.

@@ -131,6 +131,14 @@ namespace myncurses
     /// \return Return the integer OK on success and ERR on failure.
     int termNoecho();
 
+    /// \brief The init_pair routine changes the definition of a color-pair.
+    ///        This routine affects all the Windows.
+    /// \param pair A valid pair number to setup.
+    /// \param f The foreground color maccro.
+    /// \param b The background color maccro.
+    /// \return Return the integer OK on success and ERR on failure.
+    int initPair(short pair, short f, short b);
+
   protected:
     /// \brief Method to know if the current window is the stdscr.
     /// \return true if the window is stdscr, false otherwise.
@@ -166,7 +174,7 @@ namespace myncurses
     ///        If an event has already been registered, the handler is replaced.
     ///        This method should never fail (in case of fail, an NcursesError exception is thrown).
     /// \param key The key you want to bind the handler to.
-    /// \param handler The handler you ant to bind to the key (handler's prototype: "void handler(void *);").
+    /// \param handler The handler you want to bind to the key (handler's prototype: "void handler(void *);").
     /// \param param The parameter to pass to the handler.
     void registerEvent(int key, handler func, void* param);
 

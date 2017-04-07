@@ -102,6 +102,8 @@ namespace myncurses
 
   int Window::termNoecho() { return noecho(); }
 
+  int Window::initPair(short pair, short f, short b) { return init_pair(pair, f, b); }
+
   // </editor-fold>
 
   /*
