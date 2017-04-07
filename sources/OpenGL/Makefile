@@ -5,7 +5,7 @@
 ## Login   <loens_g@epitech.net>
 ## 
 ## Started on  Thu Apr  6 21:08:23 2017 loens_g
-## Last update Fri Apr  7 10:51:51 2017 loens_g
+## Last update Fri Apr  7 19:36:20 2017 Hugo SOSZYNSKI
 ##
 
 INCLUDE		= 	-I../../includes -I/usr/include/freetype2/ -I/usr/include/libpng16
@@ -16,7 +16,7 @@ CPPFLAGS	+=	$(INCLUDE)
 
 CPPFLAGS	+=	-W -Werror -Wextra -Wall -DPIC -fPIC -lglfw -IGL -IGLEW -IGLU -L/usr/local/lib -lfreetype -l/usr/include/freetype2/ -l/usr/include/libpng16
 
-LDFLAGS		+=	-shared -Wl,--no-allow-shlib-undefined /usr/lib64/libOpenGL.so /usr/lib64/libGLEW.so.1.13
+LDFLAGS		+=	-shared -Wl,--no-undefined -lglfw -lfreetype /usr/lib64/libOpenGL.so /usr/lib64/libGLEW.so.1.13 /usr/lib64/libGLU.so  /usr/lib64/libGL.so
 
 CC		=	g++
 
@@ -27,7 +27,7 @@ ifeq	($(DEBUG), 1)
 	CPPFLAGS	+=	-g -ggdb3
 endif
 
-NAME		=	libOpenGL.so
+NAME		=	../../lib/libOpenGL.so
 
 SRCS		=	OpenGLGraph.cpp
 
@@ -39,7 +39,6 @@ all:	$(NAME)
 
 $(NAME):	$(OBJS)
 	$(CC) -o $(NAME) $(LDFLAGS) $(OBJS)
-	mv $(NAME) ../../lib
 
 %.o:	%.cpp
 	$(CC) -c -o $@ $< $(CPPFLAGS)
@@ -48,7 +47,7 @@ clean:
 	$(RM) $(OBJS)
 
 fclean:	clean
-	$(RM) ../../lib/$(NAME) $(CLI)
+	$(RM) $(NAME) $(CLI)
 
 re:	fclean
 	@$(MAKE) all

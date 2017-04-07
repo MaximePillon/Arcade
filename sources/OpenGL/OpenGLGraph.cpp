@@ -326,7 +326,7 @@ bool arcade::OpenGLGraph::init(t_pos const &size,
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
   glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-  _window = glfwCreateWindow( size.x, size.y, window_name.c_str(), NULL, NULL);
+  _window = glfwCreateWindow( size.x * BLOCK_SIZE, size.y * BLOCK_SIZE, window_name.c_str(), NULL, NULL);
   if (!_window)
   {
     std::cerr << "Failed to open GLFW window\n";
