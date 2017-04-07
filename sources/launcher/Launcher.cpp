@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <unistd.h>
+#include <IGraph.hpp>
 #include "launcher/Launcher.hpp"
 
 typedef arcade::IGraph* (*graph_func)();
@@ -237,10 +238,46 @@ namespace arcade
       this->selected_game++;
   }
 
+  bool Launcher::printText(std::string string, unsigned int x,
+			   unsigned int y)
+  {
+    t_pos	pos;
+
+    pos.x = x;
+    pos.y = y;
+    return this->graph->drawText(pos, string);
+  }
+
+  bool Launcher::printExtentedBlock(unsigned int startX, unsigned int startY,
+				    unsigned int endX, unsigned int endY,
+				    unsigned int color)
+  {
+    t_pos	end;
+    t_pos	wherePrint;
+    t_color	blockColor;
+
+    end.x = endX;
+    end.y = endY;
+    blockColor.full = color;
+    for (unsigned int x = startX; x < end.x; ++x)
+    {
+      for (unsigned y = startY; y < end.y; ++y)
+      {
+	wherePrint.x = x;
+	wherePrint.y = y;
+	if (this->graph->drawBlock(wherePrint, blockColor) == false)
+	  return false;
+      }
+    }
+    return true;
+  }
+
   // </editor-fold>
 
   void Launcher::loop()
   {
+    unsigned int x = 3;
+    unsigned int y = 5;
     this->graph->registerEvent(CommandType::PLAY, this->launch_game, NULL);
     this->graph->registerEvent(CommandType::CLOSE, this->close, NULL);
     this->graph->registerEvent(CommandType::PREVIOUS_GL, this->previousGl, NULL);
@@ -250,6 +287,30 @@ namespace arcade
     while (this->graph->isOpen() && !this->quit)
     {
       this->graph->execEvents();
+      // titles
+      printText("Arcade launcher", 12, 0);
+      printText("games", 4, 2);
+      printText("librairies", 20, 2);
+
+      // games block
+      printExtentedBlock(1, 3, 11, 20, 0x00FF00FF);
+      printExtentedBlock(2, 4, 10, 19, 0x00000000);
+	for (auto it = games.begin(); it != games.end(); ++it)
+      {
+	printText((*it).first.c_str(), x, y);
+	++y;
+      }
+
+      //libs block
+      x = 15;
+      y = 5;
+      printExtentedBlock(13, 3, 24, 20, 0x00FF00FF);
+      printExtentedBlock(14, 4, 23, 19, 0x00000000);
+      for (auto it = libs.begin(); it != libs.end(); ++it)
+      {
+	printText((*it).first.c_str(), x, y);
+	++y;
+      }
       this->graph->refresh();
     }
   }
