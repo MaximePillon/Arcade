@@ -172,7 +172,7 @@ bool arcade::OpenGLGraph::drawText(t_pos const &pos, std::string const &text)
   newpos.x = pos.x * BLOCK_SIZE;
   newpos.y = height - ((pos.y  + 1) * BLOCK_SIZE);
 
-  glm::vec3 color(1.f, 0.f, 0.f);
+  glm::vec3 color(1.f, 1.f, 1.f);
   shader.Use();
   glUniform3f(glGetUniformLocation(shader.Program, "textColor"), color.x, color.y, color.z);
   glActiveTexture(GL_TEXTURE0);

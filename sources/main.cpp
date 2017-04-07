@@ -21,8 +21,9 @@ int		main(int argc, const char *argv[])
   arcade::Launcher 	lol;
   test			ptr;
   arcade::t_pos		pos;
-
-
+  arcade::t_color	color;
+  arcade::IGraph*	graph;
+  
   if (argc != 2)
     return EXIT_FAILURE;
   if (lol.openLib(argv[1]) == 1)
@@ -36,25 +37,29 @@ int		main(int argc, const char *argv[])
     std::clog << dlerror() << std::endl;
     return lol.closeLib();
   }
-  arcade::IGraph*	yolo = ptr();
-  if (yolo == NULL)
-    std::clog << "BITE" << std::endl;
+   graph = ptr();
+  if (graph == NULL)
+  {
+    std::cerr << "can't load the graphic library\n";
+    return -1;
+  }
   pos.x = WINDOW_WIDTH;
   pos.y = WINDOW_HEIGHT;
-  yolo->init(pos, "BITE");
-  pos.x = 10;
-  pos.y = 10;
-  arcade::t_color color;
-  color.full = 0x00FFFFFF;
-  yolo->setBackground(color);
-  yolo->drawText(pos, "BITE");
+  graph->init(pos, "Arcade launcher");
+
   pos.x = 15;
-  color.full = 0xFF00FFFF;
-  yolo->drawBlock(pos, color);
-  yolo->refresh();
+  pos.y = 0;
+  graph->drawText(pos, "CPP_ARCADE");
+  color.full = 0x00FF00FF;
+  for (unsigned int j = 0; j < 3; ++j) {
+    pos.x = 5;
+    pos.y = 5 * (j + 1);
+    graph->drawText(pos, "graph");
+  }
+  graph->refresh();
   sleep(5);
-  yolo->close();
-  delete yolo;
+  graph->close();
+  delete graph;
   lol.closeLib();
   return 0;
 }
