@@ -28,7 +28,7 @@ namespace arcade
   bool SfmlGraph::init(t_pos const &size, std::string const &name)
   {
     this->font.loadFromFile("res/DejaVuSansMono.ttf");
-    this->mainWin = new sf::RenderWindow(sf::VideoMode(size.x, size.y), name);
+    this->mainWin = new sf::RenderWindow(sf::VideoMode(size.x * BLOCK_SIZE, size.y * BLOCK_SIZE), name);
     this->initMap();
     return true;
   }
@@ -52,7 +52,7 @@ namespace arcade
       col.r = color.argb[1];
       col.g = color.argb[2];
       col.b = color.argb[3];
-      tmp.setPosition(pos.x, pos.y);
+      tmp.setPosition(pos.x * BLOCK_SIZE, pos.y * BLOCK_SIZE);
       tmp.setSize(sf::Vector2f(BLOCK_SIZE, BLOCK_SIZE));
       tmp.setFillColor(col);
       this->block.push_back(tmp);
@@ -82,8 +82,8 @@ namespace arcade
     {
       tmp.setString(text);
       tmp.setFont(this->font);
-      tmp.setScale(sf::Vector2f(BLOCK_SIZE, BLOCK_SIZE));
-      tmp.setPosition(pos.x, pos.y);
+      tmp.setScale(sf::Vector2f(0.7, 0.7));
+      tmp.setPosition(pos.x * BLOCK_SIZE, pos.y * BLOCK_SIZE);
       this->textList.push_back(tmp);
     }
     i = this->textList.begin();
