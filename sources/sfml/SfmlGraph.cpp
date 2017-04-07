@@ -139,7 +139,8 @@ namespace arcade
     tmp.g  = color.argb[2];
     tmp.b  = color.argb[3];
     this->background.setPosition(0, 0);
-    this->background.setScale(WINDOW_WIDTH, WINDOW_HEIGHT);
+    this->background.setScale(WINDOW_WIDTH * BLOCK_SIZE,
+			      WINDOW_HEIGHT * BLOCK_SIZE);
     this->background.setFillColor(tmp);
     this->mainWin->draw(background);
     return true;
