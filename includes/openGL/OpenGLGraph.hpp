@@ -51,6 +51,8 @@ namespace arcade
     FT_Face _face;
     std::map<GLchar, Character> Characters;
     std::map<GLchar, Character> Block;
+    std::map<CommandType, int>	keyboard; //!< Map of keyboard macros
+    std::map<CommandType, handler_t>		eventMap; //!< Map of handler
 
   public:
     OpenGLGraph();
@@ -63,6 +65,7 @@ namespace arcade
 		   t_color const& color);
 
   public:
+    void initMap();
     bool init(t_pos const& size, std::string const& window_name);
     bool loadFont();
     bool close(void);
