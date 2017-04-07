@@ -13,17 +13,6 @@
 #include <sfml/SfmlGraph.hpp>
 #include "sfml/SfmlGraph.hpp"
 
-extern "C"
-{
-arcade::IGraph		*create_graph()
-{
-  arcade::IGraph	*newGraph;
-
-  newGraph = new arcade::SfmlGraph();
-  return newGraph;
-}
-}
-
 namespace arcade
 {
 
@@ -167,4 +156,15 @@ namespace arcade
     this->mainWin->close();
     return true;
   }
+}
+
+extern "C"
+{
+arcade::IGraph		*create_graph()
+{
+  arcade::IGraph	*newGraph;
+
+  newGraph = new arcade::SfmlGraph();
+  return newGraph;
+}
 }
