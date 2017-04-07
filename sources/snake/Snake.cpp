@@ -60,8 +60,8 @@ namespace arcade
 
   // <editor-fold>
 
-  Snake::Snake():
-    powerup(), body(), turns(), border(), score(0)
+  Snake::Snake(IGraph* graph):
+    powerup(), body(), turns(), border(), score(0), graph(graph)
   {
     t_color color;
     t_pos   pos;
@@ -100,6 +100,16 @@ namespace arcade
     pos.y = WINDOW_HEIGHT - 1;
     for (pos.x = 0; pos.x < WINDOW_WIDTH; ++(pos.x))
       this->border.push_back(Block(color, pos, direction));
+  }
+
+  void Snake::print()
+  {
+    for (auto it = this->border.begin(); it != this->border.end(); ++it)
+      (*it).print(*(this->graph));
+    for (auto it = this->body.begin(); it != this->body.end(); ++it)
+      (*it).print(*(this->graph));
+    for (auto it = this->powerup.begin(); it != this->powerup.end(); ++it)
+      (*it).print(*(this->graph));
   }
 
   // </editor-fold>

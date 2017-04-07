@@ -5,7 +5,7 @@
 ## Login   <hugo.soszynski@epitech.eu>
 ## 
 ## Started on  Wed Apr  5 09:57:14 2017 Hugo SOSZYNSKI
-## Last update Wed Apr  5 10:34:25 2017 Hugo SOSZYNSKI
+## Last update Fri Apr  7 14:41:29 2017 Hugo SOSZYNSKI
 ##
 
 INCLUDE		=	-I./includes
@@ -18,7 +18,7 @@ CPPFLAGS	+=	$(INCLUDE)
 
 CPPFLAGS	+=	-MD -MP
 
-CPPFLAGS	+=	-W -Wall -Wextra
+CPPFLAGS	+=	-W -Wall -Wextra -lncurses
 
 CC		=	g++
 
