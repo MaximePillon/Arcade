@@ -310,6 +310,15 @@ void arcade::OpenGLGraph::initMap()
   this->keyboard[CommandType::GO_RIGHT] = GLFW_KEY_RIGHT;
   this->keyboard[CommandType::GO_LEFT] = GLFW_KEY_LEFT;
   this->keyboard[CommandType::SHOOT] = GLFW_KEY_SPACE;
+  this->keyboard[CommandType::CLOSE] = GLFW_KEY_ESCAPE;
+  this->keyboard[CommandType::PREVIOUS_GL] = GLFW_KEY_2;
+  this->keyboard[CommandType::NEXT_GL] = GLFW_KEY_3;
+  this->keyboard[CommandType::PREVIOUS_GAME] = GLFW_KEY_4;
+  this->keyboard[CommandType::NEXT_GAME] = GLFW_KEY_5;
+  this->keyboard[CommandType::RESTART] = GLFW_KEY_8;
+  this->keyboard[CommandType::MENU] = GLFW_KEY_9;
+  this->keyboard[CommandType::PLAY] = GLFW_KEY_ENTER;
+
 }
 
 bool arcade::OpenGLGraph::init(t_pos const &size,

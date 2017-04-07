@@ -22,7 +22,14 @@ namespace arcade
     this->keyboard[CommandType::GO_DOWN] = sf::Keyboard::Down;
     this->keyboard[CommandType::GO_RIGHT] = sf::Keyboard::Right;
     this->keyboard[CommandType::GO_LEFT] = sf::Keyboard::Left;
-    this->keyboard[CommandType::SHOOT] = sf::Keyboard::Space;
+    this->keyboard[CommandType::CLOSE] = sf::Keyboard::Escape;
+    this->keyboard[CommandType::PREVIOUS_GL] = sf::Keyboard::Num2;
+    this->keyboard[CommandType::NEXT_GL] = sf::Keyboard::Num3;
+    this->keyboard[CommandType::PREVIOUS_GAME] = sf::Keyboard::Num4;
+    this->keyboard[CommandType::NEXT_GAME] = sf::Keyboard::Num5;
+    this->keyboard[CommandType::RESTART] = sf::Keyboard::Num8;
+    this->keyboard[CommandType::MENU] = sf::Keyboard::Num9;
+    this->keyboard[CommandType::PLAY] = sf::Keyboard::Return;
   }
 
   bool SfmlGraph::init(t_pos const &size, std::string const &name)
@@ -103,7 +110,7 @@ namespace arcade
 	this->close();
       if (this->event.key.code == sf::Keyboard::Escape)
 	this->close();
-      for (auto &it : this->keyboard)
+      for (auto it : this->keyboard)
 	if (it.second == this->event.key.code)
 	  this->eventMap[it.first].hdl(this->eventMap[it.first].param);
     }
