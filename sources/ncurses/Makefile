@@ -5,7 +5,7 @@
 ## Login   <loens_g@epitech.net>
 ## 
 ## Started on  Thu Apr  6 21:08:23 2017 loens_g
-## Last update Thu Apr  6 21:29:59 2017 loens_g
+## Last update Fri Apr  7 13:10:43 2017 Hugo SOSZYNSKI
 ##
 
 INCLUDE		= 	-I../../includes
@@ -14,7 +14,7 @@ RM		=	rm -rf
 
 CPPFLAGS	+=	$(INCLUDE)
 
-CPPFLAGS	+=	-W -Werror -Wextra -Wall -lncurses -fPIC
+CPPFLAGS	+=	-W -Wextra -Wall -fPIC -lncurses -L../../externLibs -lmyncurses
 
 LDFLAGS		+=	-shared
 
@@ -30,7 +30,6 @@ endif
 NAME		=	libncurses.so
 
 SRCS		=	NcursesGraph.cpp
-
 
 OBJS		=	 $(SRCS:.cpp=.o)
 
