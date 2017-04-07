@@ -5,7 +5,7 @@
 ## Login   <hugo.soszynski@epitech.eu>
 ## 
 ## Started on  Wed Apr  5 09:57:14 2017 Hugo SOSZYNSKI
-## Last update Fri Apr  7 14:41:29 2017 Hugo SOSZYNSKI
+## Last update Fri Apr  7 18:36:10 2017 Hugo SOSZYNSKI
 ##
 
 INCLUDE		=	-I./includes
@@ -18,11 +18,11 @@ CPPFLAGS	+=	$(INCLUDE)
 
 CPPFLAGS	+=	-MD -MP
 
-CPPFLAGS	+=	-W -Wall -Wextra -lncurses
+CPPFLAGS	+=	-W -Wall -Wextra -lncurses -fPIC
+
+LDFLAGS		+=	-shared
 
 CC		=	g++
-
-AR		=	ar rc
 
 DEBUG		?=	0
 
@@ -31,7 +31,7 @@ ifeq	($(DEBUG), 1)
 	CPPFLAGS	+=	-g -ggdb3
 endif
 
-NAME		=	libmyncurses.a
+NAME		=	libmyncurses.so
 
 SRCS		=	$(shell cat ./sources.mk)
 
@@ -43,7 +43,7 @@ DEPS		=	$(SRCS:.cpp=.d)
 all:		$(NAME)
 
 $(NAME):	$(OBJS)
-		$(AR) $(NAME) $(OBJS)
+		$(CC) -o $(NAME) $(LDFLAGS) $(OBJS)
 		mv $(NAME) $(LIB_PATH)
 
 %.o:		%.cpp

@@ -5,7 +5,7 @@
 ## Login   <loens_g@epitech.net>
 ## 
 ## Started on  Thu Apr  6 21:08:23 2017 loens_g
-## Last update Fri Apr  7 13:10:43 2017 Hugo SOSZYNSKI
+## Last update Fri Apr  7 18:38:49 2017 Hugo SOSZYNSKI
 ##
 
 INCLUDE		= 	-I../../includes
@@ -16,7 +16,7 @@ CPPFLAGS	+=	$(INCLUDE)
 
 CPPFLAGS	+=	-W -Wextra -Wall -fPIC -lncurses -L../../externLibs -lmyncurses
 
-LDFLAGS		+=	-shared
+LDFLAGS		+=	-shared -Wl,--no-allow-shlib-undefined $(PWD)/externLibs/libmyncurses.so /usr/lib64/libncurses.so
 
 CC		=	g++
 
