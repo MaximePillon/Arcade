@@ -114,3 +114,16 @@ namespace arcade
 
   // </editor-fold>
 }
+
+#include <unistd.h>
+
+extern "C"
+{
+void Play(arcade::IGraph* graph)
+{
+  arcade::Snake snake(graph);
+
+  snake.print();
+  sleep(10);
+}
+}
