@@ -5,7 +5,7 @@
 ## Login   <loens_g@epitech.net>
 ## 
 ## Started on  Thu Apr  6 21:08:23 2017 loens_g
-## Last update Thu Apr  6 22:13:07 2017 loens_g
+## Last update Fri Apr  7 10:43:09 2017 loens_g
 ##
 
 INCLUDE		= 	-I../../includes -I/usr/include/freetype2/ -I/usr/include/libpng16
@@ -48,11 +48,11 @@ clean:
 	$(RM) $(OBJS)
 
 fclean:	clean
-	$(RM) $(NAME) $(CLI)
+	$(RM) ../../lib/$(NAME) $(CLI)
 
 re:	fclean
 	@$(MAKE) all
 
 .PHONY:	 all clean fclean re
-
+x
 -include	$(DEPS)
