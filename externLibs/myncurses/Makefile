@@ -5,12 +5,10 @@
 ## Login   <hugo.soszynski@epitech.eu>
 ## 
 ## Started on  Wed Apr  5 09:57:14 2017 Hugo SOSZYNSKI
-## Last update Fri Apr  7 18:36:10 2017 Hugo SOSZYNSKI
+## Last update Fri Apr  7 19:39:47 2017 Hugo SOSZYNSKI
 ##
 
 INCLUDE		=	-I./includes
-
-LIB_PATH	=	../
 
 RM		=	rm -rf
 
@@ -31,7 +29,7 @@ ifeq	($(DEBUG), 1)
 	CPPFLAGS	+=	-g -ggdb3
 endif
 
-NAME		=	libmyncurses.so
+NAME		=	../libmyncurses.so
 
 SRCS		=	$(shell cat ./sources.mk)
 
@@ -44,7 +42,6 @@ all:		$(NAME)
 
 $(NAME):	$(OBJS)
 		$(CC) -o $(NAME) $(LDFLAGS) $(OBJS)
-		mv $(NAME) $(LIB_PATH)
 
 %.o:		%.cpp
 		$(CC) -c -o $@ $< $(CPPFLAGS)
@@ -53,7 +50,7 @@ clean:
 		$(RM) $(OBJS) $(DEPS)
 
 fclean:		clean
-		$(RM) $(LIB_PATH)$(NAME)
+		$(RM) $(NAME)
 
 re:		fclean
 		@$(MAKE) all
