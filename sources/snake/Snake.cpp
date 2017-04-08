@@ -331,11 +331,14 @@ namespace arcade
   void Snake::getHighScore()
   {
     std::ifstream file("score", std::ios::in);
-
+    std::string str;
 
     if (file)
     {
-      file >>this->highScore;
+
+      getline(file, str);
+      std::cout << str << std::endl;
+      file >> this->highScore;
       file.close();
     }
     else
