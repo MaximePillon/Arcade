@@ -18,12 +18,12 @@ namespace myncurses
 
 // <editor-fold>
 
-Events::Events(Window* window):
-  _window(window), _handlers(), _params(), _inputs()
-{}
+  Events::Events(Window *window) :
+    _window(window)
+  {}
 
-Events::~Events()
-{}
+  Events::~Events()
+  {}
 
 // </editor-fold>
 
@@ -33,25 +33,30 @@ Events::~Events()
 
 // <editor-fold>
 
-int Events::termKeypad(bool bf) const
-{
-  return keypad(this->_window->getWINDOW(), bf);
-}
+  int Events::termKeypad(bool bf) const
+  {
+    return keypad(this->_window->getWINDOW(), bf);
+  }
 
-int Events::tremNodelay(bool bf) const
-{
-  return nodelay(this->_window->getWINDOW(), bf);
-}
+  int Events::tremNodelay(bool bf) const
+  {
+    return nodelay(this->_window->getWINDOW(), bf);
+  }
 
-int Events::termRaw() const
-{
-  return raw();
-}
+  int Events::termRaw() const
+  {
+    return raw();
+  }
 
-int Events::termNoraw() const
-{
-  return noraw();
-}
+  int Events::termNoraw() const
+  {
+    return noraw();
+  }
+
+  int Events::termCursSet(int visibility) const
+  {
+    return curs_set(visibility);
+  }
 
 // </editor-fold>
 
@@ -61,33 +66,9 @@ int Events::termNoraw() const
 
   // <editor-fold>
 
-  void Events::registerEvent(int key, handler func, void* param)
+  int Events::termGetch() const
   {
-    this->_handlers[key] = func;
-    this->_params[key] = param;
-  }
-
-  void Events::inputs()
-  {
-    int in;
-
-    while ((in = getch()) != ERR)
-    {
-      if (this->_handlers.find(in) != this->_handlers.end())
-	this->_inputs.push(in);
-    }
-  }
-
-  void Events::events()
-  {
-    int in;
-
-    while (this->_inputs.size() > 0)
-    {
-      in = this->_inputs.front();
-      this->_inputs.pop();
-      this->_handlers[in](this->_params[in]);
-    }
+    return wgetch(this->_window->getWINDOW());
   }
 
   // </editor-fold>

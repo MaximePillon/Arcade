@@ -9,6 +9,7 @@
 */
 
 #include <unistd.h>
+#include <IGraph.hpp>
 #include "IGraph.hpp"
 #include "ncurses/NcursesGraph.hpp"
 
@@ -59,6 +60,7 @@ namespace arcade
     this->_window->startColor();
     this->_window->termNoecho();
     this->_events->termRaw();
+    this->_events->termCursSet(0);
     this->_events->termKeypad(TRUE);
     this->_events->tremNodelay(TRUE);
     this->_window->initPair(1, COLOR_BLACK, COLOR_RED);
@@ -106,13 +108,23 @@ namespace arcade
   void NcursesGraph::registerEvent(CommandType command, event_handler hdl,
 				   void *param)
   {
-    this->_events->registerEvent(this->_keyboard[command], hdl, param);
+    handler_t handler;
+
+    handler.hdl = hdl;
+    handler.param = param;
+    if (this->_keyboard.find(command) != this->_keyboard.end())
+      this->_handlers[this->_keyboard[command]] = handler;
   }
 
   void NcursesGraph::execEvents()
   {
-    this->_events->inputs();
-    this->_events->events();
+    int input;
+
+    while ((input = this->_events->termGetch()) != ERR)
+    {
+      if (this->_handlers.find(input) != this->_handlers.end())
+	this->_handlers[input].hdl(this->_handlers[input].param);
+    }
   }
 
   // </editor-fold>

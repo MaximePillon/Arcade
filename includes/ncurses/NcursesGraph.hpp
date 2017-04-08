@@ -47,6 +47,7 @@ namespace arcade
     myncurses::Window*	_window;
     myncurses::Events*	_events;
     std::map<CommandType, int> _keyboard;
+    std::map<int, handler_t> _handlers;
     bool		_isOpen;
   };
 }
