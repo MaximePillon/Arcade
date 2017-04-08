@@ -96,6 +96,7 @@ namespace arcade
   {
     Launcher* self;
 
+    //std::clog << "previous gl" << std::endl;
     self = static_cast<Launcher*>(param);
     if (self->selected_lib != self->libs.begin())
       self->selected_lib--;
@@ -105,8 +106,9 @@ namespace arcade
   {
     Launcher* self;
 
+    //std::clog << "next gl" << std::endl;
     self = static_cast<Launcher*>(param);
-    if (self->selected_lib != self->libs.end()--)
+    if (self->selected_lib != --self->libs.end())
       self->selected_lib++;
   }
 
