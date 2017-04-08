@@ -51,6 +51,7 @@ namespace arcade
 
   public:
     bool isOpen() const;
+    void clear() const {};
     void refresh();
 
   protected:
