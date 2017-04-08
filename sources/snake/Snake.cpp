@@ -10,8 +10,8 @@
 
 #include <unistd.h>
 #include <iostream>
+#include <algorithm>
 #include <IGraph.hpp>
-#include "arcade_protocol.hpp"
 #include "game/Snake.hpp"
 
 namespace arcade
@@ -22,7 +22,7 @@ namespace arcade
 
   // <editor-fold>
 
-  Block::Block(t_color const &color, t_pos const &pos, t_pos const& direction):
+  Block::Block(t_color const &color, t_pos const &pos, t_spos const &direction) :
     color(color)
   {
     this->pos.x = pos.x;
@@ -37,7 +37,7 @@ namespace arcade
     this->pos.y += this->direction.y;
   }
 
-  void Block::changeDirection(t_pos const& direction)
+  void Block::changeDirection(t_spos const &direction)
   {
     this->direction.x = direction.x;
     this->direction.y = direction.y;
@@ -55,6 +55,11 @@ namespace arcade
     return false;
   }
 
+  t_spos const& Block::getDirection() const
+  {
+    return this->direction;
+  }
+
   // </editor-fold>
 
   /*
@@ -63,12 +68,12 @@ namespace arcade
 
   // <editor-fold>
 
-  Snake::Snake(IGraph* graph):
+  Snake::Snake(IGraph *graph) :
     powerup(), body(), turns(), border(), score(0), graph(graph), quit(false)
   {
     t_color color;
-    t_pos   pos;
-    t_pos   direction;
+    t_pos pos;
+    t_spos direction;
 
     // Body
     color.argb[0] = 255;
@@ -103,6 +108,28 @@ namespace arcade
     pos.y = WINDOW_HEIGHT - 1;
     for (pos.x = 0; pos.x < WINDOW_WIDTH; ++(pos.x))
       this->border.push_back(Block(color, pos, direction));
+
+    // TESTING
+    pos.x = 16;
+    pos.y = 15;
+    direction.x = 1;
+    direction.y = 0;
+    this->turns.push_back(Block(color, pos, direction));
+    pos.x = 18;
+    pos.y = 15;
+    direction.x = 0;
+    direction.y = -1;
+    this->turns.push_back(Block(color, pos, direction));
+    pos.x = 18;
+    pos.y = 4;
+    direction.x = -1;
+    direction.y = 0;
+    this->turns.push_back(Block(color, pos, direction));
+    pos.x = 16;
+    pos.y = 4;
+    direction.x = 0;
+    direction.y = 1;
+    this->turns.push_back(Block(color, pos, direction));
   }
 
   void Snake::print()
@@ -115,31 +142,50 @@ namespace arcade
       (*it).print(*(this->graph));
   }
 
+  /*
+   * Event method
+   */
+  static void close(void *param)
+  {
+    arcade::Snake *self;
+
+    self = static_cast<arcade::Snake *>(param);
+    self->quit = true;
+  }
+
+  bool arcade::Snake::play()
+  {
+    graph->registerEvent(CommandType::CLOSE, arcade::close, this);
+    while (graph->isOpen() && !quit)
+    {
+      this->graph->execEvents();
+      this->move();
+      this->graph->clear();
+      this->print();
+      this->graph->refresh();
+      usleep(100000);
+    }
+    return this->quit;
+  }
+
+  void Snake::move()
+  {
+    for (auto it = this->body.begin(); it != this->body.end(); ++it)
+    {
+      it->move();
+      auto turn = std::find(this->turns.begin(), this->turns.end(), *it);
+      if (turn != this->turns.end())
+      {
+	it->changeDirection(turn->getDirection());
+	std::vector<Block>::iterator tmp = it;
+	if (++tmp == this->body.end())
+	  this->turns.erase(turn);
+      }
+    }
+  }
+
   // </editor-fold>
 
-/*
- * Event method
- */
-static void close(void* param)
-{
-  arcade::Snake* self;
-
-  self = static_cast<arcade::Snake*>(param);
-  self->quit = true;
-}
-
-bool arcade::Snake::play()
-{
-  graph->registerEvent(CommandType::CLOSE, arcade::close, this);
-  while (graph->isOpen() && !quit)
-  {
-    this->graph->execEvents();
-    this->graph->clear();
-    this->print();
-    this->graph->refresh();
-  }
-  return this->quit;
-}
 }
 
 extern "C" {

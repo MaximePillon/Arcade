@@ -22,7 +22,7 @@ namespace arcade
   class Block
   {
   public:
-    Block(t_color const& color, t_pos const& pos, t_pos const& direction);
+    Block(t_color const& color, t_pos const& pos, t_spos const& direction);
     virtual ~Block() {};
 
   public:
@@ -31,7 +31,11 @@ namespace arcade
 
     /// \brief Change the direction of the block
     /// \param direction The new direction to apply to the block
-    void changeDirection(t_pos const& direction);
+    void changeDirection(t_spos const& direction);
+
+    /// \brief Get th direction of the Block
+    /// \return The direction of the Block
+    t_spos const& getDirection() const;
 
     /// \brief Print the block on screen
     /// \param graph The graphical interface on which to print the block
@@ -45,7 +49,7 @@ namespace arcade
   protected:
     t_color	color; //!< Color of the block
     t_pos	pos; //!< Position of the block
-    t_pos	direction; //!< Direction of the block
+    t_spos	direction; //!< Direction of the block
   };
 
   /// \class Snake

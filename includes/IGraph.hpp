@@ -45,6 +45,13 @@ namespace arcade
     unsigned int y;
   } t_pos;
 
+  /// \struct t_spos
+  typedef struct
+  {
+    int x;
+    int y;
+  } t_spos;
+
   /// \union t_color
   typedef union
   {
