@@ -57,7 +57,7 @@ namespace arcade
       self->graph->init(pos, "Arcade");
       return ;
     }
-    *(void**)(&ga_creat) = self->loadGameSym("launch_game");
+    *(void**)(&ga_creat) = self->loadGameSym("Play");
     if (ga_creat == NULL)
     {
       std::clog << dlerror() << std::endl;
@@ -126,7 +126,7 @@ namespace arcade
     Launcher* self;
 
     self = static_cast<Launcher*>(param);
-    if (self->selected_game != self->games.end()--)
+    if (self->selected_game != --self->games.end())
       self->selected_game++;
   }
 

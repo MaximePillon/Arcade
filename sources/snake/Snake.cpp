@@ -8,7 +8,10 @@
 ** Last update Thu Apr 06 07:08:36 2017 Hugo SOSZYNSKI
 */
 
+#include <unistd.h>
+#include <iostream>
 #include <IGraph.hpp>
+#include "arcade_protocol.hpp"
 #include "game/Snake.hpp"
 
 namespace arcade
@@ -115,15 +118,32 @@ namespace arcade
   // </editor-fold>
 }
 
-#include <unistd.h>
+/*
+ * Event method
+ */
+void close(void* param)
+{
+  arcade::Snake* self;
 
-extern "C"
+  self = static_cast<arcade::Snake*>(param);
+  self->quit = true;
+}
+
+void arcade::Snake::play()
 {
-void Play(arcade::IGraph* graph)
-{
+  graph->registerEvent(CommandType::CLOSE, close, this);
+  while (graph->isOpen() && !quit)
+  {
+    this->print();
+    this->graph->refresh();
+    this->graph->clear();
+  }
+}
+
+extern "C" {
+void Play(arcade::IGraph *graph) {
   arcade::Snake snake(graph);
 
-  snake.print();
-  sleep(10);
+  snake.play();
 }
 }
