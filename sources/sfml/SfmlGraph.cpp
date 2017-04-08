@@ -141,8 +141,6 @@ namespace arcade
 
   bool SfmlGraph::close()
   {
-    this->keyboard.clear();
-    this->eventMap.clear();
     this->mainWin->close();
     for (auto i : textList)
       std::clog << i.getPosition().x << "&&" << i.getPosition().y << std::endl;

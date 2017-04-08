@@ -29,7 +29,7 @@ namespace arcade
   {
   public:
     SfmlGraph() {};
-    virtual ~SfmlGraph() {};
+    virtual ~SfmlGraph() {keyboard.clear(); eventMap.clear();}
 
   public:
     bool init(t_pos const& size, std::string const& name);
