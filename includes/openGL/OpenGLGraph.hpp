@@ -70,6 +70,7 @@ namespace arcade
     bool loadFont();
     bool close(void);
     void refresh(void);
+    void clear(void) const;
     bool isOpen(void) const;
     void loop(int frequency, void *handler);
     virtual void registerEvent(CommandType command,
