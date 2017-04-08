@@ -342,19 +342,20 @@ namespace arcade
 
   void Snake::getHighScore()
   {
-    std::ifstream file("score", std::ios::in);
-    std::string str;
+    std::ifstream file;
+    char		lol;
 
-    if (file)
+    file.open("score");
+    if (file.is_open())
     {
-
-      getline(file, str);
-      std::cout << str << std::endl;
       file >> this->highScore;
       file.close();
     }
     else
+    {
       this->highScore = 0;
+      std::clog << "uolou" << std::endl;
+    }
   }
 
   // </editor-fold>
