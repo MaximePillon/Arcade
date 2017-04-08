@@ -134,8 +134,8 @@ namespace arcade
 
   void SfmlGraph::refresh()
   {
-    this->mainWin->display();
     this->mainWin->clear();
+    this->mainWin->display();
   }
 
   bool SfmlGraph::setBackground(t_color const& color)
