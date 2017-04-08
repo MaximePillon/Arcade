@@ -312,36 +312,34 @@ namespace arcade
 
   void Snake::saveHighScore()
   {
-    std::ifstream inFile("score", std::ios::in);
     std::ofstream oFile;
-    unsigned int tmp;
 
-    if (inFile)
+    if (this->highScore < this->score)
     {
-      inFile >> tmp;
-      inFile.close();
-    }
-    else
-      std::cerr << "Unable to open score file !" << std::endl;
-    oFile.open("score", std::ios::out);
-    if (oFile)
-    {
-      if (tmp > this->score)
+      oFile.open("score", std::ios::out);
+      if (oFile)
       {
-	oFile << tmp;
-	this->highScore = tmp;
+	oFile << this->score;
+	oFile.close();
       }
       else
-	this->highScore = score;
-      oFile.close();
+	std::cerr << "Unable to open the score file !"  << std::endl;
     }
-    else
-      std::cerr << "Unable to open score file !" << std::endl;
   }
 
-  unsigned int Snake::getHighScore()
+
+  void Snake::getHighScore()
   {
-    return this->highScore;
+    std::ifstream file("score", std::ios::in);
+
+
+    if (file)
+    {
+      file >>this->highScore;
+      file.close();
+    }
+    else
+      this->highScore = 0;
   }
 
   // </editor-fold>

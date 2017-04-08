@@ -65,7 +65,8 @@ namespace arcade
     /// \brief Move all the blocks the snake
     void move();
 
-    /// \brief Collision detections and reactions
+    /// \brief C
+    /// ollision detections and reactions
     void collide();
 
     /// \brief The main game function
@@ -73,7 +74,7 @@ namespace arcade
 
     void saveHighScore();
 
-    unsigned int getHighScore();
+    void getHighScore();
 
   public:
     Snake(IGraph* graph);
