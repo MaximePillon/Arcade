@@ -386,6 +386,8 @@ void arcade::OpenGLGraph::refresh()
   glClear(GL_COLOR_BUFFER_BIT);
 }
 
+void arcade::OpenGLGraph::clear() const {}
+
 bool arcade::OpenGLGraph::isOpen() const
 {
   if (glfwWindowShouldClose(_window))
