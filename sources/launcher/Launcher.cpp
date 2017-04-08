@@ -321,6 +321,10 @@ namespace arcade
 	for (auto it = games.begin(); it != games.end(); ++it)
       {
 	printText((*it).first.c_str(), x, y);
+	if (it == selected_game)
+	{
+	  printText(">", x - 1, y);
+	}
 	++y;
       }
 
@@ -331,6 +335,10 @@ namespace arcade
       for (auto it = libs.begin(); it != libs.end(); ++it)
       {
 	printText((*it).first.c_str(), x, y);
+	if (it == selected_lib)
+	{
+	  printText(">", x - 1, y);
+	}
 	++y;
       }
       usleep(10000);
