@@ -328,7 +328,7 @@ namespace arcade
 
     if (this->highScore < this->score)
     {
-      oFile.open("score", std::ios::out);
+      oFile.open("snake.score", std::ios::out);
       if (oFile)
       {
 	oFile << this->score;
@@ -343,9 +343,8 @@ namespace arcade
   void Snake::getHighScore()
   {
     std::ifstream file;
-    char		lol;
 
-    file.open("score");
+    file.open("snake.score");
     if (file.is_open())
     {
       file >> this->highScore;
@@ -354,7 +353,6 @@ namespace arcade
     else
     {
       this->highScore = 0;
-      std::clog << "uolou" << std::endl;
     }
   }
 
