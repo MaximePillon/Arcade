@@ -16,119 +16,13 @@
 
 namespace arcade
 {
-  /*
-   * Block
-   */
-
-  // <editor-fold>
-
-  Block::Block(t_color const &color, t_pos const &pos, t_spos const &direction) :
-    color(color)
-  {
-    this->pos.x = pos.x;
-    this->pos.y = pos.y;
-    this->direction.x = direction.x;
-    this->direction.y = direction.y;
-  }
-
-  t_pos const& Block::getPos() const
-  {
-    return this->pos;
-  }
-
-  void Block::move()
-  {
-    this->pos.x += this->direction.x;
-    this->pos.y += this->direction.y;
-  }
-
-  void Block::changeDirection(t_spos const &direction)
-  {
-    this->direction.x = direction.x;
-    this->direction.y = direction.y;
-  }
-
-  void Block::print(IGraph &graph)
-  {
-    graph.drawBlock(this->pos, this->color);
-  }
-
-  bool Block::operator==(Block const &other)
-  {
-    if (this->pos.x == other.pos.x && this->pos.y == other.pos.y)
-      return true;
-    return false;
-  }
-
-  t_spos const& Block::getDirection() const
-  {
-    return this->direction;
-  }
-
-  // </editor-fold>
-
-  /*
-   * Snake
-   */
-
-  // <editor-fold>
-
-  Snake::Snake(IGraph *graph) :
-    powerup(), border(), score(0), graph(graph), body(), turns(), quit(false),
-    restart(false), menu(false)
-  {
-    t_color color;
-    t_pos pos;
-    t_spos direction;
-
-    // Body
-    color.argb[0] = 255;
-    color.argb[1] = 255;
-    color.argb[2] = 255;
-    color.argb[3] = 0;
-    direction.x = 0;
-    direction.y = 1;
-    pos.x = 16;
-    pos.y = 12;
-    for (int i = 0; i < 4; ++i)
-    {
-      this->body.push_back(Block(color, pos, direction));
-      pos.y -= 1;
-    }
-
-    // Borders
-    color.argb[0] = 255;
-    color.argb[1] = 255;
-    color.argb[2] = 255;
-    color.argb[3] = 255;
-    direction.y = 0;
-    pos.y = 2;
-    for (pos.x = 0; pos.x < WINDOW_WIDTH; ++(pos.x))
-      this->border.push_back(Block(color, pos, direction));
-    pos.x = 0;
-    for (pos.y = 2; pos.y < WINDOW_HEIGHT; ++(pos.y))
-      this->border.push_back(Block(color, pos, direction));
-    pos.x = WINDOW_WIDTH - 1;
-    for (pos.y = 2; pos.y < WINDOW_HEIGHT; ++(pos.y))
-      this->border.push_back(Block(color, pos, direction));
-    pos.y = WINDOW_HEIGHT - 1;
-    for (pos.x = 0; pos.x < WINDOW_WIDTH; ++(pos.x))
-      this->border.push_back(Block(color, pos, direction));
-  }
-
-  void Snake::print()
-  {
-    for (auto it = this->border.begin(); it != this->border.end(); ++it)
-      (*it).print(*(this->graph));
-    for (auto it = this->body.begin(); it != this->body.end(); ++it)
-      (*it).print(*(this->graph));
-    for (auto it = this->powerup.begin(); it != this->powerup.end(); ++it)
-      (*it).print(*(this->graph));
-  }
 
   /*
    * Event method
    */
+
+  // <editor-fold>
+
   static void close(void *param)
   {
     arcade::Snake *self;
@@ -231,7 +125,123 @@ namespace arcade
     self->menu = true;
   }
 
-  bool arcade::Snake::play()
+  // </editor-fold>
+
+  /*
+   * Block
+   */
+
+  // <editor-fold>
+
+  Block::Block(t_color const &color, t_pos const &pos, t_spos const &direction) :
+    color(color)
+  {
+    this->pos.x = pos.x;
+    this->pos.y = pos.y;
+    this->direction.x = direction.x;
+    this->direction.y = direction.y;
+  }
+
+  t_pos const& Block::getPos() const
+  {
+    return this->pos;
+  }
+
+  void Block::move()
+  {
+    this->pos.x += this->direction.x;
+    this->pos.y += this->direction.y;
+  }
+
+  void Block::changeDirection(t_spos const &direction)
+  {
+    this->direction.x = direction.x;
+    this->direction.y = direction.y;
+  }
+
+  void Block::print(IGraph &graph)
+  {
+    graph.drawBlock(this->pos, this->color);
+  }
+
+  bool Block::operator==(Block const &other)
+  {
+    if (this->pos.x == other.pos.x && this->pos.y == other.pos.y)
+      return true;
+    return false;
+  }
+
+  t_spos const& Block::getDirection() const
+  {
+    return this->direction;
+  }
+
+  // </editor-fold>
+
+  /*
+   * Snake
+   */
+
+  // <editor-fold>
+
+  Snake::Snake(IGraph *graph) :
+    powerup(), border(), score(0), graph(graph), loose(false), body(),
+    turns(), quit(false), restart(false), menu(false)
+  {
+    t_color color;
+    t_pos pos;
+    t_spos direction;
+
+    // Body
+    color.full = 0x00FFFFFF;
+    direction.x = 0;
+    direction.y = 1;
+    pos.x = 16;
+    pos.y = 12;
+    for (int i = 0; i < 4; ++i)
+    {
+      this->body.push_back(Block(color, pos, direction));
+      pos.y -= 1;
+    }
+
+    // Borders
+    color.argb[0] = 255;
+    color.argb[1] = 255;
+    color.argb[2] = 255;
+    color.argb[3] = 255;
+    direction.y = 0;
+    pos.y = 2;
+    for (pos.x = 0; pos.x < WINDOW_WIDTH; ++(pos.x))
+      this->border.push_back(Block(color, pos, direction));
+    pos.x = 0;
+    for (pos.y = 2; pos.y < WINDOW_HEIGHT; ++(pos.y))
+      this->border.push_back(Block(color, pos, direction));
+    pos.x = WINDOW_WIDTH - 1;
+    for (pos.y = 2; pos.y < WINDOW_HEIGHT; ++(pos.y))
+      this->border.push_back(Block(color, pos, direction));
+    pos.y = WINDOW_HEIGHT - 1;
+    for (pos.x = 0; pos.x < WINDOW_WIDTH; ++(pos.x))
+      this->border.push_back(Block(color, pos, direction));
+    color.full = 0x0000FFFF;
+    srand(getpid());
+    pos.x = rand() % (WINDOW_WIDTH - 2) + 1;
+    pos.y = rand() % (WINDOW_HEIGHT - 4) + 3;
+    direction.x = 0;
+    direction.y = 0;
+    this->powerup.push_back(Block(color, pos, direction));
+  }
+
+  void Snake::print()
+  {
+    for (auto it = this->border.begin(); it != this->border.end(); ++it)
+      (*it).print(*(this->graph));
+    for (auto it = this->body.begin(); it != this->body.end(); ++it)
+      (*it).print(*(this->graph));
+    for (auto it = this->powerup.begin(); it != this->powerup.end(); ++it)
+      (*it).print(*(this->graph));
+  }
+
+  bool Snake::play()
   {
     graph->registerEvent(CommandType::CLOSE, arcade::close, this);
     graph->registerEvent(CommandType::GO_DOWN, arcade::goDown, this);
@@ -240,10 +250,11 @@ namespace arcade
     graph->registerEvent(CommandType::GO_LEFT, arcade::goLeft, this);
     graph->registerEvent(CommandType::RESTART, arcade::restart, this);
     graph->registerEvent(CommandType::MENU, arcade::goMenu, this);
-    while (graph->isOpen() && !quit && !restart && !menu)
+    while (graph->isOpen() && !quit && !restart && !menu && !loose)
     {
       this->graph->execEvents();
       this->move();
+      this->collide();
       this->graph->clear();
       this->print();
       this->graph->refresh();
@@ -268,6 +279,32 @@ namespace arcade
     }
   }
 
+  void Snake::collide()
+  {
+    t_color color;
+    t_pos pos;
+    t_spos direction;
+
+    for (auto it = this->border.begin(); it != this->border.end(); ++it)
+      if (*it == this->body[0])
+	this->loose = true;
+    for (auto it = ++this->body.begin(); it != this->body.end(); ++it)
+      if (*it == this->body[0])
+	this->loose = true;
+    for (auto it = this->powerup.begin(); it != this->powerup.end(); ++it)
+      if (*it == this->body[0])
+      {
+	this->score += 10;
+	this->powerup.erase(it);
+	color.full = 0x0000FFFF;
+	pos.x = rand() % (WINDOW_WIDTH - 2) + 1;
+	pos.y = rand() % (WINDOW_HEIGHT - 4) + 3;
+	direction.x = 0;
+	direction.y = 0;
+	this->powerup.push_back(Block(color, pos, direction));
+      }
+  }
+
   // </editor-fold>
 
 }
@@ -277,13 +314,18 @@ bool Play(arcade::IGraph *graph)
 {
   bool quit = false;
   bool restart = true;
+  arcade::t_pos pos;
 
+  pos.x = WINDOW_WIDTH;
+  pos.y = WINDOW_HEIGHT;
+  graph->init(pos, "Snake");
   while (restart)
   {
     arcade::Snake snake(graph);
     quit = snake.play();
     restart = snake.restart;
   }
+  graph->close();
   return quit;
 }
 }

@@ -80,6 +80,7 @@ namespace arcade
     std::vector<Block>		border; //!< Border
     unsigned int		score; //!< The score
     IGraph			*graph; //!< The graph interface to draw with
+    bool			loose;
 
   public:
     std::vector<Block>		body; //!< Block of the body

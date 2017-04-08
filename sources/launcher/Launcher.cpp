@@ -121,9 +121,7 @@ namespace arcade
       self->graph->init(pos, "Arcade");
       return ;
     }
-    graph->init(pos, (*(self->selected_game)).second);
     self->quit = ga_creat(graph);
-    graph->close();
     delete graph;
     self->closeGameLib();
     self->closeGraphLib();
