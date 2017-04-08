@@ -13,6 +13,7 @@
 #include <algorithm>
 #include <IGraph.hpp>
 #include <fstream>
+#include <sstream>
 #include <iostream>
 #include "game/Snake.hpp"
 
@@ -232,12 +233,23 @@ namespace arcade
 
   void Snake::print()
   {
+    t_pos pos;
+    std::ostringstream out;
+
     for (auto it = this->border.begin(); it != this->border.end(); ++it)
       (*it).print(*(this->graph));
     for (auto it = this->body.begin(); it != this->body.end(); ++it)
       (*it).print(*(this->graph));
     for (auto it = this->powerup.begin(); it != this->powerup.end(); ++it)
       (*it).print(*(this->graph));
+    pos.x = 0;
+    pos.y = 0;
+    out << "Highscore: " << this->highScore;
+    this->graph->drawText(pos, out.str());
+    pos.y = 1;
+    out.str("");
+    out << "Score: " << this->score;
+    this->graph->drawText(pos, out.str());
   }
 
   bool Snake::play()
@@ -362,7 +374,9 @@ bool Play(arcade::IGraph *graph)
   while (restart)
   {
     arcade::Snake snake(graph);
+    snake.getHighScore();
     quit = snake.play();
+    snake.saveHighScore();
     restart = snake.restart;
   }
   graph->close();
