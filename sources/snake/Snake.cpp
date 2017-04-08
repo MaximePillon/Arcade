@@ -82,7 +82,7 @@ namespace arcade
     for (int i = 0; i < 4; ++i)
     {
       this->body.push_back(Block(color, pos, direction));
-      pos.y += 1;
+      pos.y -= 1;
     }
 
     // Borders

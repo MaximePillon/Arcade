@@ -171,19 +171,17 @@ namespace myncurses
     ~Events();
 
   public:
-    /// \brief Method used to bind event to a function.
-    ///        If an event has already been registered, the handler is replaced.
-    ///        This method should never fail (in case of fail, an NcursesError exception is thrown).
-    /// \param key The key you want to bind the handler to.
-    /// \param handler The handler you want to bind to the key (handler's prototype: "void handler(void *);").
-    /// \param param The parameter to pass to the handler.
-    void registerEvent(int key, handler func, void* param);
 
-    /// \brief Method used to save the user inputs queue deleting all inputs not already registered.
-    void inputs();
+    /// \brief Read a character from the window.
+    ///        In no-delay mode, if no input is waiting, the value ERR is returned.
+    ///        In delay mode, the program waits until the system passes text through to the program.
+    /// \return ERR upon failure, value different of ERR otherwise.
+    int termGetch() const;
 
-    /// \brief Method used to execute the handlers of the event already saved in the user inputs queue.
-    void events();
+    /// \brief The  curs_set  routine  sets the cursor state to invisible, normal, or very visible for visibility equal to 0, 1, or 2 respectively.
+    /// \param visibility The visibility type to set the cursor to.
+    /// \return termCursSet returns the previous cursor state, or ERR if the requested visibility is not supported.
+    int termCursSet(int visibility) const;
 
     /// \brief The keypad option enables the keypad of the user's terminal. If enabled (bf is TRUE), the user can press a function key (such as an arrow key).
     ///        If disabled (bf is FALSE), curses does not treat function keys specially and the program has to interpret the escape sequences itself.
@@ -212,9 +210,6 @@ namespace myncurses
 
   protected:
     Window*			_window; //!< Window the events are associated with.
-    std::map<int, handler>	_handlers; //!< Map of bind events handlers.
-    std::map<int, void*>	_params; //!< Map of bind events handler's params.
-    std::queue<int>		_inputs; //!< Queue of events to be executed.
   };
 
   /// \class NcursesError
