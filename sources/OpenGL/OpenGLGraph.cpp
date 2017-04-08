@@ -43,7 +43,7 @@ bool arcade::OpenGLGraph::loadFont()
   if (FT_Init_FreeType(&_ft))
     std::cerr << "ERROR::FREETYPE: Could not init FreeType Library" << std::endl;
 
-  if (FT_New_Face(_ft, "/usr/share/fonts/dejavu/DejaVuSansMono.ttf", 0, &_face))
+  if (FT_New_Face(_ft, "res/DejaVuSansMono.ttf", 0, &_face))
     std::cerr << "ERROR::FREETYPE: Failed to load font" << std::endl;
 
   FT_Set_Pixel_Sizes(_face, 0, 25);
