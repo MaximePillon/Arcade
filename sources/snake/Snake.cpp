@@ -74,7 +74,8 @@ namespace arcade
   // <editor-fold>
 
   Snake::Snake(IGraph *graph) :
-    powerup(), body(), turns(), border(), score(0), graph(graph), quit(false), restart(false), menu(false)
+    powerup(), border(), score(0), graph(graph), body(), turns(), quit(false),
+    restart(false), menu(false)
   {
     t_color color;
     t_pos pos;
@@ -276,14 +277,12 @@ bool Play(arcade::IGraph *graph)
 {
   bool quit = false;
   bool restart = true;
-  bool menu = false;
 
   while (restart)
   {
     arcade::Snake snake(graph);
     quit = snake.play();
     restart = snake.restart;
-    menu = snake.menu;
   }
   return quit;
 }
