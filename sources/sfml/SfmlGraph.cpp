@@ -81,8 +81,11 @@ namespace arcade
 
     while (i != this->textList.end())
     {
-      if (i->getPosition().x == pos.x && i->getPosition().y == pos.y)
+      if (i->getPosition().x == pos.x && i->getPosition().y == pos.y && i->getString() == text)
+      {
+	i->setPosition(pos.x, pos.y);
 	same = 1;
+      }
       i++;
     }
     if (same != 1)
@@ -108,11 +111,12 @@ namespace arcade
     {
       if (this->event.type == sf::Event::Closed)
 	this->close();
-      if (this->event.key.code == sf::Keyboard::Escape)
-	this->close();
-      for (auto it : this->keyboard)
+      for (auto &it : this->keyboard)
 	if (it.second == this->event.key.code)
+	{
+	  std::clog << this->event.key.code << std::endl;
 	  this->eventMap[it.first].hdl(this->eventMap[it.first].param);
+	}
     }
   }
 
