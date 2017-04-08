@@ -11,6 +11,7 @@
 #include <IGraph.hpp>
 #include <iostream>
 #include <sfml/SfmlGraph.hpp>
+#include <zconf.h>
 #include "sfml/SfmlGraph.hpp"
 
 namespace arcade
@@ -44,76 +45,58 @@ namespace arcade
   {
     sf::RectangleShape tmp;
     sf::Color col;
-    int same = 0;
-    auto i = this->block.begin();
 
-    while (i != this->block.end())
-    {
-      if (i->getPosition().x == pos.x && i->getPosition().y == pos.y)
-	same = 1;
-      i++;
-    }
-    if (same != 1)
-    {
-      col.a = color.argb[0];
-      col.r = color.argb[1];
-      col.g = color.argb[2];
-      col.b = color.argb[3];
-      tmp.setPosition(pos.x * BLOCK_SIZE, pos.y * BLOCK_SIZE);
-      tmp.setSize(sf::Vector2f(BLOCK_SIZE, BLOCK_SIZE));
-      tmp.setFillColor(col);
-      this->block.push_back(tmp);
-    }
-    i = this->block.begin();
-    while (i != this->block.end())
-    {
-      this->mainWin->draw(*i);
-      i++;
-    }
+    col.a = color.argb[0];
+    col.r = color.argb[1];
+    col.g = color.argb[2];
+    col.b = color.argb[3];
+    tmp.setPosition(pos.x * BLOCK_SIZE, pos.y * BLOCK_SIZE);
+    tmp.setSize(sf::Vector2f(BLOCK_SIZE, BLOCK_SIZE));
+    tmp.setFillColor(col);
+    this->mainWin->draw(tmp);
     return true;
   }
 
   bool SfmlGraph::drawText(t_pos const &pos, std::string const &text)
   {
-    sf::Text tmp;
-    auto i = this->textList.begin();
-    int same = 0;
+    sf::Text	tmp;
 
-    while (i != this->textList.end())
-    {
-      if (i->getPosition().x == pos.x && i->getPosition().y == pos.y && i->getString() == text)
+    tmp.setFont(this->font);
+    tmp.setPosition(pos.x * BLOCK_SIZE, pos.y * BLOCK_SIZE);
+    tmp.setString(text);
+    tmp.setScale(0.7, 0.7);
+    this->mainWin->draw(tmp);
+  }
+
+  void SfmlGraph::gstKey()
+  {
+    for (auto it : this->keyboard)
+      if (it.second == this->event.key.code)
       {
-	i->setPosition(pos.x, pos.y);
-	same = 1;
+	if (this->eventMap[it.first].hdl)
+	  this->eventMap[it.first].hdl(this->eventMap[it.first].param);
       }
-      i++;
-    }
-    if (same != 1)
-    {
-      tmp.setString(text);
-      tmp.setFont(this->font);
-      tmp.setScale(sf::Vector2f(0.7, 0.7));
-      tmp.setPosition(pos.x * BLOCK_SIZE, pos.y * BLOCK_SIZE);
-      this->textList.push_back(tmp);
-    }
-    i = this->textList.begin();
-    while (i != textList.end())
-    {
-      this->mainWin->draw(*i);
-      i++;
-    }
-    return true;
+    if (event.key.code == sf::Keyboard::Escape)
+      this->mainWin->close();
   }
 
   void SfmlGraph::execEvents()
   {
-    if (this->mainWin->pollEvent(this->event))
+    while (this->mainWin->pollEvent(this->event))
     {
-      if (this->event.type == sf::Event::Closed)
-	this->close();
-      for (auto it : this->keyboard)
-	if (it.second == this->event.key.code)
-	  this->eventMap[it.first].hdl(this->eventMap[it.first].param);
+      switch (this->event.type)
+      {
+	case sf::Event::Closed:
+	  this->close();
+	  break;
+
+	case sf::Event::KeyPressed:
+	  this->gstKey();
+	  break;
+
+	default:
+	  break;
+      }
     }
   }
 
@@ -159,9 +142,9 @@ namespace arcade
   {
     this->keyboard.clear();
     this->eventMap.clear();
-    this->textList.clear();
-    this->block.clear();
     this->mainWin->close();
+    for (auto i : textList)
+      std::clog << i.getPosition().x << "&&" << i.getPosition().y << std::endl;
     return true;
   }
 }
