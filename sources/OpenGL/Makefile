@@ -27,7 +27,7 @@ ifeq	($(DEBUG), 1)
 	CPPFLAGS	+=	-g -ggdb3
 endif
 
-NAME		=	../../lib/libOpenGL.so
+NAME		=	../../lib/lib_arcade_opengl.so
 
 SRCS		=	OpenGLGraph.cpp
 

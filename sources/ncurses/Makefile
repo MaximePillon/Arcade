@@ -27,7 +27,7 @@ ifeq	($(DEBUG), 1)
 	CPPFLAGS	+=	-g -ggdb3
 endif
 
-NAME		=	../../lib/libncurses.so
+NAME		=	../../lib/lib_arcade_ncurses.so
 
 SRCS		=	NcursesGraph.cpp
 

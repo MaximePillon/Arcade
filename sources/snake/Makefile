@@ -27,7 +27,7 @@ ifeq	($(DEBUG), 1)
 	CPPFLAGS	+=	-g -ggdb3
 endif
 
-NAME		=	../../lib/libsnake.so
+NAME		=	../../lib/lib_arcade_snake.so
 
 SRCS		=	Snake.cpp
 

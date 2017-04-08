@@ -42,7 +42,7 @@ namespace arcade
   protected:
     bool printText(std::string string, unsigned int x, unsigned int y);
 
-    bool printExtentedBlock(unsigned int startX, unsigned int startY, unsigned int endX, unsigned int endY, unsigned int color);
+    bool printBorderBlock(unsigned int startX, unsigned int startY, unsigned int endX, unsigned int endY, unsigned int color);
 
   public:
     int openLib(std::string const &filename);

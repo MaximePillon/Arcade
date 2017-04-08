@@ -8,6 +8,7 @@
 ** Last update Wed Apr 05 09:04:04 2017 Hugo SOSZYNSKI
 */
 
+#include <unistd.h>
 #include "IGraph.hpp"
 #include "ncurses/NcursesGraph.hpp"
 
@@ -90,6 +91,7 @@ namespace arcade
   void NcursesGraph::refresh()
   {
     this->_window->refresh();
+    usleep(2000);
     this->_window->clear();
   }
 

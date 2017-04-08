@@ -27,7 +27,7 @@ ifeq	($(DEBUG), 1)
 	CPPFLAGS	+=	-g -ggdb3
 endif
 
-NAME		=	../../lib/libsfml.so
+NAME		=	../../lib/lib_arcade_sfml.so
 
 SRCS		=	SfmlGraph.cpp
 
