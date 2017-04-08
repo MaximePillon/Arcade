@@ -64,7 +64,7 @@ namespace arcade
   // <editor-fold>
 
   Snake::Snake(IGraph* graph):
-    powerup(), body(), turns(), border(), score(0), graph(graph)
+    powerup(), body(), turns(), border(), score(0), graph(graph), quit(false)
   {
     t_color color;
     t_pos   pos;
@@ -116,12 +116,11 @@ namespace arcade
   }
 
   // </editor-fold>
-}
 
 /*
  * Event method
  */
-void close(void* param)
+static void close(void* param)
 {
   arcade::Snake* self;
 
@@ -129,21 +128,25 @@ void close(void* param)
   self->quit = true;
 }
 
-void arcade::Snake::play()
+bool arcade::Snake::play()
 {
-  graph->registerEvent(CommandType::CLOSE, close, this);
+  graph->registerEvent(CommandType::CLOSE, arcade::close, this);
   while (graph->isOpen() && !quit)
   {
+    this->graph->execEvents();
+    this->graph->clear();
     this->print();
     this->graph->refresh();
-    this->graph->clear();
   }
+  return this->quit;
+}
 }
 
 extern "C" {
-void Play(arcade::IGraph *graph) {
+bool Play(arcade::IGraph *graph)
+{
   arcade::Snake snake(graph);
 
-  snake.play();
+  return snake.play();
 }
 }

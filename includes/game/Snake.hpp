@@ -16,7 +16,7 @@
 
 namespace arcade
 {
-  void close(void* param);
+//  void close(void* param);
 
   /// \class Block
   class Block
@@ -66,7 +66,7 @@ namespace arcade
     void collide();
 
     /// \brief The main game function
-    void play();
+    bool play();
 
   public:
     Snake(IGraph* graph);
