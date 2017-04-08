@@ -66,6 +66,7 @@ namespace arcade
     tmp.setString(text);
     tmp.setScale(0.7, 0.7);
     this->mainWin->draw(tmp);
+    return true;
   }
 
   void SfmlGraph::gstKey()

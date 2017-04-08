@@ -44,6 +44,7 @@ namespace arcade
     bool setBackground(t_color const& color);
 
   public:
+    void gstKey();
     void execEvents();
     void registerEvent(CommandType type,
 		       event_handler hdl,
@@ -57,8 +58,7 @@ namespace arcade
   protected:
     std::map<CommandType, sf::Keyboard::Key>	keyboard; //!< Map of keyboard macros
     std::map<CommandType, handler_t>		eventMap; //!< Map of handler
-    std::list<sf::Text> 			textList; //!< List of text object
-    std::list<sf::RectangleShape>		block; //!< List of block
+    std::list<sf::Text>				textList;
     sf::Font					font; //!< Font of the project
     sf::Event					event; //!< Keyboard Event
     sf::RectangleShape				background; //!< Background
