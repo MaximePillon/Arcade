@@ -205,10 +205,7 @@ namespace arcade
     }
 
     // Borders
-    color.argb[0] = 255;
-    color.argb[1] = 255;
-    color.argb[2] = 255;
-    color.argb[3] = 255;
+    color.full = 0xFFFFFFFF;
     direction.y = 0;
     pos.y = 2;
     for (pos.x = 0; pos.x < WINDOW_WIDTH; ++(pos.x))
@@ -252,13 +249,13 @@ namespace arcade
     graph->registerEvent(CommandType::MENU, arcade::goMenu, this);
     while (graph->isOpen() && !quit && !restart && !menu && !loose)
     {
+      usleep(100000);
       this->graph->execEvents();
       this->move();
       this->collide();
       this->graph->clear();
       this->print();
       this->graph->refresh();
-      usleep(100000);
     }
     return this->quit;
   }
@@ -302,6 +299,12 @@ namespace arcade
 	direction.x = 0;
 	direction.y = 0;
 	this->powerup.push_back(Block(color, pos, direction));
+	color.full = 0x00FFFFFF;
+	pos = this->body[this->body.size() - 1].getPos();
+	direction = this->body[this->body.size() - 1].getDirection();
+	pos.x -= direction.x;
+	pos.y -= direction.y;
+	this->body.push_back(Block(color, pos, direction));
       }
   }
 
