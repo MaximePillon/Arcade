@@ -44,6 +44,7 @@ namespace arcade
   class OpenGLGraph : public IGraph
   {
   protected:
+    Shader* _shader;
     GLFWwindow* _window;
     bool _isOpen;
     GLuint _textureFont;

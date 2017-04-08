@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <openGL/OpenGLGraph.hpp>
+#include <unistd.h>
 #include <IGraph.hpp>
 #include "openGL/OpenGLGraph.hpp"
 
@@ -21,12 +22,13 @@
 
 arcade::OpenGLGraph::OpenGLGraph()
 {
+  //_shader = new Shader("./sources/OpenGL/shader/shader1.vec", "./sources/OpenGL/shader/shader2.fra");
   _isOpen = false;
 }
 
 arcade::OpenGLGraph::~OpenGLGraph()
 {
-
+  delete _shader;
 }
 
 /*
@@ -151,10 +153,10 @@ bool arcade::OpenGLGraph::drawText(t_pos const &pos, std::string const &text)
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-  Shader shader("./sources/OpenGL/shader/shader1.vec", "./sources/OpenGL/shader/shader2.fra");
+  //Shader shader("./sources/OpenGL/shader/shader1.vec", "./sources/OpenGL/shader/shader2.fra");
   glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(width), 0.0f, static_cast<GLfloat>(height));
-  shader.Use();
-  glUniformMatrix4fv(glGetUniformLocation(shader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+  _shader->Use();
+  glUniformMatrix4fv(glGetUniformLocation(_shader->Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
   GLuint VAO, VBO;
   glGenVertexArrays(1, &VAO);
@@ -173,8 +175,8 @@ bool arcade::OpenGLGraph::drawText(t_pos const &pos, std::string const &text)
   newpos.y = height - ((pos.y  + 1) * BLOCK_SIZE);
 
   glm::vec3 color(1.f, 1.f, 1.f);
-  shader.Use();
-  glUniform3f(glGetUniformLocation(shader.Program, "textColor"), color.x, color.y, color.z);
+  _shader->Use();
+  glUniform3f(glGetUniformLocation(_shader->Program, "textColor"), color.x, color.y, color.z);
   glActiveTexture(GL_TEXTURE0);
   glBindVertexArray(VAO);
 
@@ -225,10 +227,10 @@ bool arcade::OpenGLGraph::drawBlock(t_pos const &pos, t_color const &color_char)
   glDisable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-  Shader shader("./sources/OpenGL/shader/shader1.vec", "./sources/OpenGL/shader/shader2.fra");
+  //Shader shader("./sources/OpenGL/shader/shader1.vec", "./sources/OpenGL/shader/shader2.fra");
   glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(width), 0.0f, static_cast<GLfloat>(height));
-  shader.Use();
-  glUniformMatrix4fv(glGetUniformLocation(shader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+  _shader->Use();
+  glUniformMatrix4fv(glGetUniformLocation(_shader->Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
   GLuint VAO, VBO;
   glGenVertexArrays(1, &VAO);
@@ -247,8 +249,8 @@ bool arcade::OpenGLGraph::drawBlock(t_pos const &pos, t_color const &color_char)
   newpos.y = height - ((pos.y  + 1) * BLOCK_SIZE);
 
   glm::vec3 color(static_cast<float>(color_char.argb[1] / 255), static_cast<float>(color_char.argb[2] / 255), static_cast<float>(color_char.argb[3] / 255));
-  shader.Use();
-  glUniform3f(glGetUniformLocation(shader.Program, "textColor"), color.x, color.y, color.z);
+  _shader->Use();
+  glUniform3f(glGetUniformLocation(_shader->Program, "textColor"), color.x, color.y, color.z);
   glActiveTexture(GL_TEXTURE0);
   glBindVertexArray(VAO);
 
@@ -285,7 +287,6 @@ bool arcade::OpenGLGraph::drawBlock(t_pos const &pos, t_color const &color_char)
   }
   glBindVertexArray(0);
   glBindTexture(GL_TEXTURE_2D, 0);
-
   return true;
 }
 
@@ -365,6 +366,8 @@ bool arcade::OpenGLGraph::init(t_pos const &size,
 
   // set the close calback
   glfwSetKeyCallback(_window, key_callback);
+
+  _shader = new Shader("./sources/OpenGL/shader/shader1.vec", "./sources/OpenGL/shader/shader2.fra");
   return true;
 }
 
@@ -386,7 +389,10 @@ void arcade::OpenGLGraph::refresh()
   glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void arcade::OpenGLGraph::clear() const {}
+void arcade::OpenGLGraph::clear() const
+{
+  usleep(100000);
+}
 
 bool arcade::OpenGLGraph::isOpen() const
 {
