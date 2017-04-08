@@ -406,7 +406,8 @@ void arcade::OpenGLGraph::execEvents()
   glfwPollEvents();
   for (auto &it : this->keyboard)
     if (glfwGetKey(_window, it.second) == GLFW_PRESS)
-      this->eventMap[it.first].hdl(this->eventMap[it.first].param);
+      if (this->eventMap[it.first].hdl)
+	this->eventMap[it.first].hdl(this->eventMap[it.first].param);
 }
 
 void arcade::OpenGLGraph::registerEvent(CommandType command, event_handler hdl,

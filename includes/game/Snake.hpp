@@ -29,6 +29,9 @@ namespace arcade
     /// \brief Move the block
     void move();
 
+    /// \brief Get the position of the block
+    t_pos const& getPos(void) const;
+
     /// \brief Change the direction of the block
     /// \param direction The new direction to apply to the block
     void changeDirection(t_spos const& direction);
@@ -56,10 +59,6 @@ namespace arcade
   class Snake
   {
   public:
-    /// \brief Change the direction of the head and add a turn position
-    /// \param type The direction in which you turn
-    void turn(CommandType type);
-
     /// \brief Print the snake
     void print();
 
@@ -78,14 +77,16 @@ namespace arcade
 
   protected:
     std::vector<Block>		powerup; //!< Powerups
-    std::vector<Block>		body; //!< Block of the body
-    std::vector<Block>		turns; //!< The turning points
     std::vector<Block>		border; //!< Border
     unsigned int		score; //!< The score
     IGraph			*graph; //!< The graph interface to draw with
 
   public:
+    std::vector<Block>		body; //!< Block of the body
+    std::vector<Block>		turns; //!< The turning points
     bool			quit; //!< if the quit bind has been press
+    bool			restart; //!< if the restart bind has been press
+    bool			menu;
   };
 }
 

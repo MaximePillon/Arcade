@@ -31,6 +31,11 @@ namespace arcade
     this->direction.y = direction.y;
   }
 
+  t_pos const& Block::getPos() const
+  {
+    return this->pos;
+  }
+
   void Block::move()
   {
     this->pos.x += this->direction.x;
@@ -69,7 +74,7 @@ namespace arcade
   // <editor-fold>
 
   Snake::Snake(IGraph *graph) :
-    powerup(), body(), turns(), border(), score(0), graph(graph), quit(false)
+    powerup(), body(), turns(), border(), score(0), graph(graph), quit(false), restart(false), menu(false)
   {
     t_color color;
     t_pos pos;
@@ -108,28 +113,6 @@ namespace arcade
     pos.y = WINDOW_HEIGHT - 1;
     for (pos.x = 0; pos.x < WINDOW_WIDTH; ++(pos.x))
       this->border.push_back(Block(color, pos, direction));
-
-    // TESTING
-    pos.x = 16;
-    pos.y = 15;
-    direction.x = 1;
-    direction.y = 0;
-    this->turns.push_back(Block(color, pos, direction));
-    pos.x = 18;
-    pos.y = 15;
-    direction.x = 0;
-    direction.y = -1;
-    this->turns.push_back(Block(color, pos, direction));
-    pos.x = 18;
-    pos.y = 4;
-    direction.x = -1;
-    direction.y = 0;
-    this->turns.push_back(Block(color, pos, direction));
-    pos.x = 16;
-    pos.y = 4;
-    direction.x = 0;
-    direction.y = 1;
-    this->turns.push_back(Block(color, pos, direction));
   }
 
   void Snake::print()
@@ -153,10 +136,110 @@ namespace arcade
     self->quit = true;
   }
 
+  static void goDown(void *param)
+  {
+    arcade::Snake	*self;
+    t_pos		head;
+    t_spos		dir;
+    t_color		color;
+
+    self = static_cast<arcade::Snake *>(param);
+    dir = self->body[0].getDirection();
+    if (dir.y)
+      return ;
+    color.full = 0x00000000;
+    dir.y = 1;
+    dir.x = 0;
+    head = self->body[0].getPos();
+    self->body[0].changeDirection(dir);
+    self->turns.push_back(Block(color, head, dir));
+  }
+
+  static void goUp(void *param)
+  {
+
+    arcade::Snake	*self;
+    t_pos		head;
+    t_spos		dir;
+    t_color		color;
+
+    self = static_cast<arcade::Snake *>(param);
+    dir = self->body[0].getDirection();
+    if (dir.y)
+      return ;
+    color.full = 0x00000000;
+    dir.y = -1;
+    dir.x = 0;
+    head = self->body[0].getPos();
+    self->body[0].changeDirection(dir);
+    self->turns.push_back(Block(color, head, dir));
+  }
+
+  static void goRight(void *param)
+  {
+    arcade::Snake	*self;
+    t_pos		head;
+    t_spos		dir;
+    t_color		color;
+
+    self = static_cast<arcade::Snake *>(param);
+    dir = self->body[0].getDirection();
+    if (dir.x)
+      return ;
+    color.full = 0x00000000;
+    dir.y = 0;
+    dir.x = 1;
+    head = self->body[0].getPos();
+    self->body[0].changeDirection(dir);
+    self->turns.push_back(Block(color, head, dir));
+  }
+
+  static void goLeft(void *param)
+  {
+
+    arcade::Snake	*self;
+    t_pos		head;
+    t_spos		dir;
+    t_color		color;
+
+    self = static_cast<arcade::Snake *>(param);
+    dir = self->body[0].getDirection();
+    if (dir.x)
+      return ;
+    color.full = 0x00000000;
+    dir.y = 0;
+    dir.x = -1;
+    head = self->body[0].getPos();
+    self->body[0].changeDirection(dir);
+    self->turns.push_back(Block(color, head, dir));
+  }
+
+  static void restart(void *param)
+  {
+    arcade::Snake *self;
+
+    self = static_cast<arcade::Snake *>(param);
+    self->restart = true;
+  }
+
+  static void goMenu(void *param)
+  {
+    arcade::Snake *self;
+
+    self = static_cast<arcade::Snake *>(param);
+    self->menu = true;
+  }
+
   bool arcade::Snake::play()
   {
     graph->registerEvent(CommandType::CLOSE, arcade::close, this);
-    while (graph->isOpen() && !quit)
+    graph->registerEvent(CommandType::GO_DOWN, arcade::goDown, this);
+    graph->registerEvent(CommandType::GO_UP, arcade::goUp, this);
+    graph->registerEvent(CommandType::GO_RIGHT, arcade::goRight, this);
+    graph->registerEvent(CommandType::GO_LEFT, arcade::goLeft, this);
+    graph->registerEvent(CommandType::RESTART, arcade::restart, this);
+    graph->registerEvent(CommandType::MENU, arcade::goMenu, this);
+    while (graph->isOpen() && !quit && !restart && !menu)
     {
       this->graph->execEvents();
       this->move();
@@ -191,8 +274,17 @@ namespace arcade
 extern "C" {
 bool Play(arcade::IGraph *graph)
 {
-  arcade::Snake snake(graph);
+  bool quit = false;
+  bool restart = true;
+  bool menu = false;
 
-  return snake.play();
+  while (restart)
+  {
+    arcade::Snake snake(graph);
+    quit = snake.play();
+    restart = snake.restart;
+    menu = snake.menu;
+  }
+  return quit;
 }
 }
