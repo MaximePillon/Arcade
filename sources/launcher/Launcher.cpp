@@ -309,6 +309,8 @@ namespace arcade
       unsigned int x = 3;
       unsigned int y = 5;
       this->graph->execEvents();
+
+      this->graph->clear();
       // titles
       printText("Arcade launcher", 12, 0);
       printText("games", 6, 2);
@@ -331,6 +333,7 @@ namespace arcade
 	printText((*it).first.c_str(), x, y);
 	++y;
       }
+      usleep(10000);
       this->graph->refresh();
     }
   }

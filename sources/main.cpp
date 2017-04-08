@@ -22,7 +22,8 @@ int		main(int argc, const char *argv[])
 
   if (argc != 2)
     return EXIT_FAILURE;
-  launcher.start(argv[1]);
+  if (launcher.start(argv[1]) == 1)
+    return 1;
   launcher.get_libs();
   launcher.loop();
   launcher.end();

@@ -29,6 +29,7 @@ namespace arcade
 
   public:
     virtual void refresh(void);
+    virtual void clear(void) const;
     virtual bool isOpen(void) const;
     virtual void registerEvent(CommandType command,
 			       event_handler hdl,

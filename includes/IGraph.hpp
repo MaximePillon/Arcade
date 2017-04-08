@@ -101,6 +101,9 @@ namespace arcade
     /// \return True if the window is open, false otherwise
     virtual bool isOpen(void) const = 0;
 
+    /// \brief Clear the window content.
+    virtual void clear(void) const = 0;
+
     /// \brief Method used to bind event to a function.
     ///
     /// \param command The command you want to bind the handler to.

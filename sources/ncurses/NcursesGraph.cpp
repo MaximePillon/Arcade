@@ -88,11 +88,14 @@ namespace arcade
 
   // <editor-fold>
 
+  void NcursesGraph::clear() const
+  {
+    this->_window->clear();
+  }
+
   void NcursesGraph::refresh()
   {
     this->_window->refresh();
-    usleep(2000);
-    this->_window->clear();
   }
 
   bool NcursesGraph::isOpen() const
