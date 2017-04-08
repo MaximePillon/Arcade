@@ -12,6 +12,8 @@
 #include <iostream>
 #include <algorithm>
 #include <IGraph.hpp>
+#include <fstream>
+#include <iostream>
 #include "game/Snake.hpp"
 
 namespace arcade
@@ -306,6 +308,40 @@ namespace arcade
 	pos.y -= direction.y;
 	this->body.push_back(Block(color, pos, direction));
       }
+  }
+
+  void Snake::saveHighScore()
+  {
+    std::ifstream inFile("score", std::ios::in);
+    std::ofstream oFile;
+    unsigned int tmp;
+
+    if (inFile)
+    {
+      inFile >> tmp;
+      inFile.close();
+    }
+    else
+      std::cerr << "Unable to open score file !" << std::endl;
+    oFile.open("score", std::ios::out);
+    if (oFile)
+    {
+      if (tmp > this->score)
+      {
+	oFile << tmp;
+	this->highScore = tmp;
+      }
+      else
+	this->highScore = score;
+      oFile.close();
+    }
+    else
+      std::cerr << "Unable to open score file !" << std::endl;
+  }
+
+  unsigned int Snake::getHighScore()
+  {
+    return this->highScore;
   }
 
   // </editor-fold>

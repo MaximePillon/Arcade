@@ -71,6 +71,10 @@ namespace arcade
     /// \brief The main game function
     bool play();
 
+    void saveHighScore();
+
+    unsigned int getHighScore();
+
   public:
     Snake(IGraph* graph);
     virtual ~Snake() {};
@@ -88,6 +92,8 @@ namespace arcade
     bool			quit; //!< if the quit bind has been press
     bool			restart; //!< if the restart bind has been press
     bool			menu;
+
+    unsigned int		highScore;
   };
 }
 
