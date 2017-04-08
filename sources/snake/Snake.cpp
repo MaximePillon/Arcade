@@ -119,11 +119,12 @@ namespace arcade
 
 extern "C"
 {
-void Play(arcade::IGraph* graph)
+bool launch_game(arcade::IGraph* graph)
 {
   arcade::Snake snake(graph);
 
   snake.print();
   sleep(10);
+  return false;
 }
 }

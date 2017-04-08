@@ -241,12 +241,12 @@ namespace arcade
     for (auto it = this->libs.begin(); it != this->libs.end(); ++it)
     {
       if (access((*it).second.c_str(), R_OK) == -1)
-	this->libs.erase(it);
+	it = this->libs.erase(it);
     }
     for (auto it = this->games.begin(); it != this->games.end(); ++it)
     {
       if (access((*it).second.c_str(), R_OK) == -1)
-	this->games.erase(it);
+	it = this->games.erase(it);
     }
     this->selected_lib = this->libs.begin();
     this->selected_game = this->games.begin();
