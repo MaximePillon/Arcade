@@ -65,11 +65,16 @@ namespace arcade
     /// \brief Move all the blocks the snake
     void move();
 
-    /// \brief Collision detections and reactions
+    /// \brief C
+    /// ollision detections and reactions
     void collide();
 
     /// \brief The main game function
     bool play();
+
+    void saveHighScore();
+
+    void getHighScore();
 
   public:
     Snake(IGraph* graph);
@@ -80,6 +85,7 @@ namespace arcade
     std::vector<Block>		border; //!< Border
     unsigned int		score; //!< The score
     IGraph			*graph; //!< The graph interface to draw with
+    bool			loose;
 
   public:
     std::vector<Block>		body; //!< Block of the body
@@ -87,6 +93,8 @@ namespace arcade
     bool			quit; //!< if the quit bind has been press
     bool			restart; //!< if the restart bind has been press
     bool			menu;
+
+    unsigned int		highScore;
   };
 }
 
