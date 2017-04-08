@@ -16,6 +16,8 @@
 
 namespace arcade
 {
+  void close(void* param);
+
   /// \class Block
   class Block
   {
@@ -77,6 +79,9 @@ namespace arcade
     std::vector<Block>		border; //!< Border
     unsigned int		score; //!< The score
     IGraph			*graph; //!< The graph interface to draw with
+
+  public:
+    bool			quit; //!< if the quit bind has been press
   };
 }
 

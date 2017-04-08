@@ -57,7 +57,7 @@ namespace arcade
       self->graph->init(pos, "Arcade");
       return ;
     }
-    *(void**)(&ga_creat) = self->loadGameSym("launch_game");
+    *(void**)(&ga_creat) = self->loadGameSym("Play");
     if (ga_creat == NULL)
     {
       std::clog << dlerror() << std::endl;
@@ -96,6 +96,7 @@ namespace arcade
   {
     Launcher* self;
 
+    //std::clog << "previous gl" << std::endl;
     self = static_cast<Launcher*>(param);
     if (self->selected_lib != self->libs.begin())
       self->selected_lib--;
@@ -105,8 +106,9 @@ namespace arcade
   {
     Launcher* self;
 
+    //std::clog << "next gl" << std::endl;
     self = static_cast<Launcher*>(param);
-    if (self->selected_lib != self->libs.end()--)
+    if (self->selected_lib != --self->libs.end())
       self->selected_lib++;
   }
 
@@ -124,7 +126,7 @@ namespace arcade
     Launcher* self;
 
     self = static_cast<Launcher*>(param);
-    if (self->selected_game != self->games.end()--)
+    if (self->selected_game != --self->games.end())
       self->selected_game++;
   }
 
@@ -321,6 +323,10 @@ namespace arcade
 	for (auto it = games.begin(); it != games.end(); ++it)
       {
 	printText((*it).first.c_str(), x, y);
+	if (it == selected_game)
+	{
+	  printText(">", x - 1, y);
+	}
 	++y;
       }
 
@@ -331,6 +337,10 @@ namespace arcade
       for (auto it = libs.begin(); it != libs.end(); ++it)
       {
 	printText((*it).first.c_str(), x, y);
+	if (it == selected_lib)
+	{
+	  printText(">", x - 1, y);
+	}
 	++y;
       }
       usleep(10000);
