@@ -379,15 +379,18 @@ namespace arcade
       {
 	if ((*it2) == *(this->bullets)) {
 	  this->score += 50;
-	  if (it2 == it->body.begin() || it2 == it->body.end()) {
+	  if (it2 == it->body.begin() || it2 == it->body.end())
+	  {
 	    it->body.erase(it2);
 	    ++it2;
-	  } else {
-	    std::vector<Block> NewCentipede;
+	  }
+	  else
+	  {
 	    t_spos Dir;
 	    it->body.erase(it2);
 	    ++it2;
-	    while (it2 != it->body.end()) {
+	    while (it2 != it->body.end())
+	    {
 	      // block configuration
 	      Dir.y = -1;
 	      Dir.x = (*it2).getDirection().x * -1;
