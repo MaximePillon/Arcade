@@ -368,6 +368,7 @@ namespace arcade
   {
     this->quit = false;
 
+    this->quit = false;
     this->index = 0;
     this->letter.push_back(65);
     this->letter.push_back(65);
@@ -392,7 +393,6 @@ namespace arcade
     this->graph->registerEvent(CommandType::NEXT_GL, nextGl, this);
     this->graph->registerEvent(CommandType::PREVIOUS_GAME, previousGame, this);
     this->graph->registerEvent(CommandType::NEXT_GAME,nextGame, this);
-    this->quit = false;
     while (this->graph->isOpen() && !this->quit)
     {
       unsigned int x = 3;
