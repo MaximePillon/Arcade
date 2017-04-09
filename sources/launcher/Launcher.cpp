@@ -360,7 +360,11 @@ namespace arcade
     Launcher *self;
 
     self = static_cast<Launcher *>(param);
-    self->playerName = self->letter[0] + self->letter[1] + self->letter[2];
+    self->playerName = "";
+    self->playerName = self->letter[0];
+    self->playerName = self->letter[1];
+    self->playerName = self->letter[2];
+    self->letter.clear();
     self->quit = true;
   }
 
