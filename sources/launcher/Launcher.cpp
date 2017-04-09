@@ -18,8 +18,7 @@ typedef bool (*game_func)(arcade::IGraph*, std::string const&);
 
 namespace arcade
 {
-
-  /*
+/*
  * Events Methods
  */
 
@@ -223,7 +222,8 @@ namespace arcade
     if (ptr == NULL)
     {
       std::clog << dlerror() << std::endl;
-      return this->closeLib();
+      this->closeLib();
+      return 1;
     }
     this->graph = ptr();
     if (this->graph == NULL)
