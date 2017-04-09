@@ -80,8 +80,8 @@ namespace arcade
     virtual ~Blockade() {};
 
   public:
-    size_t Lives;
     Block block;
+    size_t Lives;
   };
 
   class Game {
@@ -112,12 +112,13 @@ namespace arcade
   public:
     std::vector<Centipede>		Centipedes;
     std::vector<Blockade>		blockades;
-    std::vector<Block>			bullets;
     bool				quit;
     bool				restart;
     bool				menu;
-    unsigned int			highscore;
+    size_t				left_turn;
+    unsigned int			highScore;
     Block				*player;
+    Block				*bullets;
   };
 
 }
