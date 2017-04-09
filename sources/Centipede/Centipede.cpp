@@ -234,6 +234,7 @@ namespace arcade
 
     // blockades
     color.full = 0xFFFF00FF;
+    srand(getpid());
     for (unsigned int x = 0; x < 15; ++x)
     {
       pos.x = rand() % (WINDOW_WIDTH - 2) + 1;
@@ -464,6 +465,7 @@ namespace arcade
 	  score = 0;
 	color.full = 0x00FFFFFF;
 	direction.x = 1;
+	direction.y = 0;
 	pos.x = 12;
 	pos.y = 5;
 	this->Centipedes.begin()->body.clear();
@@ -485,6 +487,7 @@ namespace arcade
 	score += 200;
 	color.full = 0x00FFFFFF;
 	direction.x = 1;
+	direction.y = 0;
 	pos.x = 12;
 	pos.y = 5;
 	this->Centipedes.begin()->body.clear();
