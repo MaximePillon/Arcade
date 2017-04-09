@@ -14,6 +14,7 @@ all:
 	make -C externLibs/myncurses/
 	make -C sources/ncurses/
 	make -C sources/snake/
+	make -C sources/Centipede/
 	make -C sources/
 
 clean:
@@ -22,6 +23,7 @@ clean:
 	make -C externLibs/myncurses/ clean
 	make -C sources/ncurses/ clean
 	make -C sources/snake/ clean
+	make -C sources/Centipede/ clean
 	make -C sources/ clean
 
 fclean:
@@ -30,6 +32,7 @@ fclean:
 	make -C externLibs/myncurses/ fclean
 	make -C sources/ncurses/ fclean
 	make -C sources/snake/ fclean
+	make -C sources/Centipede/ fclean
 	make -C sources/ fclean
 
 re:
@@ -38,4 +41,5 @@ re:
 	make -C externLibs/myncurses/ re
 	make -C sources/ncurses/ re
 	make -C sources/snake/ re
+	make -C sources/Centipede/ re
 	make -C sources/ re
