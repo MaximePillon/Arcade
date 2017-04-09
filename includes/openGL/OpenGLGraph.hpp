@@ -41,17 +41,18 @@ namespace arcade
     GLuint     Advance;    // Offset to advance to next glyph
   };
 
+  /// \class OpenGlGraph
   class OpenGLGraph : public IGraph
   {
   protected:
-    Shader* _shader;
-    GLFWwindow* _window;
-    bool _isOpen;
-    GLuint _textureFont;
-    FT_Library _ft;
-    FT_Face _face;
-    std::map<GLchar, Character> Characters;
-    std::map<GLchar, Character> Block;
+    Shader* _shader; //!< Shader use to render glyph of character
+    GLFWwindow* _window; //!< The main window
+    bool _isOpen; //!< State of the main Window
+    GLuint _textureFont; //!< id of the texture font
+    FT_Library _ft; //!< library where is load the font
+    FT_Face _face; //!< face of a Character
+    std::map<GLchar, Character> Characters; //!< map which contains all ASCII table character
+    std::map<GLchar, Character> Block; //!< map which contains font to drawing blocks
     std::map<CommandType, int>	keyboard; //!< Map of keyboard macros
     std::map<CommandType, handler_t>		eventMap; //!< Map of handler
 
