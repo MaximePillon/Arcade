@@ -22,7 +22,11 @@ class Shader
 {
 public:
   GLuint Program;
-  // Constructor generates the shader on the fly
+  /// \brief Constructor generates the shader
+  ///
+  /// \param vertexPath path to a compilable vertex GLSL file
+  /// \param fragmentPath path to a compilable fragment GLSL file
+  /// \param geometryPath path to a compilable geometry GLSL file
   Shader(const GLchar* vertexPath, const GLchar* fragmentPath, const GLchar* geometryPath = nullptr)
   {
     // 1. Retrieve the vertex/fragment source code from filePath
@@ -108,10 +112,14 @@ public:
       glDeleteShader(geometry);
 
   }
-  // Uses the current shader
+  /// \brief Uses the current shader
   void Use() { glUseProgram(this->Program); }
 
 private:
+  /// \brief check Compile error of the shader
+  ///
+  /// \param shader shader compilation return value
+  /// \param type type of the error
   void checkCompileErrors(GLuint shader, std::string type)
   {
     GLint success;
