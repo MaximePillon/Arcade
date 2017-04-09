@@ -65,18 +65,21 @@ namespace arcade
     /// \brief Move all the blocks the snake
     void move();
 
-    /// \brief C
-    /// ollision detections and reactions
+    /// \brief Collision detections and reactions
     void collide();
 
     /// \brief The main game function
     bool play();
 
+    /// \brief save the highScore of the game
     void saveHighScore();
 
+    /// \brief get the highScore and name of score in game
     void getHighScore();
 
   public:
+    /// create the game and take as parameter the library
+    /// \param graph
     Snake(IGraph* graph);
     virtual ~Snake() {};
 
@@ -85,20 +88,20 @@ namespace arcade
     std::vector<Block>		border; //!< Border
     unsigned int		score; //!< The score
     IGraph			*graph; //!< The graph interface to draw with
-    bool			loose;
+    bool			loose; //!< boolean to know if the game is lost
 
   public:
     std::vector<Block>		body; //!< Block of the body
     std::vector<Block>		turns; //!< The turning points
     bool			quit; //!< if the quit bind has been press
     bool			restart; //!< if the restart bind has been press
-    bool			menu;
+    bool			menu; //!< if the menu bind has been press
 
-    unsigned int		highScore;
+    unsigned int		highScore; //!< actual highscore of the game
 
-    std::string			name;
+    std::string			name; //!< Name of the actual player
 
-    std::string			highScoreName;
+    std::string			highScoreName; //!< Name of the highscorer
   };
 }
 

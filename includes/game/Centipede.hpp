@@ -16,12 +16,6 @@
 
 namespace arcade
 {
-  /// \enum Who
-  enum Who {
-    PLAYER,
-    CENTIPEDE
-  };
-
   /// \class Block
   class Block
   {
@@ -88,55 +82,62 @@ namespace arcade
   class Blockade {
   public:
     /// \brief Constructor of the Blockade object.
-    /// \param color
-    /// \param pos
-    /// \param direction
-    /// \param Lives
+    /// \param color color of the obstacle on the map
+    /// \param pos position of a block on the map
+    /// \param direction the direction of the block, here it will always be 0, 0
+    /// \param Lives number of lives of the block
     Blockade(t_color const& color, t_pos const& pos, t_spos const& direction, size_t Lives = 5);
     virtual ~Blockade() {};
 
   public:
-    Block block;
-    size_t Lives;
+    Block block; //!< the block of the blockade
+    size_t Lives; //!< the remains number of live
   };
 
   class Game {
   public:
-
+    /// \brief Print the snake
     void print();
 
+    /// \brief Move all the blocks the snake
     void move();
 
+    /// \brief Collision detections and reactions
     void collide();
 
+    /// \brief The main game function
     bool play();
 
+    /// \brief save the highScore of the game
     void saveHighScore();
 
+    /// \brief get the highScore and name of score in game
     void getHighScore();
 
   public:
+    /// create the game and take as parameter the library
+    /// \param graph
     Game(IGraph* graph);
     virtual ~Game() {};
 
   protected:
-    std::vector<Block>			border;
-    unsigned int			score;
-    IGraph				*graph;
-    bool				loose;
+    std::vector<Block>			border; //!< Border
+    unsigned int			score; //!< The score
+    IGraph				*graph; //!< The graph interface to draw with
+    bool				loose; //!< boolean to know if the game is lost
 
   public:
-    std::vector<Centipede>		Centipedes;
-    std::vector<Blockade>		blockades;
-    bool				quit;
-    bool				restart;
-    bool				menu;
-    size_t				left_turn;
-    unsigned int			highScore;
-    std::string				highScoreName;
-    Block				*player;
-    Block				*bullets;
-    std::string				name;
+    std::vector<Centipede>		Centipedes; //!< all the centipede around the map
+    std::vector<Blockade>		blockades; //!< The obstacles
+    bool				quit; //!< if the quit bind has been press
+    bool				restart; //!< if the restart bind has been press
+    bool				menu; //!< if the menu bind has been press
+    size_t				left_turn; //!< number of turn before the game ending
+    unsigned int			highScore; //!< actual highscore of the game
+    std::string				highScoreName; //!< Name of the highscorer
+    Block				*player; //!< player data
+    Block				*bullets; //!< The bullet
+    std::string				name; //!< Name of the actual player
   };
 
 }
