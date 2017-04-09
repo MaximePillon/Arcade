@@ -1,14 +1,16 @@
-// Kind of Advanced Language Assistant Laboratory 2006-2042
-// Epitech 1999-2042
-// Jason Brillante brilla_a brilla_b
-// Have you played Atari today?
-//
-// WELCOME TO THE ARCADE
-// ENJOY OR DIE
+/*
+** arcade_protocol.hpp for cpp_arcade in /home/loens_g/rendu/TEK2/CPP/cpp_arcade/includes/arcade_protocol.hpp
+**
+** Made by Gregoire LOENS
+** Login   <gregoire.loens@epitech.eu>
+**
+** Started on  Sun Apr 09 13:26:13 2017 Gregoire LOENS
+** Last update Sun Apr 09 13:26:13 2017 Gregoire LOENS
+*/
 
 #ifndef			__ARCADE_PROTOCOL_HPP__
 # define		__ARCADE_PROTOCOL_HPP__
-# include		<stdint.h>
+# include		<cstdint>
 
 namespace		arcade
 {
