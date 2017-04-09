@@ -117,8 +117,10 @@ namespace arcade
     bool				menu;
     size_t				left_turn;
     unsigned int			highScore;
+    std::string				highScoreName;
     Block				*player;
     Block				*bullets;
+    std::string				name;
   };
 
 }
