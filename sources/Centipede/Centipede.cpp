@@ -26,7 +26,7 @@ namespace arcade
   // <editor-fold>
 
   Block::Block(t_color const &color, t_pos const &pos, t_spos const &direction) :
-    color(color)
+    color(color), pos(), direction()
   {
     this->pos.x = pos.x;
     this->pos.y = pos.y;
@@ -402,7 +402,7 @@ namespace arcade
 	      ++it2;
 	    }
 	  }
-	  break;
+	  return ;
 	}
       }
   }
@@ -507,7 +507,7 @@ namespace arcade
 }
 
 extern "C" {
-bool Play(arcade::IGraph *graph)
+bool gPlay(arcade::IGraph *graph, std::string const& player)
 {
   bool quit = false;
   bool restart = true;

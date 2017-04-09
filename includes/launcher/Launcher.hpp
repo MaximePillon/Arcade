@@ -20,18 +20,6 @@
 namespace arcade
 {
 
-//  void launch_game(void *param);
-//
-//  void close(void* param);
-//
-//  void previousGl(void* param);
-//
-//  void nextGl(void* param);
-//
-//  void previousGame(void* param);
-//
-//  void nextGame(void* param);
-
   class Launcher
   {
   public:

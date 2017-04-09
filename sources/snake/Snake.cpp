@@ -361,7 +361,7 @@ namespace arcade
 }
 
 extern "C" {
-bool Play(arcade::IGraph *graph)
+bool gPlay(arcade::IGraph *graph, std::string const& player)
 {
   bool quit = false;
   bool restart = true;
