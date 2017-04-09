@@ -14,6 +14,7 @@
 # include <vector>
 # include "IGraph.hpp"
 
+/// \namespace arcade
 namespace arcade
 {
 //  void close(void* param);

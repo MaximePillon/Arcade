@@ -22,6 +22,7 @@
 # include "IGraph.hpp"
 # include "arcade_protocol.hpp"
 
+/// \namespace arcade
 namespace arcade
 {
   /// \class SfmlGraph
