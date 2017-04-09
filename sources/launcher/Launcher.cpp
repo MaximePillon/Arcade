@@ -147,6 +147,7 @@ namespace arcade
     this->libs["SDL"] = "lib/lib_arcade_sdl.so";
 
     this->games["Snake"] = "lib/lib_arcade_snake.so";
+    this->games["Centipede"] = "lib/lib_arcade_centipede.so";
   }
 
   /*
