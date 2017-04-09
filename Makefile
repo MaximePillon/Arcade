@@ -5,10 +5,13 @@
 ## Login   <loens_g@epitech.net>
 ## 
 ## Started on  Thu Apr  6 21:49:10 2017 loens_g
-## Last update Fri Apr  7 15:34:19 2017 Hugo SOSZYNSKI
+## Last update Sun Apr  9 20:20:24 2017 Hugo SOSZYNSKI
 ##
 
 all:
+	make -C sources/protocol/
+
+graph:
 	make -C sources/sfml/
 	make -C sources/OpenGL/
 	make -C externLibs/myncurses/
@@ -36,10 +39,4 @@ fclean:
 	make -C sources/ fclean
 
 re:
-	make -C sources/sfml/ re
-	make -C sources/OpenGL/ re
-	make -C externLibs/myncurses/ re
-	make -C sources/ncurses/ re
-	make -C sources/snake/ re
-	make -C sources/Centipede/ re
-	make -C sources/ re
+	make -C sources/protocol/ re
