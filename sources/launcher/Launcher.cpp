@@ -306,17 +306,13 @@ namespace arcade
 
   void Launcher::printChar()
   {
-    std::string tmp;
-    int index = 0;
-    unsigned int x = WINDOW_WIDTH / 2 - 1;
-
-    while (this->letter[index])
-    {
-      tmp = this->letter[index];
-      printText(tmp, x, WINDOW_HEIGHT / 2 - 1);
-      x++;
-      index++;
-    }
+    std::string tmp = "";
+    tmp += this->letter[0];
+    tmp += ' ';
+    tmp += this->letter[1];
+    tmp += ' ';
+    tmp += this->letter[2];
+    printText(tmp, WINDOW_WIDTH / 2 - 1, WINDOW_HEIGHT / 2 - 1);
   }
 
   static void nextChar(void *param)
