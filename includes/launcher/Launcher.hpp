@@ -87,7 +87,9 @@ namespace arcade
     std::map<std::string, std::string>::iterator selected_game;
     std::string	playerName;
     std::vector<char> letter;
+    int	cursX;
     int index;
+    bool setName;
     bool quit;
   };
 }

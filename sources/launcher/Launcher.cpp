@@ -320,6 +320,9 @@ namespace arcade
     Launcher *self;
 
     self = static_cast<Launcher *>(param);
+    self->cursX += 1;
+    if (self->cursX > WINDOW_WIDTH / 2 + 1)
+      self->cursX = WINDOW_WIDTH / 2 - 1;
     self->index++;
     if (self->index > 2)
     self->index = 0;
@@ -330,6 +333,9 @@ namespace arcade
     Launcher *self;
 
     self = static_cast<Launcher *>(param);
+    self->cursX -= 1;
+    if (self->cursX < WINDOW_WIDTH / 2 - 1)
+      self->cursX = WINDOW_WIDTH / 2 + 1;
     self->index--;
     if (self->index < 0)
       self->index = 2;
@@ -365,15 +371,16 @@ namespace arcade
     self->playerName = self->letter[1];
     self->playerName = self->letter[2];
     self->letter.clear();
-    self->quit = true;
+    self->setName = true;
   }
 
   void Launcher::loop()
   {
-    this->quit = false;
-
+    this->setName = false;
     this->quit = false;
     this->index = 0;
+    this->cursX = WINDOW_WIDTH / 2 - 1;
+
     this->letter.push_back(65);
     this->letter.push_back(65);
     this->letter.push_back(65);
@@ -383,10 +390,11 @@ namespace arcade
     this->graph->registerEvent(CommandType::GO_RIGHT, nextChar, this);
     this->graph->registerEvent(CommandType::GO_LEFT, prevChar, this);
     this->graph->registerEvent(CommandType::PLAY, validName, this);
-    while (!this->quit)
+    while (!this->setName)
     {
       printText("ENTER YOUR NAME", WINDOW_WIDTH / 2 - 3.5, 0);
       printText("PRESS ENTER TO VALID", WINDOW_WIDTH / 2 - 4.7  , 1);
+      printText("^", this->cursX, WINDOW_HEIGHT / 2 + 1);
       printText("_ _ _", WINDOW_WIDTH / 2 - 1, WINDOW_HEIGHT / 2);
       printChar();
       this->graph->execEvents();
