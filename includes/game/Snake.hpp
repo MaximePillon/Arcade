@@ -95,6 +95,10 @@ namespace arcade
     bool			menu;
 
     unsigned int		highScore;
+
+    std::string			name;
+
+    std::string			highScoreName;
   };
 }
 

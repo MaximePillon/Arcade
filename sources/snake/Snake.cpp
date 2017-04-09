@@ -15,7 +15,7 @@
 #include <sstream>
 #include <iostream>
 #include "IGraph.hpp"
-#include "game/PSnake.hpp"
+#include "game/Snake.hpp"
 
 namespace arcade
 {
@@ -331,7 +331,7 @@ namespace arcade
       oFile.open("snake.score", std::ios::out);
       if (oFile)
       {
-	oFile << this->score;
+	oFile << this->name << "\n" << this->score;
 	oFile.close();
       }
       else
@@ -347,7 +347,7 @@ namespace arcade
     file.open("snake.score");
     if (file.is_open())
     {
-      file >> this->highScore;
+      file >> this->highScoreName >> this->highScore;
       file.close();
     }
     else
@@ -373,6 +373,7 @@ bool gPlay(arcade::IGraph *graph, std::string const& player)
   while (restart)
   {
     arcade::Snake snake(graph);
+    snake.name = player;
     snake.getHighScore();
     quit = snake.play();
     snake.saveHighScore();

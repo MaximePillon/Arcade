@@ -78,8 +78,6 @@ namespace arcade
 	if (this->eventMap[it.first].hdl)
 	  this->eventMap[it.first].hdl(this->eventMap[it.first].param);
       }
-    if (event.key.code == sf::Keyboard::Escape)
-      this->mainWin->close();
   }
 
   void SfmlGraph::execEvents()
@@ -143,8 +141,6 @@ namespace arcade
   bool SfmlGraph::close()
   {
     this->mainWin->close();
-    for (auto i : textList)
-      std::clog << i.getPosition().x << "&&" << i.getPosition().y << std::endl;
     return true;
   }
 }
