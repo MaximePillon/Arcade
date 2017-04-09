@@ -378,9 +378,10 @@ namespace arcade
     for (std::vector<Centipede>::iterator it = this->Centipedes.begin(); it != this->Centipedes.end(); ++it)
       for (std::vector<Block>::iterator it2 = it->body.begin(); it2 != it->body.end(); ++it2)
       {
-	if ((*it2) == *(this->bullets)) {
+	if ((*it2) == *(this->bullets))
+	{
 	  this->score += 50;
-	  if (it2 == it->body.begin() || it2 == it->body.end())
+	  if (it2 == it->body.begin() || it2 == --it->body.end())
 	  {
 	    it->body.erase(it2);
 	    ++it2;
