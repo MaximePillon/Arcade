@@ -16,6 +16,7 @@
 
 namespace arcade
 {
+  /// \enum Who
   enum Who {
     PLAYER,
     CENTIPEDE
@@ -25,6 +26,10 @@ namespace arcade
   class Block
   {
   public:
+    /// \brief Block object constructor.
+    /// \param color The color of the Block.
+    /// \param pos The position of the Block.
+    /// \param direction The movement direction of the Block.
     Block(t_color const& color, t_pos const& pos, t_spos const& direction);
     virtual ~Block() {};
 
@@ -58,24 +63,35 @@ namespace arcade
     t_spos	direction; //!< Direction of the block
   };
 
+  /// \class Centipede
   class Centipede {
 
   public:
+    /// \brief The constructor of a Centipede object.
+    /// \param size The starting size of the Centipede.
+    /// \param startPos The starting position of the Centipede.
+    /// \param dir The starting movement direction of the Centipede.
     Centipede(size_t size, t_pos startPos, t_spos dir);
     virtual ~Centipede() {};
 
   protected:
-    size_t			size;
-    t_pos			headPos;
-    t_spos			dir;
+    size_t			size; //!< The size of the Centipede.
+    t_pos			headPos; //!< The position of the head.
+    t_spos			dir; //!< the direction of the Centipede.
 
   public:
-    std::vector<Block>		body;
-    std::vector<Block>		turns;
+    std::vector<Block>		body; //!< The Blocks of the body
+    std::vector<Block>		turns; //!< the turning points of the Centipede.
   };
 
+  /// \class Blockade
   class Blockade {
   public:
+    /// \brief Constructor of the Blockade object.
+    /// \param color
+    /// \param pos
+    /// \param direction
+    /// \param Lives
     Blockade(t_color const& color, t_pos const& pos, t_spos const& direction, size_t Lives = 5);
     virtual ~Blockade() {};
 
