@@ -286,7 +286,7 @@ namespace arcade
   {
     std::ifstream file;
 
-    file.open("centipedex.score");
+    file.open("centipede.score");
     if (file.is_open())
     {
       file >> this->highScoreName >> this->highScore;
@@ -427,11 +427,15 @@ namespace arcade
 
     pos.x = 0;
     pos.y = 0;
-    out << "Highscore: " << this->highScore;
+    out << "Highscore by " << this->highScoreName << ": " << this->highScore;
     this->graph->drawText(pos, out.str());
     pos.y = 1;
     out.str("");
     out << "Score: " << this->score;
+    this->graph->drawText(pos, out.str());
+    out.str("");
+    pos.x  = WINDOW_WIDTH - 3;
+    out << this->name;
     this->graph->drawText(pos, out.str());
   }
 
