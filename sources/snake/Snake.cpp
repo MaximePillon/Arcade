@@ -11,11 +11,11 @@
 #include <unistd.h>
 #include <iostream>
 #include <algorithm>
-#include <IGraph.hpp>
 #include <fstream>
 #include <sstream>
 #include <iostream>
-#include "game/Snake.hpp"
+#include "IGraph.hpp"
+#include "game/PSnake.hpp"
 
 namespace arcade
 {

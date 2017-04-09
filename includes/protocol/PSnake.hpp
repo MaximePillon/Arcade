@@ -22,7 +22,7 @@ namespace arcade
   class Block
   {
   public:
-    Block(t_color const& color, t_pos const& pos, t_spos const& direction);
+    Block(t_pos const& pos, t_spos const& direction);
     virtual ~Block() {};
 
   public:
@@ -40,17 +40,12 @@ namespace arcade
     /// \return The direction of the Block
     t_spos const& getDirection() const;
 
-    /// \brief Print the block on screen
-    /// \param graph The graphical interface on which to print the block
-    void print(IGraph &graph);
-
     /// \brief Compare the positions of the Blocks
     /// \param other The Block to compare with
     /// \return true if positions are equal, false otherwise
     bool operator==(Block const& other);
 
   protected:
-    t_color	color; //!< Color of the block
     t_pos	pos; //!< Position of the block
     t_spos	direction; //!< Direction of the block
   };
@@ -59,42 +54,47 @@ namespace arcade
   class Snake
   {
   public:
-    /// \brief Print the snake
-    void print();
 
     /// \brief Move all the blocks the snake
     void move();
 
-    /// \brief C
-    /// ollision detections and reactions
+    /// \brief Collision detections and reactions
     void collide();
 
     /// \brief The main game function
     bool play();
 
-    void saveHighScore();
+    CommandType readIn() const;
 
-    void getHighScore();
+    void whereAmI();
+
+    void getMap(CommandType cmd);
+
+    void goUp();
+
+    void goDown();
+
+    void goLeft();
+
+    void goRight();
+
+    void goForward();
+
+    void illegal();
+
+    void playRound(CommandType cmd);
 
   public:
-    Snake(IGraph* graph);
+    Snake();
     virtual ~Snake() {};
 
   protected:
     std::vector<Block>		powerup; //!< Powerups
-    std::vector<Block>		border; //!< Border
-    unsigned int		score; //!< The score
-    IGraph			*graph; //!< The graph interface to draw with
-    bool			loose;
-
-  public:
     std::vector<Block>		body; //!< Block of the body
     std::vector<Block>		turns; //!< The turning points
-    bool			quit; //!< if the quit bind has been press
-    bool			restart; //!< if the restart bind has been press
-    bool			menu;
 
-    unsigned int		highScore;
+  public:
+    bool			quit; //!< if the quit bind has been press
   };
 }
 
