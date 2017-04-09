@@ -273,7 +273,7 @@ namespace arcade
       oFile.open("centipede.score", std::ios::out);
       if (oFile)
       {
-	oFile << this->score;
+	oFile << this->name << "\n" << this->score;
 	oFile.close();
       }
       else
@@ -281,14 +281,15 @@ namespace arcade
     }
   }
 
+
   void Game::getHighScore()
   {
     std::ifstream file;
 
-    file.open("centipede.score");
+    file.open("centipedex.score");
     if (file.is_open())
     {
-      file >> this->highScore;
+      file >> this->highScoreName >> this->highScore;
       file.close();
     }
     else
@@ -520,6 +521,7 @@ bool gPlay(arcade::IGraph *graph, std::string const& player)
   while (restart)
   {
     arcade::Game centipede(graph);
+    centipede.name = player;
     centipede.getHighScore();
     quit = centipede.play();
     centipede.saveHighScore();
