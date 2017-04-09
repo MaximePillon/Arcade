@@ -380,6 +380,8 @@ namespace arcade
     this->graph->registerEvent(CommandType::PLAY, validName, this);
     while (!this->quit)
     {
+      printText("ENTER YOUR NAME", WINDOW_WIDTH / 2 - 3.5, 0);
+      printText("PRESS ENTER TO VALID", WINDOW_WIDTH / 2 - 4.7  , 1);
       printText("_ _ _", WINDOW_WIDTH / 2 - 1, WINDOW_HEIGHT / 2);
       printChar();
       this->graph->execEvents();
