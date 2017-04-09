@@ -82,7 +82,7 @@ namespace arcade
 
     void illegal();
 
-    void playRound(CommandType cmd);
+    void playRound();
 
   public:
     Snake();

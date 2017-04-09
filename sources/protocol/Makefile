@@ -5,7 +5,7 @@
 ## Login   <loens_g@epitech.net>
 ## 
 ## Started on  Thu Apr  6 21:08:23 2017 loens_g
-## Last update Fri Apr  7 19:40:29 2017 Hugo SOSZYNSKI
+## Last update Sun Apr  9 20:39:05 2017 Hugo SOSZYNSKI
 ##
 
 INCLUDE		= 	-I../../includes
@@ -27,7 +27,7 @@ ifeq	($(DEBUG), 1)
 	CPPFLAGS	+=	-g -ggdb3
 endif
 
-NAME		=	../../lib/lib_arcade_snake.so
+NAME		=	../../games/lib_arcade_snake.so
 
 SRCS		=	PSnake.cpp
 

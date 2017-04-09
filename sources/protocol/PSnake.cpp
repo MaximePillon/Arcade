@@ -99,7 +99,7 @@ namespace arcade
   {
     CommandType command;
 
-    std::cin.read(static_cast<char*>(&command), sizeof(CommandType));
+    std::cin.read((char*)(&command), sizeof(CommandType));
     return command;
   }
 
@@ -110,8 +110,8 @@ namespace arcade
     int cpt = 0;
 
     size = this->body.size();
-    ret = static_cast<struct WhereAmI*>(new char[sizeof(struct WhereAmI) +
-						 size * sizeof(Position)]);
+    ret =(struct WhereAmI*)(new char[sizeof(struct WhereAmI) +
+				     size * sizeof(Position)]);
     ret->type = CommandType::WHERE_AM_I;
     ret->lenght = static_cast<uint16_t>(size);
     for (auto it = this->body.begin(); it != this->body.end(); ++it)
@@ -120,9 +120,9 @@ namespace arcade
       ret->position[cpt].y = static_cast<uint16_t>((*it).getPos().y);
       ++cpt;
     }
-    std::cout.write(static_cast<char*>(ret), sizeof(struct WhereAmI) +
-					     size * sizeof(Position));
-    delete[] static_cast<char*>(ret);
+    std::cout.write((char*)(ret), sizeof(struct WhereAmI) +
+				  size * sizeof(Position));
+    delete ret;
   }
 
   void Snake::getMap(CommandType cmd)
@@ -130,18 +130,18 @@ namespace arcade
     struct GetMap *map;
     size_t size = 30 * 20;
 
-    map = static_cast<struct GetMap*>(new char[sizeof(struct GetMap) +
-					       size * sizeof(TileType)]);
+    map = (struct GetMap*)(new char[sizeof(struct GetMap) +
+				    size * sizeof(TileType)]);
     map->type = cmd;
     map->width = 30;
     map->height = 20;
-    for (int i = 0; i < size; ++i)
+    for (unsigned int i = 0; i < size; ++i)
       map->tile[i] = TileType::EMPTY;
     for (auto it = this->powerup.begin(); it != this->powerup.end(); ++it)
       map->tile[it->getPos().y * 30 + it->getPos().x] = TileType::POWERUP;
-    std::cout.write(static_cast<char*>(map), sizeof(struct GetMap) +
-					     size * sizeof(TileType));
-    delete[] static_cast<char*>(map);
+    std::cout.write((char*)(map), sizeof(struct GetMap) +
+				  size * sizeof(TileType));
+    delete[] map;
   }
 
   void Snake::goUp()
@@ -157,7 +157,6 @@ namespace arcade
     head = this->body[0].getPos();
     this->body[0].changeDirection(dir);
     this->turns.push_back(Block(head, dir));
-    this->playRound(CommandType::GO_UP);
   }
 
   void Snake::goDown()
@@ -173,7 +172,6 @@ namespace arcade
     head = this->body[0].getPos();
     this->body[0].changeDirection(dir);
     this->turns.push_back(Block(head, dir));
-    this->playRound(CommandType::GO_DOWN);
   }
 
   void Snake::goLeft()
@@ -182,14 +180,13 @@ namespace arcade
     t_spos		dir;
 
     dir = this->body[0].getDirection();
-    if (dir.y)
+    if (dir.x)
       return ;
     dir.y = 0;
     dir.x = -1;
     head = this->body[0].getPos();
     this->body[0].changeDirection(dir);
     this->turns.push_back(Block(head, dir));
-    this->playRound(CommandType::GO_LEFT);
   }
 
   void Snake::goRight()
@@ -198,32 +195,27 @@ namespace arcade
     t_spos		dir;
 
     dir = this->body[0].getDirection();
-    if (dir.y)
+    if (dir.x)
       return ;
     dir.y = 0;
     dir.x = 1;
     head = this->body[0].getPos();
     this->body[0].changeDirection(dir);
     this->turns.push_back(Block(head, dir));
-    this->playRound(CommandType::GO_RIGHT);
   }
 
   void Snake::goForward()
   {
-    this->playRound(CommandType::GO_FORWARD);
   }
 
-  void Snake::playRound(CommandType cmd)
+  void Snake::playRound()
   {
     this->move();
     this->collide();
-    if (!this->quit)
-      this->getMap(cmd);
   }
 
   void Snake::illegal()
   {
-    this->getMap(CommandType::ILLEGAL);
   }
 
   bool Snake::play()
@@ -260,7 +252,7 @@ namespace arcade
 	  break;
 
 	case CommandType::PLAY:
-	  this->playRound(CommandType::PLAY);
+	  this->playRound();
 	  break;
 
 	default:
