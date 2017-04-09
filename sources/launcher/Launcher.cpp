@@ -14,7 +14,7 @@
 #include "launcher/Launcher.hpp"
 
 typedef arcade::IGraph* (*graph_func)();
-typedef bool (*game_func)(arcade::IGraph*);
+typedef bool (*game_func)(arcade::IGraph*, std::string const&);
 
 namespace arcade
 {
@@ -37,7 +37,6 @@ namespace arcade
   {
     Launcher* self;
 
-    //std::clog << "previous gl" << std::endl;
     self = static_cast<Launcher*>(param);
     if (self->selected_lib != self->libs.begin())
       self->selected_lib--;
@@ -47,7 +46,6 @@ namespace arcade
   {
     Launcher* self;
 
-    //std::clog << "next gl" << std::endl;
     self = static_cast<Launcher*>(param);
     if (self->selected_lib != --self->libs.end())
       self->selected_lib++;
@@ -103,7 +101,7 @@ namespace arcade
       self->graph->init(pos, "Arcade");
       return ;
     }
-    *(void**)(&ga_creat) = self->loadGameSym("Play");
+    *(void**)(&ga_creat) = self->loadGameSym("gPlay");
     if (ga_creat == NULL)
     {
       std::clog << dlerror() << std::endl;
@@ -121,7 +119,7 @@ namespace arcade
       self->graph->init(pos, "Arcade");
       return ;
     }
-    self->quit = ga_creat(graph);
+    self->quit = ga_creat(graph, self->playerName);
     delete graph;
     self->closeGameLib();
     self->closeGraphLib();
@@ -146,8 +144,8 @@ namespace arcade
     this->libs["LibLapin"] = "lib/lib_arcade_liblapin.so";
     this->libs["SDL"] = "lib/lib_arcade_sdl.so";
 
-    this->games["Snake"] = "lib/lib_arcade_snake.so";
-    this->games["Centipede"] = "lib/lib_arcade_centipede.so";
+    this->games["Snake"] = "games/lib_arcade_snake.so";
+    this->games["Centipede"] = "games/lib_arcade_centipede.so";
   }
 
   /*
@@ -320,9 +318,22 @@ namespace arcade
     Launcher *self;
 
     self = static_cast<Launcher *>(param);
-    self->cursX += 1;
-    if (self->cursX > WINDOW_WIDTH / 2 + 1)
-      self->cursX = WINDOW_WIDTH / 2 - 1;
+    self->posCurs++;
+    switch (self->posCurs)
+    {
+      case 2:
+	self->cursX = "  ^  ";
+	break;
+
+      case 3:
+	self->cursX = "    ^";
+	break;
+
+      default:
+	self->cursX = "^    ";
+	self->posCurs = 1;
+	break;
+    }
     self->index++;
     if (self->index > 2)
     self->index = 0;
@@ -333,9 +344,22 @@ namespace arcade
     Launcher *self;
 
     self = static_cast<Launcher *>(param);
-    self->cursX -= 1;
-    if (self->cursX < WINDOW_WIDTH / 2 - 1)
-      self->cursX = WINDOW_WIDTH / 2 + 1;
+    self->posCurs--;
+    switch (self->posCurs)
+    {
+      case 2:
+	self->cursX = "  ^  ";
+	break;
+
+      case 3:
+	self->cursX = "    ^";
+	break;
+
+      default:
+	self->cursX = "^    ";
+	self->posCurs = 1;
+	break;
+    }
     self->index--;
     if (self->index < 0)
       self->index = 2;
@@ -379,7 +403,8 @@ namespace arcade
     this->setName = false;
     this->quit = false;
     this->index = 0;
-    this->cursX = WINDOW_WIDTH / 2 - 1;
+    this->posCurs = 1;
+    this->cursX = "^    ";
 
     this->letter.push_back(65);
     this->letter.push_back(65);
@@ -394,7 +419,7 @@ namespace arcade
     {
       printText("ENTER YOUR NAME", WINDOW_WIDTH / 2 - 3.5, 0);
       printText("PRESS ENTER TO VALID", WINDOW_WIDTH / 2 - 4.7  , 1);
-      printText("^", this->cursX, WINDOW_HEIGHT / 2 + 1);
+      printText(this->cursX, WINDOW_WIDTH / 2 - 1, WINDOW_HEIGHT / 2 + 1);
       printText("_ _ _", WINDOW_WIDTH / 2 - 1, WINDOW_HEIGHT / 2);
       printChar();
       this->graph->execEvents();

@@ -20,18 +20,6 @@
 namespace arcade
 {
 
-//  void launch_game(void *param);
-//
-//  void close(void* param);
-//
-//  void previousGl(void* param);
-//
-//  void nextGl(void* param);
-//
-//  void previousGame(void* param);
-//
-//  void nextGame(void* param);
-
   class Launcher
   {
   public:
@@ -87,7 +75,8 @@ namespace arcade
     std::map<std::string, std::string>::iterator selected_game;
     std::string	playerName;
     std::vector<char> letter;
-    int	cursX;
+    std::string	cursX;
+    int		posCurs;
     int index;
     bool setName;
     bool quit;
