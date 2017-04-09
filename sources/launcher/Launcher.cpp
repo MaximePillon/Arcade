@@ -360,7 +360,11 @@ namespace arcade
     Launcher *self;
 
     self = static_cast<Launcher *>(param);
-    self->playerName = self->letter[0] + self->letter[1] + self->letter[2];
+    self->playerName = "";
+    self->playerName = self->letter[0];
+    self->playerName = self->letter[1];
+    self->playerName = self->letter[2];
+    self->letter.clear();
     self->quit = true;
   }
 
@@ -368,6 +372,7 @@ namespace arcade
   {
     this->quit = false;
 
+    this->quit = false;
     this->index = 0;
     this->letter.push_back(65);
     this->letter.push_back(65);
@@ -380,6 +385,8 @@ namespace arcade
     this->graph->registerEvent(CommandType::PLAY, validName, this);
     while (!this->quit)
     {
+      printText("ENTER YOUR NAME", WINDOW_WIDTH / 2 - 3.5, 0);
+      printText("PRESS ENTER TO VALID", WINDOW_WIDTH / 2 - 4.7  , 1);
       printText("_ _ _", WINDOW_WIDTH / 2 - 1, WINDOW_HEIGHT / 2);
       printChar();
       this->graph->execEvents();
@@ -390,7 +397,6 @@ namespace arcade
     this->graph->registerEvent(CommandType::NEXT_GL, nextGl, this);
     this->graph->registerEvent(CommandType::PREVIOUS_GAME, previousGame, this);
     this->graph->registerEvent(CommandType::NEXT_GAME,nextGame, this);
-    this->quit = false;
     while (this->graph->isOpen() && !this->quit)
     {
       unsigned int x = 3;
