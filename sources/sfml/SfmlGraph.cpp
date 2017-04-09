@@ -72,6 +72,8 @@ namespace arcade
 
   void SfmlGraph::gstKey()
   {
+    if (this->event.key.code == sf::Keyboard::Escape)
+      this->mainWin->close();
     for (auto it : this->keyboard)
       if (it.second == this->event.key.code)
       {
