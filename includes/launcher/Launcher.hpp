@@ -14,6 +14,7 @@
 # include <string>
 # include <map>
 # include <dlfcn.h>
+# include <vector>
 # include "IGraph.hpp"
 
 namespace arcade
@@ -71,6 +72,8 @@ namespace arcade
 
     void get_libs();
 
+    void printChar();
+
   protected:
     void* handle;
     void* game_handle;
@@ -82,6 +85,9 @@ namespace arcade
     std::map<std::string, std::string> games;
     std::map<std::string, std::string>::iterator selected_lib;
     std::map<std::string, std::string>::iterator selected_game;
+    std::string	playerName;
+    std::vector<char> letter;
+    int index;
     bool quit;
   };
 }

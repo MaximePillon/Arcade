@@ -303,14 +303,96 @@ namespace arcade
     return true;
   }
 
+
+  void Launcher::printChar()
+  {
+    std::string tmp = "";
+    tmp += this->letter[0];
+    tmp += ' ';
+    tmp += this->letter[1];
+    tmp += ' ';
+    tmp += this->letter[2];
+    printText(tmp, WINDOW_WIDTH / 2 - 1, WINDOW_HEIGHT / 2 - 1);
+  }
+
+  static void nextChar(void *param)
+  {
+    Launcher *self;
+
+    self = static_cast<Launcher *>(param);
+    self->index++;
+    if (self->index > 2)
+    self->index = 0;
+  }
+
+  static void prevChar(void *param)
+  {
+    Launcher *self;
+
+    self = static_cast<Launcher *>(param);
+    self->index--;
+    if (self->index < 0)
+      self->index = 2;
+  }
+
+  static void incChar(void *param)
+  {
+    Launcher *self;
+
+    self = static_cast<Launcher *>(param);
+    self->letter[self->index] += 1;
+    if (self->letter[self->index] > 90)
+      self->letter[self->index] = 65;
+  }
+
+  static void decChar(void *param)
+  {
+    Launcher *self;
+
+    self = static_cast<Launcher *>(param);
+    self->letter[self->index] -= 1;
+    if (self->letter[self->index] < 65)
+      self->letter[self->index] = 90;
+  }
+
+  static void validName(void *param)
+  {
+    Launcher *self;
+
+    self = static_cast<Launcher *>(param);
+    self->playerName = self->letter[0] + self->letter[1] + self->letter[2];
+    self->quit = true;
+  }
+
   void Launcher::loop()
   {
-    this->graph->registerEvent(CommandType::PLAY, launch_game, this);
+    this->quit = false;
+
+    this->index = 0;
+    this->letter.push_back(65);
+    this->letter.push_back(65);
+    this->letter.push_back(65);
     this->graph->registerEvent(CommandType::CLOSE, close, this);
+    this->graph->registerEvent(CommandType::GO_UP, incChar , this);
+    this->graph->registerEvent(CommandType::GO_DOWN,decChar , this);
+    this->graph->registerEvent(CommandType::GO_RIGHT, nextChar, this);
+    this->graph->registerEvent(CommandType::GO_LEFT, prevChar, this);
+    this->graph->registerEvent(CommandType::PLAY, validName, this);
+    while (!this->quit)
+    {
+      printText("ENTER YOUR NAME", WINDOW_WIDTH / 2 - 3.5, 0);
+      printText("PRESS ENTER TO VALID", WINDOW_WIDTH / 2 - 4.7  , 1);
+      printText("_ _ _", WINDOW_WIDTH / 2 - 1, WINDOW_HEIGHT / 2);
+      printChar();
+      this->graph->execEvents();
+      this->graph->refresh();
+    }
+    this->graph->registerEvent(CommandType::PLAY, launch_game, this);
     this->graph->registerEvent(CommandType::PREVIOUS_GL, previousGl, this);
     this->graph->registerEvent(CommandType::NEXT_GL, nextGl, this);
     this->graph->registerEvent(CommandType::PREVIOUS_GAME, previousGame, this);
     this->graph->registerEvent(CommandType::NEXT_GAME,nextGame, this);
+    this->quit = false;
     while (this->graph->isOpen() && !this->quit)
     {
       unsigned int x = 3;
